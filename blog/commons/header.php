@@ -7,6 +7,6 @@ include('./components/themes.php');
 
 <div class="container">
     <header class="mb-5">
-        <?php include('./components/navbartop.php'); ?>
+        <?php include('./blog/components/navbartop.php'); ?>
     </header>
 </div>

@@ -2,7 +2,7 @@
 
 
 
-define('INCLUDE_PATH','http://localhost/Projeto_01/');
+define('INCLUDE_PATH','http://localhost/noticias/');
 
 define('INCLUDE_PATH_PAINEL',INCLUDE_PATH.'painel/');
 
@@ -18,7 +18,6 @@ define('DATABASE','blog');
 //Constantes para o painel de controle
 define('NOME_EMPRESA','Aldomar Assolin');
 
-define('URL','http://localhost:80/noticias/');
 define('URL_STATIC','http://localhost:80/noticias/static/');
 
 // define('BASE_PAINEL', 'http://localhost:80/noticias/painel/');

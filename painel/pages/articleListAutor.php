@@ -1,7 +1,7 @@
 <?php
 
 // Carregar o arquivo JSON
-$jsonData = file_get_contents(URL . 'cors/articlesData.json');
+$jsonData = file_get_contents(INCLUDE_PATH . 'cors/articlesData.json');
 
 //var_dump($jsonData);
 

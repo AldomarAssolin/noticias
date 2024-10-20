@@ -1,9 +1,9 @@
 <section class="home py-3">
         <?php
 
-        include('./components/cardCPainel.php');
-        include('./components/cardOnlineUsers.php');
-        include('./components/cardUserPainel.php');
+        include('./painel/components/cardCPainel.php');
+        include('./painel/components/cardOnlineUsers.php');
+        include('./painel/components/cardUserPainel.php');
 
         ?>
 

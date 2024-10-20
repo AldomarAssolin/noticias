@@ -1,9 +1,9 @@
 <nav class="row flex-nowrap justify-content-between align-items-center border-bottom lh-1 py-3">
         <div class="col-3 pt-1 ">
-            <a class="link-secondary" href="#">Subscribe</a>
+            <a class="link-secondary" href="<?php echo INCLUDE_PATH?>painel">Dashboard</a>
         </div>
         <div class="col-4 text-center">
-            <a class="blog-header-logo text-body-emphasis align-items-center text-decoration-none" href="#">Blog</a>
+            <a class="blog-header-logo text-body-emphasis align-items-center text-decoration-none" href="<?php echo INCLUDE_PATH?>">Blog</a>
         </div>
         <div class="col-5 d-flex justify-content-end align-items-center">
             <a class="link-secondary" href="#" aria-label="Search">
