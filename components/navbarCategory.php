@@ -1,4 +1,4 @@
-<div class="nav-scroller py-1 mb-3 border-bottom">
+<div class="nav-scroller py-3 border-top">
     <nav class="nav nav-underline justify-content-between">
         <a class="nav-item nav-link link-body-emphasis" href="#">World</a>
         <a class="nav-item nav-link link-body-emphasis" href="#">U.S.</a>

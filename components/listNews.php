@@ -1,7 +1,10 @@
 <div class="col-md-8">
+    
+    
     <h3 class="pb-2 fst-italic">
         Notícias e Releases
     </h3>
+    <?php include('./components/navbarCategory.php');?>
 
     <div>
         <ul class="list-unstyled">

@@ -1,0 +1,46 @@
+{
+    "artigos": [
+        {
+            "id": 1,
+            "title": "No mundo da Inteligência Artificial",
+            "author": "Aldomar Assolin",
+            "date": "2023-10-01",
+            "content": "Este artigo explora os avanços recentes na inteligência artificial e suas aplicações."
+        },
+        {
+            "id": 2,
+            "title": "Avanços na Tecnologia",
+            "author": "Maria Silva",
+            "date": "2023-09-15",
+            "content": "Uma visão geral sobre os avanços tecnológicos que estão moldando o futuro."
+        },
+        {
+            "id": 3,
+            "title": "O Futuro da Robótica",
+            "author": "João Souza",
+            "date": "2023-08-20",
+            "content": "Discussão sobre as tendências e inovações no campo da robótica."
+        },
+        {
+            "id": 3,
+            "title": "Tecnologia da Informação",
+            "author": "Aldomar Assolin",
+            "date": "2023-08-20",
+            "content": "Discussão sobre as tendências e inovações no campo da robótica.um conjunto de atividades e soluções que envolvem o uso de recursos tecnológicos para processar, armazenar, transmitir e utilizar informações. "
+        },
+        {
+            "id": 3,
+            "title": "O que é um Software Engineer?",
+            "author": "Aldomar Assolin",
+            "date": "2023-08-20",
+            "content": "O termo “Engenharia de Software”, surgiu na década de 60, com a intenção de contornar a crise do Software, e dar um tratamento mais sistemático e controlado ao desenvolvimento de sistemas complexos."
+        },
+        {
+            "id": 3,
+            "title": "PHP",
+            "author": "Aldomar Assolin",
+            "date": "2023-08-20",
+            "content": "A popular general-purpose scripting language that is especially suited to web development. Fast, flexible and pragmatic, PHP powers everything from your blog to ..."
+        }
+    ]
+}

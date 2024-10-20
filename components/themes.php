@@ -1,4 +1,4 @@
-<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle mode-theme">
     <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
         id="bd-theme"
         type="button"
@@ -10,7 +10,7 @@
         </svg>
         <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
     </button>
-    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+    <ul class="dropdown-menu dropdown-menu-end shadow mode-theme" aria-labelledby="bd-theme-text">
         <li>
             <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
                 <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
