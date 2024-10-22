@@ -4,7 +4,7 @@
 
 require('./config/config.php');
 
-$urlDestaque = NEWS_API."?qtd=1";
+$urlDestaque = "";
 
 // Inicia a sessão cURL
 $ch = curl_init($urlDestaque);
@@ -41,7 +41,7 @@ foreach ($dataDestaque['items'] as $itemDestaque) {
         // Acessa a URL da imagem que você precisa
         $imageIntro = htmlspecialchars($imagens['image_intro']);
 
-        echo '<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">';
+        echo '<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-tertiary">';
         echo '<div class="col-lg-12 px-0">';
         echo '<h1 class="display-4 fst-italic">' . $itemDestaque['titulo'] . '</h1>';
         echo '<p class="lead my-3">'. $itemDestaque['introducao'] . '</p>';

@@ -1,8 +1,4 @@
-<?php
-include('./components/svg.php');
-include('./components/themes.php');
 
-?>
 
 
 <div class="container">

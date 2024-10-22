@@ -1,9 +1,15 @@
 <section class="home py-3">
         <?php
+        Site::updateUsusarioOnline();
+        Site::contador();
+        $usuariosOnline = Painel::listarUsuariosOnline();
+        $totalUsuariosCadastrados = Painel::listarUsuariosCadastrado();
+        $totalDeVisitas = Painel::totalDeVisitas();
+        $VisitasDoDia = Painel::VisitasDoDia();
 
-        include('./painel/components/cardCPainel.php');
-        include('./painel/components/cardOnlineUsers.php');
-        include('./painel/components/cardUserPainel.php');
+        include('./components/cardCPainel.php');
+        include('./components/cardOnlineUsers.php');
+        include('./components/cardUserPainel.php');
 
         ?>
 

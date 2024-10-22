@@ -7,10 +7,19 @@
 
     <section class="user shadow">
       <div class="d-flex flex-column align-items-center text-center p-3">
-        <img class="rounded-circle" width="120" height="120" src="<?php echo URL_STATIC ?>/images/perfil.jpg" alt="Imagem do perfil">
+        <?php
+        if ($_SESSION['img'] == '') {
+          $_SESSION['img'] = URL_STATIC.'uploads/avatar.jpg';
+        } else {
+          $_SESSION['img'] = $_SESSION['img'];
+        }
+        ?>
+
+        <img class="rounded-circle" width="120" height="120" src="<?php echo $_SESSION['img']?>" alt="Imagem do perfil">
+
         <div class="mt-3">
-          <h4>Aldomar Assolin</h4>
-          <p class="text-secondary mb-1">Administrador</p>
+          <h4><?php echo $_SESSION['nome'] ?></h4>
+          <p class="text-secondary mb-1"><?php echo pegaCargo($_SESSION['cargo']) ?></p>
         </div>
       </div>
     </section>
@@ -38,7 +47,7 @@
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL?>cadastrarUsuario">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrarUsuario">
                     <svg class="bi">
                       <use xlink:href="#people" />
                     </svg>
@@ -46,7 +55,7 @@
                   </a>
                 </li>
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL?>cadastrarArtigo">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrarArtigo">
                     <svg class="bi">
                       <use xlink:href="#file-earmark" />
                     </svg>
@@ -77,7 +86,7 @@
                   </a>
                 </li>
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL?>articleListAutor">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>articleListAutor">
                     <svg class="bi">
                       <use xlink:href="#file-earmark" />
                     </svg>
@@ -125,7 +134,7 @@
 
       <ul class="nav flex-column mb-auto">
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center gap-2" href="#">
+          <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>?loggout">
             <svg class="bi">
               <use xlink:href="#gear-wide-connected" />
             </svg>
@@ -133,11 +142,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center gap-2" href="#">
+          <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>?loggout">
             <svg class="bi">
               <use xlink:href="#door-closed" />
             </svg>
-            Sign out
+            Sair
           </a>
         </li>
       </ul>

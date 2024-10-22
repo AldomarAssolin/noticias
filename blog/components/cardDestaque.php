@@ -1,4 +1,4 @@
-<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-tertiary">
     <div class="col-lg-12 px-0">
         <h1 class="display-4 fst-italic">Titulo</h1>
         <p class="lead my-3">This is a wider card with supporting text below as a natural lead-in to additional content.</p>

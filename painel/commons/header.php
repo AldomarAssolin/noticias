@@ -1,6 +1,6 @@
 <header class="navbar shadow flex-md-nowrap px-3 py-3 " data-bs-theme="dark">
 
-    <a class="fs-6 text-white" href="#">
+    <a class="fs-6 text-white" href="<?php echo INCLUDE_PATH_PAINEL ?>">
         <img src="<?php echo URL_STATIC ?>images/logo_black-recort.png" alt="Logomarca Aldomar Assolin" width="100">
     </a>
 
@@ -25,7 +25,7 @@
         <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
     </div>
     <div class="col-4 text-center">
-            <a class="blog-header-logo text-body-emphasis align-items-center text-decoration-none" href="<?php echo INCLUDE_PATH?>">Blog</a>
-        </div>
+        <a class="link-secondary text-decoration-none" href="<?php echo INCLUDE_PATH ?>">Blog</a>
+    </div>
 
 </header>

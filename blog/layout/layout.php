@@ -1,3 +1,9 @@
+<?php
+
+
+
+?>
+
 <!doctype html>
 <html lang="pt-br" data-bs-theme="auto">
 
@@ -22,13 +28,16 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 
-  <link href="<?php echo URL_STATIC ?>css/dashboard.css" rel="stylesheet">
+  <link href="<?php echo URL_STATIC ?>css/blog.css" rel="stylesheet">
 </head>
 
 <body>
 
   <div class="container">
     <?php
+    
+    include('./blog/components/themes.php');
+    include('./blog/components/svg.php');
     include('./blog/commons/header.php');
     ?>
   </div>
@@ -67,4 +76,3 @@
 </body>
 
 </html>
-

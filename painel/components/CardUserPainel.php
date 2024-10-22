@@ -14,18 +14,18 @@
                 </tr>
             </thead>
             <tbody>
+                <?php
+                
+                foreach($totalUsuariosCadastrados as $key => $value) {
+                
+                ?>
                 <tr>
-                    <th scope="row">Ronaldo</th>
-                    <td class="text-end">Normal</td>
+                    <th scope="row"><?php echo $value['nome']?></th>
+                    <td class="text-end"><?php echo $value['cargo']?></td>
                 </tr>
-                <tr>
-                    <th scope="row">Admin</th>
-                    <td class="text-end">Sub-ADM</td>
-                </tr>
-                <tr>
-                    <th scope="row">Aldomar</th>
-                    <td colspan="2" class="text-end">Administrador</td>
-                </tr>
+                <?php
+                }
+                ?>
             </tbody>
         </table>
     </div>

@@ -4,7 +4,7 @@
     <h3 class="pb-2 fst-italic">
         Notícias e Releases
     </h3>
-    <?php include('./components/navbarCategory.php');?>
+    <?php include('./blog/components/navbarCategory.php');?>
 
     <div>
         <ul class="list-unstyled">

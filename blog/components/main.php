@@ -1,6 +1,6 @@
 <div class="col-md-4">
-        <div class="position-sticky" style="top: 2rem;">
-          <div class="p-4 mb-3 bg-body-tertiary rounded">
+        <div class="position" style="top: 2rem;">
+          <div class="p-4 mb-3 bg-body-tertiary shadow rounded">
             <h4 class="fst-italic">Sobre</h4>
             <p class="mb-0">
               Personalize esta seção para contar aos seus visitantes um pouco sobre sua publicação, escritores, conteúdo ou algo totalmente diferente. Depende totalmente de você.
