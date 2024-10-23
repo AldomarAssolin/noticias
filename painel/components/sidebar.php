@@ -13,9 +13,10 @@
         } else {
           $_SESSION['img'] = $_SESSION['img'];
         }
+        
         ?>
 
-        <img class="rounded-circle" width="120" height="120" src="<?php echo $_SESSION['img']?>" alt="Imagem do perfil">
+        <img class="rounded-circle img-thumbnail" width="120" height="120" src="<?php echo $_SESSION['img'] ?>" alt="Imagem do perfil">
 
         <div class="mt-3">
           <h4><?php echo $_SESSION['nome'] ?></h4>
@@ -47,7 +48,7 @@
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrarUsuario">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_usuario">
                     <svg class="bi">
                       <use xlink:href="#people" />
                     </svg>
@@ -55,7 +56,7 @@
                   </a>
                 </li>
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrarArtigo">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_artigo">
                     <svg class="bi">
                       <use xlink:href="#file-earmark" />
                     </svg>
@@ -86,7 +87,7 @@
                   </a>
                 </li>
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>articleListAutor">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos">
                     <svg class="bi">
                       <use xlink:href="#file-earmark" />
                     </svg>
@@ -109,7 +110,7 @@
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
                 <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="#">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>editar_usuario">
                     <svg class="bi">
                       <use xlink:href="#people" />
                     </svg>

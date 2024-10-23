@@ -40,3 +40,13 @@ function pegaCargo($indice)
 {
     return Painel::$cargos[$indice];
 }
+
+function listarCategorias($indice)
+{
+    return Painel::$categorias[$indice];
+}
+
+function listarTipos($indice)
+{
+    return Painel::$tipos[$indice];
+}

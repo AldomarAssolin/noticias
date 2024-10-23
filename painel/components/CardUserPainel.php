@@ -11,18 +11,41 @@
                 <tr class="table-success">
                     <th scope="col">Nome</th>
                     <th scope="col" class="text-end">Cargo</th>
+                    <th scope="col" class="text-end">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                
-                foreach($totalUsuariosCadastrados as $key => $value) {
-                
+
+                foreach ($totalUsuariosCadastrados as $key => $value) {
+
                 ?>
-                <tr>
-                    <th scope="row"><?php echo $value['nome']?></th>
-                    <td class="text-end"><?php echo $value['cargo']?></td>
-                </tr>
+                <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
+                
+                    <tr>
+                        <th scope="row">
+                            <img src="<?php echo $value['img'] ?>" alt="Imagem Perfil" width="24" height="24" class="rounded-circle img-thumbnail mx-2">
+                            <?php echo $value['nome'] ?>
+                        </th>
+                        <td class="text-end"><?php echo $value['cargo'] ?></td>
+                        <td class='text-end'>
+                            <a href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo $value['id'] ?>" class='btn btn-primary btn-sm my-1 my-md-0'>
+                                <svg class='bi'>
+                                    <use xlink:href='#folder-symlink-fill' />
+                                </svg>
+                            </a>
+                            <a href="<?php echo INCLUDE_PATH_PAINEL ?>atualizar_usuario?id=<?php echo  $value['id'] ?>" class='btn btn-warning btn-sm my-1 my-md-0 mx-lg-2'>
+                                <svg class='bi'>
+                                    <use xlink:href='#pencil' />
+                                </svg>
+                            </a>
+                            <a href="<?php echo INCLUDE_PATH_PAINEL ?>" class='btn btn-danger btn-sm my-1 my-md-0'>
+                                <svg class='bi'>
+                                    <use xlink:href='#trash' />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
                 <?php
                 }
                 ?>

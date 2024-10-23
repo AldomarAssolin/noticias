@@ -13,7 +13,7 @@ class MySql
                 self::$pdo = new PDO('mysql:host=' . HOST . ';dbname=' . DATABASE, USER, PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
                 self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
-                echo '<h3 class="alert alert-danger">Erro ao conectar!</h3>';
+                echo '<div class="alert alert-danger p-2"><h3>Erro ao conectar!</h3><p>' . $e->getMessage() . '</p></div>';
             }
         }
 

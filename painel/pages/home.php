@@ -1,7 +1,7 @@
 <section class="home py-3">
         <?php
         Site::updateUsusarioOnline();
-        Site::contador();
+        
         $usuariosOnline = Painel::listarUsuariosOnline();
         $totalUsuariosCadastrados = Painel::listarUsuariosCadastrado();
         $totalDeVisitas = Painel::totalDeVisitas();

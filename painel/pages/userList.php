@@ -18,7 +18,11 @@ botões para acessar lista de artigos do usuario, editar usuario e excluir usuar
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped table-sm">
+        <?php 
+        $totalUsuariosCadastrados = Painel::listarUsuariosCadastrado();
+        include('./components/cardUserPainel.php') 
+        ?>
+        <!-- <table class="table table-striped table-sm">
             <thead>
                 <tr class="table-success py-2">
                     <th>#</th>
@@ -29,11 +33,14 @@ botões para acessar lista de artigos do usuario, editar usuario e excluir usuar
                 </tr>
             </thead>
             <tbody>
+                <?php
+                for ($i = 1; $i <= 10; $i++) {
+                ?>
                 <tr>
-                    <td>1</td>
+                    <td><?php echo $i?></td>
                     <td>João Silva</td>
                     <td>joao.silva@example.com</td>
-                    <td>10</td>
+                    <td><?php echo $i * 3?></td>
                     <td class="text-end">
                         <a href="#" class="btn btn-sm btn-primary" title="Ver Artigos do Autor">
                             <svg class="bi">
@@ -52,77 +59,11 @@ botões para acessar lista de artigos do usuario, editar usuario e excluir usuar
                         </a>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Maria Oliveira</td>
-                    <td>maria.oliveira@example.com</td>
-                    <td>8</td>
-                    <td class="text-end">
-                        <a href="#" class="btn btn-sm btn-primary" title="Ver Artigos do Autor">
-                            <svg class="bi">
-                                <use xlink:href="#person-lines-fill" />
-                            </svg>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-warning mx-md-1 my-2 my-lg-0">
-                            <svg class="bi">
-                                <use xlink:href="#pencil" />
-                            </svg>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger">
-                            <svg class="bi">
-                                <use xlink:href="#trash" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Maria Oliveira</td>
-                    <td>maria.oliveira@example.com</td>
-                    <td>8</td>
-                    <td class="text-end">
-                        <a href="#" class="btn btn-sm btn-primary" title="Ver Artigos do Autor">
-                            <svg class="bi">
-                                <use xlink:href="#person-lines-fill" />
-                            </svg>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-warning mx-md-1 my-2 my-lg-0">
-                            <svg class="bi">
-                                <use xlink:href="#pencil" />
-                            </svg>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger">
-                            <svg class="bi">
-                                <use xlink:href="#trash" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Maria Oliveira</td>
-                    <td>maria.oliveira@example.com</td>
-                    <td>8</td>
-                    <td class="text-end">
-                        <a href="#" class="btn btn-sm btn-primary" title="Ver Artigos do Autor">
-                            <svg class="bi">
-                                <use xlink:href="#person-lines-fill" />
-                            </svg>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-warning mx-md-1 my-2 my-lg-0">
-                            <svg class="bi">
-                                <use xlink:href="#pencil" />
-                            </svg>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-danger">
-                            <svg class="bi">
-                                <use xlink:href="#trash" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-                <!-- Adicione mais linhas conforme necessário -->
+                <?php 
+                }
+                ?>
+                
             </tbody>
-        </table>
+        </table> -->
     </div>
 </section>

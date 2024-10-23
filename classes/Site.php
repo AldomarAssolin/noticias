@@ -44,11 +44,18 @@ class Site
         // Verifica se o cookie 'visita' não está definido
         if (!isset($_COOKIE['visita'])) {
             // Define o cookie 'visita' com duração de 7 dias
-            setcookie('visita', true, time() + (60*60*24*7));
-            $date = date('Y-m-d');
+            setcookie('visita', uniqid(), time() + (60 * 60 * 24 * 7), '/');
+            $date = date('Y-m-d H:i:s');
+        
             // Insere um novo registro na tabela 'tb_admin.visitas' com o IP do usuário e a data/hora atual
-            $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.visitas` VALUES (null, ?, ?)");
-            $sql->execute(array($_SERVER['REMOTE_ADDR'], $date));
+            try {
+                $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.visitas` VALUES (null, ?, ?)");
+                $sql->execute(array($_SERVER['REMOTE_ADDR'], $date));
+            } catch (Exception $e) {
+                // Trate o erro aqui, como registrar ou exibir uma mensagem
+                error_log($e->getMessage());
+                echo '<div class="alert alert-danger p-2"><h3>Erro ao conectar!</h3><p>' . $e->getMessage() . '</p></div>';
+            }
         }
     }
 }

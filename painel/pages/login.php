@@ -42,8 +42,9 @@
         }
         ?>
         <div class="row">
-            <div class="col-md-6 offset-md-3 shadow">
+            <div class="col-md-6 offset-md-3 shadow px-2 py-4">
                 <h1 class="text-center">Login</h1>
+                <h3 class="text-center text-secondary">Seja bem vindo ao nosso site!</h3>
                 <hr>
                 <form method="post">
                     <div class="mb-3">
