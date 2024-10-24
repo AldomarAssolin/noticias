@@ -16,15 +16,22 @@
             </thead>
             <tbody>
                 <?php
-
-                foreach ($totalUsuariosCadastrados as $key => $value) {
-
-                ?>
-                <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
                 
+
+
+foreach ($totalUsuariosCadastrados as $key => $value) {
+ 
+                ?>
+                    <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
+
                     <tr>
                         <th scope="row">
-                            <img src="<?php echo $value['img'] ?>" alt="Imagem Perfil" width="24" height="24" class="rounded-circle img-thumbnail mx-2">
+                            <?php
+                            
+                            ?>
+                                <img src="<?php echo $value['img'] ?>" alt="Imagem Perfil" width="24" height="24"
+                                    class="rounded-circle <?php echo  $value['logado'] == 1 ? 'border-success border-2' : '' ?> img-thumbnail mx-2">
+                            
                             <?php echo $value['nome'] ?>
                         </th>
                         <td class="text-end"><?php echo $value['cargo'] ?></td>

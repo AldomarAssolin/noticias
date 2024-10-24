@@ -28,11 +28,13 @@
             if($sql->rowCount() == 1) {
                 $info = $sql->fetch();
                 $_SESSION['login'] = true;
+                $_SESSION['id'] = $info['id'];
                 $_SESSION['user'] = $user;
                 $_SESSION['password'] = $password;
                 $_SESSION['cargo'] = $info['cargo'];
                 $_SESSION['nome'] = $info['nome'];
                 $_SESSION['img'] = $info['img'];
+                $_SESSION['logado'] = true;
                 header('Location: ' .INCLUDE_PATH_PAINEL);
                 echo '<div class="alert alert-success">Logado com sucesso!</div>';
                 die();

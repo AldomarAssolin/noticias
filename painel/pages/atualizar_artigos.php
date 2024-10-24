@@ -12,14 +12,10 @@
 
     <?php
 
-    //var_dump($_SESSION['user']);
-    $sql = MySql::connect()->prepare("SELECT id FROM `tb_admin.usuarios` WHERE user = ?");
-    $sql->execute(array($_SESSION['user']));
-    $value = $sql->fetch();
-
+    $value = Artigos::pegarArtigo($_GET['id']);
+    $categoria = Painel::$categorias[$value['categoria']]; // Pega a categoria do artigo
+    $tipo = $value['tipo']; // Pega a tipo do artigo
     if ($value) { // Verifica se um resultado foi encontrado
-        //var_dump($_POST);
-        //var_dump($value['id']);
 
         if (isset($_POST['acao'])) {
             $titulo = $_POST['titulo'];
@@ -28,28 +24,30 @@
             $categoria = $_POST['categoria'];
             $tipo = $_POST['tipo'];
             $conteudo = $_POST['conteudo'];
-            $img = $_FILES['img'];
-            $data_criacao = date('Y-m-d H:i:s');
-            $usuario_id = $value['id'];
+            $imagem = $_FILES['imagem'];
+            $imagem_atual = $_POST['imagem_atual'];
+            $data_atualizacao = date('Y-m-d H:i:s');
+
 
             $artigo = new Artigos();
-            if ($img['name'] != '') {
+            if ($imagem['name'] != '') {
 
                 //Existe o upload de imagem.
-                if (Painel::imagemValida($img)) {
-                    $img = Painel::uploadFile($img);
-                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao)) {
-                        //$value['img'] = $img;
-                        Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
-                    } else {
-                        var_dump($img);
-                        Painel::alert('erro', 'Ocorreu um erro ao Cadastrar junto com a imagem');
-                    }
+            if (Painel::imagemValida($imagem)) {
+                Painel::deleteFile($imagem_atual);
+                $imagem = Painel::uploadFile($imagem);
+                $img = $imagem;
+                if ($artigo->editarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $data_atualizacao, $_GET['id'])) {
+                    $value['img'] = $imagem;
+                    Painel::alert('sucesso', 'Atualizado com sucesso junto com a imagem!');
                 } else {
-                    Painel::alert('erro', 'O formato da imagem não é válido');
+                    Painel::alert('erro', 'Ocorreu um erro ao atualizar junto com a imagem');
                 }
             } else {
-                Painel::alert('erro', 'Alguma coisa deu errado');
+                Painel::alert('erro', 'O formato da imagem não é válido');
+            }
+            } else {
+                Painel::alert('erro', 'Erro ao atualizar...');
             }
         }
     }
@@ -60,22 +58,25 @@
     <form method="post" enctype="multipart/form-data" class="row g-3 border rounded-1 m-0 p-2">
         <div class="col-md-12">
             <label for="inputEmail4" class="form-label">Título</label>
-            <input type="text" class="form-control" name="titulo" placeholder="Digite o título do artigo">
+            <input type="text" class="form-control" name="titulo" placeholder="Digite o título do artigo" value="<?php echo $value['titulo'] ?>">
         </div>
         <div class="col-md-12">
             <label for="inputPassword4" class="form-label">Subtítulo</label>
-            <input type="text" class="form-control" name="subtitulo" placeholder="Digite o subtítulo do artigo">
+            <input type="text" class="form-control" name="subtitulo" placeholder="Digite o subtítulo do artigo" value="<?php echo $value['subtitulo'] ?>">
         </div>
         <div class="col-12">
             <label for="inputAddress" class="form-label">Descrição</label>
-            <input type="text" class="form-control" name="descricao" placeholder="Digite a descrição do artigo">
+            <input type="text" class="form-control" name="descricao" placeholder="Digite a descrição do artigo" value="<?php echo $value['descricao'] ?>">
         </div>
         <div class="col-12">
             <label for="inputSelect" class="form-label">Categoria</label>
             <select class="form-select" name="categoria" aria-label="Default select example" id="inputSelect">
+                <option value="<?php echo $value['categoria'] ?>" selected></option>
+
                 <?php
+                echo '<option selected value="' . $categoria . '">' . $categoria . '</option>';
                 foreach (Painel::$categorias as $key => $val) {
-                    echo '<option selected value="' . $key . '">' . $val . '</option>';
+                    echo '<option value="' . $key . '">' . $val . '</option>';
                 }
                 ?>
             </select>
@@ -84,22 +85,26 @@
             <label for="inputSelect" class="form-label">Tipo</label>
             <select class="form-select" name="tipo" aria-label="Default select example" id="inputSelect">
                 <?php
+                echo '<option selected value="' . $tipo . '">' . $tipo . '</option>';
                 foreach (Painel::$tipos as $key => $val) {
-                    echo '<option selected value="' . $key . '">' . $val . '</option>';
+                    echo '<option value="' . $key . '">' . $val . '</option>';
                 }
                 ?>
             </select>
         </div>
         <div class="col-md-12">
             <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
-            <textarea class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo"></textarea>
+            <textarea class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo">
+                <?php echo $value['conteudo'] ?>
+            </textarea>
         </div>
         <div class="col-12">
             <label for="inputAddress" class="form-label">Thumbnail</label>
-            <input type="file" class="form-control" name="img">
+            <input type="file" class="form-control" name="imagem">
+            <input type="hidden" name="imagem_atual" value="<?php echo $value['img'] != '' ? $value['img'] : $avatar ?>">
         </div>
         <div class="col-12">
-            <input type="submit" name="acao" class="btn btn-success" value="Cadastrar">
+            <input type="submit" name="acao" class="btn btn-success" value="Atualizar">
         </div>
     </form>
     </div>

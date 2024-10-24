@@ -50,3 +50,20 @@ function listarTipos($indice)
 {
     return Painel::$tipos[$indice];
 }
+
+function permissaoPagina($permissao)
+{
+    if ($_SESSION['cargo'] >= $permissao) {
+        echo $_SESSION['cargo'];
+        return;
+    } else {
+        echo 'style="display:none;"';
+    }
+}
+
+
+function exibirUsuariosOnline(){
+    $usuarios = Painel::listarUsuariosOnline();
+    
+    return $usuarios;
+}

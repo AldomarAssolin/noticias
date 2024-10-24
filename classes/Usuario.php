@@ -38,6 +38,14 @@
 			$sql->execute(array($user,$nome,$senha,$cargo,$img));
 		}
 
+		//pernissao de usuario
+		public static function permissaoUsuario($user){
+			$sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE user = ?");
+			$sql->execute(array($user));
+			$info = $sql->fetch();
+			return $info['cargo'];
+		}
+
 	}
 
 ?>

@@ -9,6 +9,7 @@ class Site
         if (isset($_SESSION['online'])) {
             $token = $_SESSION['online'];
             $agora = date('Y-m-d H:i:s');
+            $usuario_id = $_SESSION['id'];
             $expira = date('Y-m-d H:i:s', strtotime('+5 minutes', strtotime($agora)));
             //verificando se o token já existe
             $check = MySql::connect()->prepare("SELECT `id` FROM `tb_admin.online` WHERE token = ?");
@@ -17,26 +18,29 @@ class Site
             //verificando se o token já existe
             if ($check->rowCount() == 1) {
                 //atualizando a ultima ação do usuário
-                $sql = MySql::connect()->prepare("UPDATE `tb_admin.online` SET ultima_acao = ? WHERE token = ?");
-                $sql->execute(array($agora, $token));
+                $sql = MySql::connect()->prepare("UPDATE `tb_admin.online` SET ultima_acao = ?, usuario_id = ? WHERE token = ?");
+                $sql->execute(array($agora, $usuario_id, $token));
             } else {
                 $token = $_SESSION['online'];
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $agora = date('Y-m-d H:i:s');
+                $usuario_id = $_SESSION['id'];
                 $expira = date('Y-m-d H:i:s', strtotime('+5 minutes', strtotime($agora)));
                 //caso o token não exista, ele é criado
-                $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.online` VALUES (null,?,?,?)");
-                $sql->execute(array($ip, $agora, $token));
+                $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.online` VALUES (null,?,?,?,?)");
+                $sql->execute(array($ip, $agora, $usuario_id, $token));
             }
         } else {
             $_SESSION['online'] = uniqid();
             $token = $_SESSION['online'];
             $ip = $_SERVER['REMOTE_ADDR'];
             $agora = date('Y-m-d H:i:s');
+            $usuario_id = $_SESSION['id'];
             //$expira = date('Y-m-d H:i:s',strtotime('+5 minutes',strtotime($agora)));
-            $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.online` VALUES (null,?,?,?)");
-            $sql->execute(array($ip, $agora, $token));
+            $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.online` VALUES (null,?,?,?,?)");
+            $sql->execute(array($ip, $agora, $usuario_id, $token));
         }
+
     }
 
     public static function contador()

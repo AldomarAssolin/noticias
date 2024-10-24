@@ -12,12 +12,11 @@
         ?>
         <ul class="list-unstyled">
             <?php
-            $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.artigos`");
-            $sql->execute();
-            $artigos = $sql->fetchAll();
-
-
-            foreach ($artigos as $key => $value) {
+            $result = Artigos::listarArtigos();
+            if (!$result) {
+                echo "Nenhum artigo encontrado.";
+            }else{
+            foreach ($result as $key => $value) {
             ?>
                 <li>
                     <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
@@ -25,13 +24,14 @@
                             <img src="<?php echo './painel/' . $value['img'] ?>" alt="imagem descritiva" class="img-card-list">
                         </div>
                         <div class="col-lg-9">
+                            <span class="badge rounded-pill mb-2 text-bg-primary"><?php echo $value['tipo'] ? $value['tipo'] : 'Notícias' ?></span>                            
                             <h6 class="mb-0"><?php echo $value['titulo'] ?></h6>
                             <small class="text-body-secondary"><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></small>
                         </div>
                     </a>
                 </li>
             <?php
-            }
+            }}
             ?>
         </ul>
     </div>

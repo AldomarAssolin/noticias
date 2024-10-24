@@ -19,18 +19,24 @@ class Painel
 
     public static $tipos = [
         '0' => 'Artigo',
-        '1' => 'PAPER',
+        '1' => 'Paper',
         '2' => 'Notícia'
     ];
 
     public static function logado()
     {
+        // Atualizando o status de logado na tabela tb_admin.usuarios
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 1 WHERE id = ?");
+        $sql->execute(array($_SESSION['id']));
         return isset($_SESSION['login']) ? true : false;
         //return false;
     }
 
     public static function loggout()
     {
+        // Atualizando o status de logado na tabela tb_admin.usuarios
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 0 WHERE id = ?");
+        $sql->execute(array($_SESSION['id']));
         session_destroy();
         header('Location: ' . INCLUDE_PATH);
     }
@@ -99,7 +105,7 @@ class Painel
         if (
             $imagem['type'] == 'image/jpeg' ||
             $imagem['type'] == 'image/jpg' ||
-            $imagem['type'] == 'image/png' 
+            $imagem['type'] == 'image/png'
         ) {
 
             $tamanho = intval($imagem['size'] / 1024);
@@ -128,4 +134,35 @@ class Painel
     {
         @unlink('uploads/' . $file);
     }
+
+    public static function permissaoPagina($permissao)
+    {
+        if ($_SESSION['cargo'] >= $permissao) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function listarUsuarioOnline()
+    {
+
+        if (isset($_SESSION)) {
+            $sql = MySql::prepare("SELECT usuario_id FROM `tb_admin.online`");
+            $sql->execute();
+
+            $users = $sql->fetchAll();
+            return $users;
+        } else {
+            echo Painel::alert('erro', 'Erro ao verificar usuário online!');
+        }
+    }
 }
+
+// SELECT o.usuario_id, u.id 
+// FROM `tb_admin.online` AS o 
+// INNER JOIN `tb_admin.usuarios` u
+// ON o.usuario_id = u.id
+// where o.usuario_id = ?
+
+//SELECT usuario_id FROM `tb_admin.online`

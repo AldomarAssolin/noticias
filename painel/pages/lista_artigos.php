@@ -16,7 +16,7 @@
                     <td>Autor</td>
                     <td>Título</td>
                     <td>Data</td>
-                    <td>Ações</td>
+                    <td >Ações</td>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +24,7 @@
                 $artigos = Artigos::listarArtigosComAutores();  // Chama a função para pegar os artigos
 
                 if ($artigos) {  // Verifica se há artigos
+                   
                 ?>
 
                     <?php foreach ($artigos as $artigo) { ?>
@@ -34,15 +35,15 @@
                             </td>
                             <td><?php echo htmlspecialchars($artigo['titulo']); ?></td>
                             <td><?php echo date('d/m/Y', strtotime($artigo['data_criacao'])); ?></td>
-                            <td class='text-end'>
+                            <td  class='text-end'>
                             <!-- Botão para editar artigo -->
-                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>editar_artigo?id=<?php echo $value['id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
+                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $artigo['id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
                                 <svg class='bi'>
                                     <use xlink:href='#pencil' />
                                 </svg>
                             </a>
                             <!-- Botão para excluir artigo -->
-                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?excluir=<?php echo $value['id']; ?>' class="btn btn-danger btn-sm my-1 my-md-0">
+                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?excluir=<?php echo $artigo['id']; ?>' class="btn btn-danger btn-sm my-1 my-md-0">
                                 <svg class='bi'>
                                     <use xlink:href='#trash' />
                                 </svg>

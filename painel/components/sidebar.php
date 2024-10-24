@@ -47,7 +47,7 @@
           <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
-                <li class="nav-item shadow">
+                <li <?php permissaoPagina(2) ?> class="nav-item shadow">
                   <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_usuario">
                     <svg class="bi">
                       <use xlink:href="#people" />
@@ -78,8 +78,8 @@
           <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
-                <li class="nav-item shadow">
-                  <a class="nav-link d-flex align-items-center gap-2" href="<?php INCLUDE_PATH_PAINEL ?>userList">
+                <li  <?php permissaoPagina(2) ?> class=" nav-item shadow">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php INCLUDE_PATH_PAINEL ?>lista_usuarios">
                     <svg class="bi">
                       <use xlink:href="#people" />
                     </svg>
