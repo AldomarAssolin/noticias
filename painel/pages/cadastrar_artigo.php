@@ -56,51 +56,52 @@
 
 
     ?>
-    <form method="post" enctype="multipart/form-data" class="row g-3 border rounded-1 m-0 p-2">
-        <div class="col-md-12">
-            <label for="inputEmail4" class="form-label">Título</label>
-            <input type="text" class="form-control" name="titulo" placeholder="Digite o título do artigo">
-        </div>
-        <div class="col-md-12">
-            <label for="inputPassword4" class="form-label">Subtítulo</label>
-            <input type="text" class="form-control" name="subtitulo" placeholder="Digite o subtítulo do artigo">
-        </div>
-        <div class="col-12">
-            <label for="inputAddress" class="form-label">Descrição</label>
-            <input type="text" class="form-control" name="descricao" placeholder="Digite a descrição do artigo">
-        </div>
-        <div class="col-12">
-            <label for="inputSelect" class="form-label">Categoria</label>
-            <select class="form-select" name="categoria" aria-label="Default select example" id="inputSelect">
-                <?php
-                foreach (Painel::$categorias as $key => $val) {
-                    echo '<option selected value="' . $key . '">' . $val . '</option>';
-                }
-                ?>
-            </select>
-        </div>
-        <div class="col-12">
-            <label for="inputSelect" class="form-label">Tipo</label>
-            <select class="form-select" name="tipo" aria-label="Default select example" id="inputSelect">
-                <?php
-                foreach (Painel::$tipos as $key => $val) {
-                    echo '<option selected value="' . $key . '">' . $val . '</option>';
-                }
-                ?>
-            </select>
-        </div>
-        <div class="col-md-12">
-            <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
-            <textarea class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo"></textarea>
-        </div>
-        <div class="col-12">
-            <label for="inputAddress" class="form-label">Thumbnail</label>
-            <input type="file" class="form-control" name="img">
-        </div>
-        <div class="col-12">
-            <input type="submit" name="acao" class="btn btn-success" value="Cadastrar">
-        </div>
-    </form>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" class="row g-3 mt-2 mt-md-5">
+            <div class="col-md-12">
+                <label for="inputEmail4" class="form-label">Título</label>
+                <input type="text" class="form-control" name="titulo" placeholder="Digite o título do artigo">
+            </div>
+            <div class="col-md-12">
+                <label for="inputPassword4" class="form-label">Subtítulo</label>
+                <input type="text" class="form-control" name="subtitulo" placeholder="Digite o subtítulo do artigo">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Descrição</label>
+                <input type="text" class="form-control" name="descricao" placeholder="Digite a descrição do artigo">
+            </div>
+            <div class="col-12">
+                <label for="inputSelect" class="form-label">Categoria</label>
+                <select class="form-select" name="categoria" aria-label="Default select example" id="inputSelect">
+                    <?php
+                    foreach (Painel::$categorias as $key => $val) {
+                        echo '<option selected value="' . $key . '">' . $val . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="inputSelect" class="form-label">Tipo</label>
+                <select class="form-select" name="tipo" aria-label="Default select example" id="inputSelect">
+                    <?php
+                    foreach (Painel::$tipos as $key => $val) {
+                        echo '<option selected value="' . $key . '">' . $val . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
+                <textarea id="tinymce" class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo"></textarea>
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Thumbnail</label>
+                <input type="file" class="form-control" name="img">
+            </div>
+            <div class="col-12">
+                <input type="submit" name="acao" class="btn btn-success" value="Cadastrar">
+            </div>
+        </form>
     </div>
     </div>
 </section>

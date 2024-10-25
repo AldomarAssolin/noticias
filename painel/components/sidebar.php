@@ -36,7 +36,8 @@
       </div>
 
       <div class="accordion accordion-flush my-2" id="accordionFlushExample">
-        <div class="accordion-item">
+        <!-- Cadastros -->
+        <div <?php permissaoPagina(2) ?>  class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
               <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
@@ -47,7 +48,7 @@
           <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
-                <li <?php permissaoPagina(2) ?> class="nav-item shadow">
+                <li class="nav-item shadow">
                   <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_usuario">
                     <svg class="bi">
                       <use xlink:href="#people" />
@@ -55,7 +56,7 @@
                     Usuários
                   </a>
                 </li>
-                <li class="nav-item shadow">
+                <li <?php permissaoPagina(2) ?> class="nav-item shadow">
                   <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_artigo">
                     <svg class="bi">
                       <use xlink:href="#file-earmark" />
@@ -63,10 +64,20 @@
                     Artigos
                   </a>
                 </li>
+                <li <?php permissaoPagina(2) ?> class="nav-item shadow">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_slides">
+                    <svg class="bi">
+                      <use xlink:href="#file-earmark" />
+                    </svg>
+                    Slides
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
         </div>
+
+        <!-- Gestão -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -94,10 +105,20 @@
                     Listar Artigos
                   </a>
                 </li>
+                <li class="nav-item shadow">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_slides">
+                    <svg class="bi">
+                      <use xlink:href="#file-earmark" />
+                    </svg>
+                    Listar Slides
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
         </div>
+
+        <!-- Administração -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">

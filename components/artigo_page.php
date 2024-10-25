@@ -2,24 +2,27 @@
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-
+    
+    // Chama a função pegarArtigo para pegar o artigo selecionado
     $artigo = Artigos::pegarArtigo($id);
+    $usuario_id = $artigo['usuario_id'];
+    
     // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
-    $artigos = Artigos::listarArtigosAutor($id);
-    //var_dump($artigos);
+    $artigos = Artigos::listarArtigosAutor($usuario_id );
+    
 ?>
-<div class="col-md-8">
-    <div class="card text-center">
+
+    <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link nav_link_autor" href="#"><?php echo $artigo['tipo'] ? $artigo['tipo'] : 'Notícia' ?></a>
+                    <a class="nav-link nav_link_autor text-capitalize" href="#"><?php echo $artigo['tipo'] ? $artigo['tipo'] : 'Notícia' ?></a>
                 </li><!-- Tipo do artigo | Link para artigo do autor -->
                 <li class="nav-item">
-                    <a class="nav-link nav_link_autor" href="#">Mais de <strong><?php echo $artigo['nome'] ?></strong></a>
+                    <a class="nav-link nav_link_autor text-capitalize" href="#">Mais de <strong><?php echo $artigo['nome'] ?></strong></a>
                 </li><!-- Nome do autor | Link para artigos do autor -->
                 <li class="nav-item">
-                    <a class="nav-link nav_link_autor" href="#">Sobre o Autor <strong><?php echo $artigo['nome'] ?></strong></a>
+                    <a class="nav-link nav_link_autor text-capitalize" href="#">Sobre o Autor <strong><?php echo $artigo['nome'] ?></strong></a>
                 </li><!-- Sobre o autor | Link para página sobre o autor -->
             </ul>
         </div>
@@ -58,4 +61,3 @@ if (isset($_GET['id'])) {
     </div>
     <h2></h2>
     <p></p>
-</div>

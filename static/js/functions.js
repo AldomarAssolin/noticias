@@ -17,3 +17,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initially show the first card body
     cardBodies.forEach((body, index) => body.style.display = index === 0 ? 'block' : 'none');
 });
+

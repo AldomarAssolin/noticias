@@ -4,34 +4,34 @@ class Painel
 {
 
     public static $cargos = [
-        '0' => 'Normal',
-        '1' => 'Autor',
-        '2' => 'Administrador'
+        '0' => 'normal',
+        '1' => 'autor',
+        '2' => 'administrador'
     ];
 
     public static $categorias = [
-        '0' => 'Mundo',
-        '1' => 'Brasil',
-        '2' => 'TI',
-        '3' => 'Programação',
-        '4' => 'Curiosidades'
+        '0' => 'mundo',
+        '1' => 'brasil',
+        '2' => 'ti',
+        '3' => 'programacao',
+        '4' => 'curiosidades'
     ];
 
     public static $tipos = [
-        '0' => 'Artigo',
-        '1' => 'Paper',
-        '2' => 'Notícia'
+        '0' => 'artigo',
+        '1' => 'paper',
+        '2' => 'noticia'
     ];
 
     public static function logado()
     {
-        if(isset($_SESSION['login'])){
-        // Atualizando o status de logado na tabela tb_admin.usuarios
-        $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 1 WHERE id = ?");
-        $sql->execute(array($_SESSION['id']));
-        return isset($_SESSION['login']) ? true : false;
-        //return false;
-        }else{
+        if (isset($_SESSION['login'])) {
+            // Atualizando o status de logado na tabela tb_admin.usuarios
+            $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 1 WHERE id = ?");
+            $sql->execute(array($_SESSION['id']));
+            return isset($_SESSION['login']) ? true : false;
+            //return false;
+        } else {
             return false;
         }
     }
@@ -108,14 +108,14 @@ class Painel
     {
         $tiposValidos = ['image/jpeg', 'image/jpg', 'image/png', 'image/PNG', 'image/JPG', 'image/JPEG'];
 
-        if(in_array($imagem['type'], $tiposValidos)){
+        if (in_array($imagem['type'], $tiposValidos)) {
             $tamanho = intval($imagem['size'] / 1024);
-            if($tamanho < 5048){
+            if ($tamanho < 5048) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             echo Painel::alert('erro', 'Formato de imagem inválido!');
         }
     }
@@ -134,7 +134,12 @@ class Painel
 
     public static function deleteFile($file)
     {
-        @unlink('uploads/' . $file);
+        if (file_exists('uploads/' . $file)) {
+            @unlink('uploads/' . $file);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function permissaoPagina($permissao)
@@ -160,4 +165,3 @@ class Painel
         }
     }
 }
-

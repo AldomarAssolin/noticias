@@ -103,7 +103,7 @@
         </div>
         <div class="col-md-12">
             <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
-            <textarea class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo">
+            <textarea id="tinymce" class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo">
                 <?php echo $value['conteudo'] ?>
             </textarea>
         </div>

@@ -17,12 +17,10 @@ include('./components/card_destaque.php');
 
 
 
-<div class="row g-5">
+
 
   <?php
-  include('./components/lista_artigos.php');
   include('./components/main.php');
   ?>
 
 
-</div>

@@ -17,7 +17,31 @@ h1, h2, h3, h4, h5, h6 {
   flex: 0 0 auto;
 }
 
-.h-250 { height: 250px; }
+.h-250 { height: 25vh; }
+
+/*Custom styles*/
+
+.carousel-item-custom{
+  background: black !important;
+  color: white;
+
+}
+
+.image-slide-home{
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  object-fit: fill;
+  object-position: center;
+  -webkit-object-fit: cover; /* For Safari */
+  -moz-object-fit: cover; /* For Firefox */
+  -o-object-fit: cover; /* For older Opera versions */
+  -ms-object-fit: cover; /* For Internet Explorer */
+  -webkit-object-position: center; /* For Safari */
+  -moz-object-position: center; /* For Firefox */
+  -o-object-position: center; /* For older Opera versions */
+  -ms-object-position: center; /* For Internet Explorer */
+}
 
 .img-card-list {
   width: 100%;

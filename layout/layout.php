@@ -29,6 +29,7 @@ Site::contador();
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <link href="<?php echo URL_STATIC ?>css/blog.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -60,6 +61,7 @@ Site::contador();
   <script src="<?php echo URL_STATIC ?>/js/functions.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
