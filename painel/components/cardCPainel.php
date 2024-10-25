@@ -6,8 +6,7 @@
             <svg class="bi">
                 <use xlink:href="#house-fill" />
             </svg>
-            <span class="mx-2 lead">Painel de Controle - <strong
-            ><?php echo $_SESSION['nome'] ?></strong
+            <span class="mx-2 lead">Painel de Controle - <strong><?php echo $_SESSION['nome'] ?></strong
             ></span>
         </h6>
         <div class="d-md-flex flex-wrap align-itens-center justify-content-center justify-content-lg-between py-3 gap-2">

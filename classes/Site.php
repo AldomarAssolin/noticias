@@ -2,6 +2,21 @@
 
 class Site
 {
+    //função para carregar a página
+    public static function carregarPagina()
+    {
+        if (isset($_GET['url'])) {
+            $url = explode('/', $_GET['url']);
+            if (file_exists('pages/' . $url[0] . '.php')) {
+                include('pages/' . $url[0] . '.php');
+            } else {
+                include('pages/home.php');
+            }
+        } else {
+            include('pages/404.php');
+        }
+    }
+
     public static function updateUsusarioOnline()
     {
         //verificando se a sessão online existe

@@ -20,7 +20,7 @@ Site::contador();
   <link rel="canonical" href="">
 
   <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
-  
+
 
 
 
@@ -35,44 +35,31 @@ Site::contador();
 
   <div class="container">
     <?php
-    
-    include('./blog/components/themes.php');
-    include('./blog/components/svg.php');
-    include('./blog/commons/header.php');
+
+    include('./components/themes.php');
+    include('./components/svg.php');
+    include('./commons/header.php');
     ?>
   </div>
 
 
-  <main class="container">
-
+  <main class="container" style="min-height:73vh">
     <?php
-    include('./blog/components/cardDestaque.php');
-    
+
+    Site::carregarPagina();
+
     ?>
-
-
-
-
-    <div class="row g-5">
-
-      <?php
-      include('./blog/components/listNews.php');
-      include('./blog/components/main.php');
-      ?>
-
-      
-    </div>
-
   </main>
 
   <?php
-  include('./blog/commons/footer.php')
+  include('./commons/footer.php')
   ?>
 
-  
-<script src="<?php echo INCLUDE_PATH ?>assets/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script>
+  <script src="<?php echo INCLUDE_PATH ?>assets/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="<?php echo URL_STATIC ?>/js/functions.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script>
 </body>
 
 </html>

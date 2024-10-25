@@ -25,11 +25,15 @@ class Painel
 
     public static function logado()
     {
+        if(isset($_SESSION['login'])){
         // Atualizando o status de logado na tabela tb_admin.usuarios
         $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 1 WHERE id = ?");
         $sql->execute(array($_SESSION['id']));
         return isset($_SESSION['login']) ? true : false;
         //return false;
+        }else{
+            return false;
+        }
     }
 
     public static function loggout()
@@ -102,19 +106,17 @@ class Painel
 
     public static function imagemValida($imagem)
     {
-        if (
-            $imagem['type'] == 'image/jpeg' ||
-            $imagem['type'] == 'image/jpg' ||
-            $imagem['type'] == 'image/png'
-        ) {
+        $tiposValidos = ['image/jpeg', 'image/jpg', 'image/png', 'image/PNG', 'image/JPG', 'image/JPEG'];
 
+        if(in_array($imagem['type'], $tiposValidos)){
             $tamanho = intval($imagem['size'] / 1024);
-            if ($tamanho < 2700)
+            if($tamanho < 5048){
                 return true;
-            else
+            }else{
                 return false;
-        } else {
-            return false;
+            }
+        }else{
+            echo Painel::alert('erro', 'Formato de imagem inválido!');
         }
     }
 
@@ -159,10 +161,3 @@ class Painel
     }
 }
 
-// SELECT o.usuario_id, u.id 
-// FROM `tb_admin.online` AS o 
-// INNER JOIN `tb_admin.usuarios` u
-// ON o.usuario_id = u.id
-// where o.usuario_id = ?
-
-//SELECT usuario_id FROM `tb_admin.online`

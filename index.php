@@ -3,7 +3,7 @@
 
 include('./config.php');
 
-include('./blog/layout/layout.php');
+include('./layout/layout.php');
 
 
 ?>

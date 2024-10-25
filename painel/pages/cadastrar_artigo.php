@@ -38,8 +38,7 @@
                 //Existe o upload de imagem.
                 if (Painel::imagemValida($img)) {
                     $img = Painel::uploadFile($img);
-                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao)) {
-                        //$value['img'] = $img;
+                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null)) {
                         Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
                     } else {
                         var_dump($img);
