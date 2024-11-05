@@ -23,6 +23,19 @@ class Painel
         '2' => 'noticia'
     ];
 
+    public static function generateSlug($str)
+    {
+        $str = mb_strtolower($str);
+        $str = preg_replace('/(â|á|ã)/', 'a', $str);
+        $str = preg_replace('/(ê|é)/', 'e', $str);
+        $str = preg_replace('/(í|Í)/', 'i', $str);
+        $str = preg_replace('/(ó|ô|õ)/', 'o', $str);
+        $str = preg_replace('/(ú)/', 'u', $str);
+        $str = preg_replace('/(_|\/|!|\?|#)/', '', $str);
+        $str = preg_replace('/( )/', '-', $str);
+        return $str;
+    }
+
     public static function logado()
     {
         if (isset($_SESSION['login'])) {
@@ -164,4 +177,5 @@ class Painel
             echo Painel::alert('erro', 'Erro ao verificar usuário online!');
         }
     }
+
 }

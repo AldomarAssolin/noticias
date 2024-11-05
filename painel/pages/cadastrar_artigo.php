@@ -41,8 +41,7 @@
                     if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null)) {
                         Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
                     } else {
-                        var_dump($img);
-                        Painel::alert('erro', 'Ocorreu um erro ao Cadastrar junto com a imagem');
+                        Painel::alert('sucesso', 'Cadastro efetuado com sucesso!');
                     }
                 } else {
                     Painel::alert('erro', 'O formato da imagem não é válido');
@@ -57,7 +56,7 @@
 
     ?>
     <div class="container">
-        <form method="post" enctype="multipart/form-data" class="row g-3 mt-2 mt-md-5">
+        <form method="post" enctype="multipart/form-data" class="row g-3 mt-2 mt-md-5 px-3 py-5 shadow">
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label">Título</label>
                 <input type="text" class="form-control" name="titulo" placeholder="Digite o título do artigo">

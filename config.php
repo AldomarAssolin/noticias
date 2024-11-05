@@ -28,10 +28,10 @@ define('BASE_DIR_PAINEL', __DIR__ . '/painel');
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASSWORD', '');
-define('DATABASE', 'noticias');
+define('DATABASE', 'blog');
 
 
-define('NOME_EMPRESA', 'Portal News');
+define('NOME_EMPRESA', 'BLOG News');
 
 $css = URL_STATIC . 'css/';
 

@@ -43,18 +43,18 @@ $slides = Slides::listarSlides();
     <a href='<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($result[1]['id']) ?>' class="card-link text-decoration-none">
       <div class="card mb-3" style="height: 225px;">
         <div class="row g-0">
-          <div class="col-md-8">
+          <div class="col-md-8 card-container">
             <div class="card-body">
               <div class="d-flex align-items-end justify-content-between">
                 <h5 class="card-title"><?php echo $result[1]['titulo'] ?></h5>
                 <strong class="d-inline-block mb-2 text-primary-emphasis"><?php echo $result[1]['tipo'] ? $result[1]['tipo'] : 'Notícias' ?></strong>
               </div><!-- d-flex -->
               <p class="card-text img-card-truncate"><?php echo $result[1]['descricao'] ?>...</p>
-              <p class="card-text"><small class="text-body-secondary"><?php echo date('d/m/Y', strtotime($result[1]['data_criacao'])) ?></small></p>
+              <p class="card-text"><small class="text-body-secondary"><?php echo date('M Y', strtotime($result[1]['data_criacao'])) ?></small></p>
             </div><!-- card-body -->
           </div><!-- col-md-8 -->
-          <div class="col-md-4">
-            <img class="image-card" src="<?php echo './painel/' . $result[1]['img'] ?>" alt="<?php echo $result[1]['titulo'] ?>" title="<?php echo $result[2]['titulo'] ?>">
+          <div class="col-md-4 d-none d-md-block">
+            <img class="image-card rounded rounded-md-end" src="<?php echo './painel/' . $result[1]['img'] ?>" alt="<?php echo $result[1]['titulo'] ?>" title="<?php echo $result[2]['titulo'] ?>">
           </div><!-- col-md-4 -->
         </div><!-- row -->
       </div><!-- card -->
@@ -64,18 +64,18 @@ $slides = Slides::listarSlides();
     <a href='<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($result[2]['id']) ?>' class="card-link text-decoration-none">
       <div class="card mb-3" style="height: 225px;">
         <div class="row g-0">
-          <div class="col-md-8">
+          <div class="col-md-8 card-container">
             <div class="card-body">
               <div class="d-flex align-items-end justify-content-between">
                 <h5 class="card-title"><?php echo $result[2]['titulo'] ?></h5>
                 <strong class="d-inline-block mb-2 text-primary-emphasis"><?php echo $result[2]['tipo'] ? $result[2]['tipo'] : 'Notícias' ?></strong>
               </div><!-- d-flex -->
               <p class="card-text img-card-truncate"><?php echo $result[2]['descricao'] ?>...</p>
-              <p class="card-text"><small class="text-body-secondary"><?php echo date('d/m/Y', strtotime($result[2]['data_criacao'])) ?></small></p>
+              <p class="card-text"><small class="text-body-secondary"><?php echo date('M Y', strtotime($result[2]['data_criacao'])) ?></small></p>
             </div><!-- card-body -->
           </div><!-- col-md-8 -->
-          <div class="col-md-4">
-            <img class="image-card" src="<?php echo './painel/' . $result[2]['img'] ?>" alt="<?php echo $result[1]['titulo'] ?>" title="<?php echo $result[2]['titulo'] ?>">
+          <div class="col-md-4 d-none d-md-block">
+            <img class="image-card img-fluid rounded rounded-md-end" src="<?php echo './painel/' . $result[2]['img'] ?>" alt="<?php echo $result[1]['titulo'] ?>" title="<?php echo $result[2]['titulo'] ?>">
           </div><!-- col-md-4 -->
         </div><!-- row -->
       </div><!-- card -->

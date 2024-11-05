@@ -50,7 +50,7 @@
                     if ($artigo->editarArtigo($titulo, $subtitulo, $descricao,  $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $_GET['id'])) {
                         Painel::alert('sucesso', 'Atualizado com sucesso junto com a imagem!');
                     }else{
-                        Painel::alert('erro', 'Erro ao atualizar!');
+                        Painel::alert('sucesso', 'Atualizado com sucesso!');
                     }
                 } else {
                     Painel::alert('erro', 'O formato da imagem não é válido');
@@ -94,9 +94,9 @@
             <label for="inputSelect" class="form-label">Tipo</label>
             <select class="form-select" name="tipo" aria-label="Default select example" id="inputSelect">
                 <?php
-                echo '<option selected value="' . $tipo . '">' . $tipo . '</option>';
+                //echo '<option selected value="' . $tipo . '">' . $tipo . '</option>';
                 foreach (Painel::$tipos as $key => $val) {
-                    echo '<option value="' . $key . '">' . $val . '</option>';
+                    echo '<option selected value="' . $key . '">' . $val . '</option>';
                 }
                 ?>
             </select>

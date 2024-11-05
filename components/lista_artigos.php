@@ -10,22 +10,32 @@
         switch ($url) {
             case 'mundo':
                 $artigo = Artigos::listarArtigosCategoria('mundo');
+                if (!$artigo) {
+                    echo '<h3 class="text-center">Nenhum artigo encontrado</h3>';
+                }
                 break;
             case 'brasil':
                 $artigo = Artigos::listarArtigosCategoria('brasil');
+                if (!$artigo) {
+                    echo '<h3 class="text-center">Nenhum artigo encontrado</h3>';
+                }
                 break;
             case 'ti':
                 $artigo = Artigos::listarArtigosCategoria('programacao');
+                if (!$artigo) {
+                    echo '<h3 class="text-center">Nenhum artigo encontrado</h3>';
+                }
                 break;
             case 'programacao':
                 $artigo = Artigos::listarArtigosCategoria('programacao');
+                if (!$artigo) {
+                    echo '<h3 class="text-center">Nenhum artigo encontrado</h3>';
+                }
                 break;
             case 'curiosidades':
-                if (isset($artigo)) {
-                    $artigo = Artigos::listarArtigosCategoria('curiosidades');
-                } else {
-                    echo '<div class="alert alert-danger p-2"><h3>Não há artigos cadastrados nesta categoria!</h3><p></p></div>';
-                    $artigo = [];
+                $artigo = Artigos::listarArtigosCategoria('curiosidades');
+                if (!$artigo) {
+                    echo '<h3 class="text-center">Nenhum artigo encontrado</h3>';
                 }
                 break;
             default:

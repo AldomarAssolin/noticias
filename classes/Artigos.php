@@ -7,7 +7,7 @@ class Artigos
     //buscar artigo individual
     public static function pegarArtigo($id)
     {
-        $sql = MySql::prepare("SELECT u.id, u.nome, a.id, a.titulo, a.subtitulo, a.descricao, a.categoria, a.tipo, a.conteudo, a.img, a.usuario_id, a.data_criacao, a.data_atualizacao 
+        $sql = MySql::prepare("SELECT u.id, u.nome, u.img AS avatar, a.id, a.titulo, a.subtitulo, a.descricao, a.categoria, a.tipo, a.conteudo, a.img, a.usuario_id, a.data_criacao, a.data_atualizacao 
                                     FROM `tb_site.artigos` AS a
                                     JOIN `tb_admin.usuarios` u
                                     ON a.usuario_id = u.id
@@ -45,7 +45,7 @@ class Artigos
     //retorna todos os artigos com o nome do autor
     public static function listarArtigosComAutores()
     {
-        $sql = MySql::connect()->prepare("SELECT u.nome AS autor, u.img, a.id, a.titulo, a.data_criacao 
+        $sql = MySql::connect()->prepare("SELECT u.nome AS autor, u.img AS avatar, a.id, a.titulo, a.data_criacao, a.img AS capa
                                            FROM `tb_site.artigos` a 
                                            JOIN `tb_admin.usuarios` u ON a.usuario_id = u.id 
                                            WHERE a.usuario_id = u.id
@@ -59,7 +59,7 @@ class Artigos
     public static function listarArtigosAutor($id)
     {
         try {
-            $sql = MySql::prepare("SELECT u.nome, u.img, a.id, a.titulo, a.data_criacao 
+            $sql = MySql::prepare("SELECT  u.nome AS autor, u.img AS avatar, a.id, a.titulo, a.subtitulo, a.data_criacao, a.img AS capa
                                     FROM `tb_site.artigos` a 
                                     JOIN `tb_admin.usuarios` u ON a.usuario_id = u.id 
                                     WHERE a.usuario_id = ? 
@@ -81,7 +81,7 @@ class Artigos
 
     public static function deletarArtigo($id)
     {
-        $sql = MySql::connect()->prepare("DELETE img FROM `tb_site.artigos` WHERE id = ?");
+        $sql = MySql::connect()->prepare("DELETE FROM `tb_site.artigos` WHERE id = ?");
         $sql->execute(array($id));
     }
 

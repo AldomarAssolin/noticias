@@ -52,7 +52,7 @@
 
     ?>
     <div class="container">
-        <form method="post" enctype="multipart/form-data" class="row g-3 mt-2 mt-md-5">
+        <form method="post" enctype="multipart/form-data" class="row g-3 mt-2 mt-md-5  px-3 py-5 shadow">
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Usuário</label>
                 <input type="text" class="form-control" id="inputEmail4" name="user">

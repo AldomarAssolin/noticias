@@ -30,7 +30,7 @@
                     <?php foreach ($artigos as $artigo) { ?>
                         <tr>
                             <td>
-                                <img src="<?php echo htmlspecialchars($artigo['img']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
+                                <img src="<?php echo htmlspecialchars($artigo['avatar']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
                                 <?php echo htmlspecialchars($artigo['autor']); ?>
                             </td>
                             <td><?php echo htmlspecialchars($artigo['titulo']); ?></td>

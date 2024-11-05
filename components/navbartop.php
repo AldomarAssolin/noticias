@@ -4,12 +4,12 @@
             <div class="col-12 col-md-4 pt-1">
                 <div class="px-2">
                     <a class="navbar-brand text-uppercase d-flex justify-content-center align-items-end" href="<?php echo INCLUDE_PATH ?>">
-                        <img src="<?php echo INCLUDE_PATH ?>/static/images/logo_black-recort.png" alt="Logo do Site" width="160" height="40">
+                        <img src="<?php echo INCLUDE_PATH ?>/static/images/logomarca.png" alt="Logo do Site" width="160" height="40">
                     </a>
                 </div>
             </div>
             <div class="col-md-8 d-none d-md-flex justify-content-center align-items-end">
-                <a class="blog-header-logo text-body-emphasis  text-decoration-none" href="<?php echo INCLUDE_PATH ?>">Notícias</a>
+                <a class="blog-header-logo text-body-emphasis  text-decoration-none" href="<?php echo INCLUDE_PATH ?>">Blog</a>
             </div>
         </div>
     </div>

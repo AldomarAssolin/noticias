@@ -4,7 +4,7 @@
 <div class="col-md-9">
 
   <?php
-  include('./components/artigo_page.php');
+  include('./components/artigo.php');
   ?>
 </div>
 

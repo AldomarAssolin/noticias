@@ -20,7 +20,7 @@
 
 
 foreach ($totalUsuariosCadastrados as $key => $value) {
- 
+
                 ?>
                     <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
 
@@ -34,7 +34,7 @@ foreach ($totalUsuariosCadastrados as $key => $value) {
                             
                             <?php echo $value['nome'] ?>
                         </th>
-                        <td class="text-end"><?php echo $value['cargo'] ?></td>
+                        <td class="text-end"><?php echo Painel::$cargos[$value['cargo']] ?></td>
                         <td class='text-end'>
                             <a href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo $value['id'] ?>" class='btn btn-primary btn-sm my-1 my-md-0'>
                                 <svg class='bi'>

@@ -3,11 +3,17 @@
 // Pega o ID do autor através de $_GET
 $id = $_GET['id'];  // Aqui o ID do autor é passado pela URL (lista de usuários)
 
+if (isset($_GET['excluir'])) { // Verifica se o parâmetro excluir foi passado pela URL
+    $idExcluir = intval($_GET['excluir']); // Pega o ID do artigo a ser excluído
+    Artigos::deletarArtigo($idExcluir); // Chama a função excluirArtigo passando o ID do artigo
+    Painel::alert('sucesso', 'Artigo excluído com sucesso!'); // Exibe mensagem de sucesso
+}
+
 // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
 $artigos = Artigos::listarArtigosAutor($id);
 
 
-$titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $artigos[0]['nome'] . '</b>'; // Título da página
+$titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $artigos[0]['autor'] . '</b>'; // Título da página
 
 ?>
 
@@ -44,7 +50,7 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
 
                     <tr>
                         <td>
-                        <img src="<?php echo htmlspecialchars($value['img']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
+                        <img src="<?php echo htmlspecialchars($value['avatar']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
                         </td> <!-- Nome do autor do artigo -->
                         <td><?php echo $value['titulo']; ?></td> <!-- Título do artigo -->
                         <td><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></td> <!-- Data de criação formatada -->
