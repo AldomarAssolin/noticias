@@ -1,20 +1,19 @@
+//atualiza a pagina sem recarregar
+function atualizaPagina(){
+    location.reload();
+}
+
+//atualizaPagina();
 
 
-
-//Funcao para tabs da pagina de artigo_page
-document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('.nav_link_autor');
-    const cardBodies = document.querySelectorAll('.page');
-
-    navLinks.forEach((link, index) => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            cardBodies.forEach(body => body.style.display = 'none');
-            cardBodies[index].style.display = 'block';
-        });
+//atribuindo URL às imagens do editor.
+function getImgUrl(){
+    const images = document.querySelectorAll('.conteudo img');
+    images.forEach(img => {
+        const attr = img.getAttribute('src');
+        img.setAttribute('src', 'painel/' + attr);
     });
+}
 
-    // Initially show the first card body
-    cardBodies.forEach((body, index) => body.style.display = index === 0 ? 'block' : 'none');
-});
+window.onload = getImgUrl;
 

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="pt-br" data-bs-theme="auto">
 
@@ -19,25 +18,35 @@
     ?>
     <div class="container login">
         <?php
-        
+
         if (isset($_POST['acao'])) {
             $user = $_POST['user'];
             $password = $_POST['password'];
             $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE user = ? AND senha = ?");
             $sql->execute(array($user, $password));
-            if($sql->rowCount() == 1) {
+            if ($sql->rowCount() == 1) {
                 $info = $sql->fetch();
-                $_SESSION['login'] = true;
-                $_SESSION['id'] = $info['id'];
-                $_SESSION['user'] = $user;
-                $_SESSION['password'] = $password;
-                $_SESSION['cargo'] = $info['cargo'];
-                $_SESSION['nome'] = $info['nome'];
-                $_SESSION['img'] = $info['img'];
-                $_SESSION['logado'] = true;
-                header('Location: ' .INCLUDE_PATH_PAINEL);
-                echo '<div class="alert alert-success">Logado com sucesso!</div>';
-                die();
+                $_SESSION['status'] = $info['status'];
+
+                if ($_SESSION['status'] > 0) {
+                    $_SESSION['login'] = true;
+                    $_SESSION['id'] = $info['id'];
+                    $_SESSION['user'] = $user;
+                    $_SESSION['password'] = $password;
+                    $_SESSION['cargo'] = $info['cargo'];
+                    $_SESSION['nome'] = $info['nome'];
+                    $_SESSION['img'] = $info['img'];
+                    $_SESSION['logado'] = true;
+
+                    header('Location: ' . INCLUDE_PATH);
+                    echo '<div class="alert alert-success">Logado com sucesso!</div>';
+                    die();
+                } else {
+                    $_SESSION['login'] = false;
+                    echo '<div class="alert alert-danger">Usuário não encontrado!</div>';
+                    header('Location: ' . INCLUDE_PATH . 'login');
+                    die();
+                }
             } else {
                 echo '<div class="alert alert-danger">Usuário ou senha incorretos!</div>';
             }

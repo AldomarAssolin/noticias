@@ -2,7 +2,7 @@
     <?php
 
     ?>
-    <ul class="list-unstyled">
+    <ul class="list-unstyled px-2">
         <?php
 
         $url = $_GET['url'];
@@ -43,19 +43,42 @@
                 break;
         }
 
+
         foreach ($artigo as $key => $value) {
         ?>
-            <li>
-                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                    href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>">
-                    <div class="col-lg-3 m-auto">
-                        <img src="<?php echo './painel/' . $value['img'] ?>" alt="imagem descritiva" class="img-card-list">
-                    </div>
-                    <div class="col-lg-9">
-                        <span class="badge rounded-pill mb-2 text-bg-primary"><?php echo $value['categoria'] ? $value['categoria'] : 'mundo' ?></span>
-                        <h6 class="mb-0"><?php echo $value['titulo'] ?></h6>
-                        <small class="text-body-secondary"><?php echo date('M y', strtotime($value['data_criacao'])); ?></small>
-                    </div>
+            <li class="p-2 border-top">
+                <a class="py-3 mb-2 link-body-emphasis text-decoration-none" href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>">
+                    <div class="card mb-2 border-0 d-flex flex-column flex-lg-row align-items-center">
+                        <div class="col-lg-3 px-2 mb-2 mb-md-0">
+                            <img src="<?php echo INCLUDE_PATH_PAINEL . $value['capa'] ?>" alt="imagem descritiva" width="200" height="200">
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="mb-0"><?php echo $value['titulo'] ?></h6>
+                                    </div><!--col-->
+                                    <div class="col-6 text-end">
+                                        <span class="badge rounded-pill mb-2 text-bg-primary"><?php echo $value['categoria'] ? $value['categoria'] : 'mundo' ?></span>
+                                    </div><!--col-->
+                                </div><!--row-->
+                            </div>
+                            <div class="card-body">
+                                <p class="text-body-secondary mt-2"><?php echo $value['subtitulo'] ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <img src="<?php echo INCLUDE_PATH_PAINEL . $value['avatar'] ?>" alt="imagem descritiva" class="rounded-circle" width="16" height="16">
+                                        <span class="fs-6 fst-italic"><?php echo $value['autor'] ?></span>
+                                    </div><!--col-->
+                                    <div class="col-6 text-end">
+                                        <small class="text-body-secondary"><?php echo date('M y', strtotime($value['data_criacao'])); ?></small>
+                                    </div><!--col-->
+                                </div><!--row-->
+                            </div><!--card-footer-->
+                        </div><!--col-9-->
+                    </div><!--card-->
                 </a>
             </li>
         <?php

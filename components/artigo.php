@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
 </div> 
 -->
 
-<section class="px-4 pt-2 my-5 border-bottom">
+<section class="px-4 pt-2 my-5 border-bottom  bg-body-secondary">
     <div class="text-center">
         <h3>
             <span class="badge text-bg-secondary">
@@ -56,7 +56,7 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 
-    <div class="my-5">
+    <div class="conteudo my-5">
         <?php echo $artigo['conteudo'] ?>
     </div>
 

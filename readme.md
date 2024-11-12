@@ -1,11 +1,11 @@
 
-# Site de Notícias
+# BLOG
 
-Bem-vindo ao repositório do Site de Notícias!
+Bem-vindo ao repositório do BLOG!
 
 ## Descrição
 
-Este projeto é um site de notícias desenvolvido para fornecer as últimas atualizações e artigos sobre diversos tópicos. O objetivo é criar uma plataforma informativa e fácil de usar para os leitores.
+Este projeto é um blog desenvolvido para fornecer as últimas atualizações e artigos sobre diversos tópicos. O objetivo é criar uma plataforma informativa e fácil de usar para os leitores.
 
 ## Funcionalidades
 

@@ -3,13 +3,18 @@
         Site::updateUsusarioOnline();
         
         $usuariosOnline = Painel::listarUsuariosOnline();
-        $totalUsuariosCadastrados = Painel::listarUsuariosCadastrado();
         $totalDeVisitas = Painel::totalDeVisitas();
         $VisitasDoDia = Painel::VisitasDoDia();
+        $totalUsuariosCadastrados = Painel::listarUsuariosCadastrado();
+        $usuariosDesativados = Usuario::listarUsuariosDesativados();
 
-        include('./components/cardCPainel.php');
-        include('./components/cardOnlineUsers.php');
-        include('./components/cardUserPainel.php');
+        if($_SESSION['cargo'] >= 1){
+                include('./components/cardCPainel.php');
+                include('./components/cardOnlineUsers.php');
+                include('./components/cardUserPainel.php');
+                include('./components/usuarios_desativados.php');
+        }
+        
 
         ?>
 

@@ -22,18 +22,18 @@
                     <path d="M21 21l-5.2-5.2" />
                 </svg>
             </a>
+            <a class="blog-header text-body-emphasis  text-decoration-none mx-2" href="<?php echo INCLUDE_PATH ?>about">Sobre</a>
             <?php
-            try {
-                if (isset($_SESSION['online']) == false) {
-                    echo '<a class="link-secondary" href="' . INCLUDE_PATH_PAINEL . '">Entrar</a>';
-                } else {
-                    echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
-                    echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '?loggout">Sair</a>';
-                    echo '<a><img class="rounded-circle" width="32" height="32" src="' . INCLUDE_PATH_PAINEL . $_SESSION['img'] . '" alt="Imagem do perfil"></a>';
+            if (isset($_SESSION['login']) == false) {
+                echo '<a class="link-secondary" href="' . INCLUDE_PATH_PAINEL . '">Entrar</a>';
+            } else {
+                if($_SESSION['cargo'] >= 1){
+                echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
                 }
-            } catch (Exception $e) {
-                echo 'ERRO'; //'<a class="link-secondary" href="' . INCLUDE_PATH_PAINEL . '">Entrar</a>';
+                echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '?loggout">Sair</a>';
+                echo '<a href="'. INCLUDE_PATH . 'perfil"><img class="rounded-circle" width="32" height="32" src="' . INCLUDE_PATH_PAINEL . $_SESSION['img'] . '" alt="Imagem do perfil"></a>';
             }
+
             ?>
         </div>
     </div>

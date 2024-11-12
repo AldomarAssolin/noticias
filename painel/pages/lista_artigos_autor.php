@@ -1,17 +1,59 @@
 <?php
 
-// Pega o ID do autor através de $_GET
-$id = $_GET['id'];  // Aqui o ID do autor é passado pela URL (lista de usuários)
 
-if (isset($_GET['excluir'])) { // Verifica se o parâmetro excluir foi passado pela URL
-    $idExcluir = intval($_GET['excluir']); // Pega o ID do artigo a ser excluído
-    Artigos::deletarArtigo($idExcluir); // Chama a função excluirArtigo passando o ID do artigo
-    Painel::alert('sucesso', 'Artigo excluído com sucesso!'); // Exibe mensagem de sucesso
-}
+// Pega o ID do autor através de $_GET
+$id = $_GET['id'];
+
+$url = INCLUDE_PATH_PAINEL . 'lista_artigos_autor?id=' . $id;
+
+?>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="excluirArtigo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <?php
+    //Exibe alerta de sucesso ou erro ao excluir categoria 
+    try {
+
+        if (isset($_GET['excluir']) && isset($_GET['idArtigo']) && $_GET['excluir'] == 'ok') {
+            $idArtigo = intval($_GET['idArtigo']);
+            $id = intval($_GET['id']);
+
+            if (http_response_code() >= 200 && http_response_code() < 300) {
+                Artigos::deletarArtigo($idArtigo, $id);
+                Painel::redirect(INCLUDE_PATH_PAINEL . $_GET['url'] . '?id=' . $id);
+            }
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    ?>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Tem certeza que deseja excluir?</h1>
+                <a href="<?php echo INCLUDE_PATH_PAINEL . $_GET['url'] . '?id=' . $_GET['id'] ?>" class="btn-close"></a>
+            </div>
+            <div class="modal-body">
+                <p>Essa ação não poderá ser desfeita!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <!-- Link para exclusão que será atualizado com o ID via JS -->
+                <a id="confirmExcluir" class="btn btn-danger">Excluir</a>
+            </div>
+        </div><!--modal-content-->
+    </div><!--modal-dialog-->
+</div><!-- Modal de confirmação -->
+<!-- Modal de confirmação -->
+
+
+<?php
+
 
 // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
 $artigos = Artigos::listarArtigosAutor($id);
-
 
 $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $artigos[0]['autor'] . '</b>'; // Título da página
 
@@ -50,23 +92,40 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
 
                     <tr>
                         <td>
-                        <img src="<?php echo htmlspecialchars($value['avatar']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
+                            <img src="<?php echo htmlspecialchars($value['avatar']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
                         </td> <!-- Nome do autor do artigo -->
                         <td><?php echo $value['titulo']; ?></td> <!-- Título do artigo -->
                         <td><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></td> <!-- Data de criação formatada -->
                         <td class='text-end'>
                             <!-- Botão para editar artigo -->
-                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $value['id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
+                            <a title="Atualizar artigo" href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $value['id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
                                 <svg class='bi'>
                                     <use xlink:href='#pencil' />
                                 </svg>
                             </a>
-                            <!-- Botão para excluir artigo -->
-                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?excluir=<?php echo $value['id']; ?>' class="btn btn-danger btn-sm my-1 my-md-0">
-                                <svg class='bi'>
-                                    <use xlink:href='#trash' />
-                                </svg>
-                            </a>
+
+                            <?php
+                            if ($value['status'] == 1) {
+                            ?>
+                                <!-- Botão para excluir artigo -->
+                                <button title="Excluir artigo" type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigo" data-idArtigo="<?php echo $value['id']; ?>" data-id="<?php echo $_GET['id']; ?>">
+                                    <svg class='bi'>
+                                        <use xlink:href='#trash' />
+                                    </svg>
+                                </button>
+                            <?php
+                            } else {
+                            ?>
+                                <!-- Botão para ativar artigo -->
+                                <button title="Ativar artigo" type="button" class="btn btn-success btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigo" data-idArtigo="<?php echo $value['id']; ?>" data-id="<?php echo $_GET['id']; ?>">
+                                    <svg class='bi'>
+                                        <use xlink:href='#file-earmark' />
+                                    </svg>
+                                </button>
+
+                            <?php
+                            }
+                            ?>
                         </td>
                     </tr>
 
@@ -78,3 +137,18 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
         </table>
     </div>
 </section>
+
+<script>
+    // Quando o modal é acionado, atualiza o link de confirmação com o ID correto
+    const modalExcluirLinks = document.querySelectorAll('.btn-danger[data-bs-target="#excluirArtigo"');
+    modalExcluirLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            const artigoId = link.getAttribute('data-idArtigo');
+            const usuarioID = link.getAttribute('data-id');
+            const confirmLink = document.getElementById('confirmExcluir');
+            confirmLink.setAttribute('href', '<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?excluir=ok&idArtigo=' + artigoId + '&id=' + usuarioID);
+            console.log(confirmLink);
+            console.log(categoriaId);
+        });
+    });
+</script>

@@ -46,6 +46,26 @@
 			return $info['cargo'];
 		}
 
+		//deletar usuario
+		public static function deletarUsuario($id){
+			$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET status = 0 WHERE id = ?");
+			$sql->execute(array($id));
+		}
+
+		public static function listarUsuariosDesativados()
+    {
+        //self::limparUsuariosOnline();
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE status = 0");
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
+    public static function ativarUsuario($id)
+    {
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET status = 1 WHERE id = ?");
+        $sql->execute(array($id));
+    }
+
 	}
 
 ?>

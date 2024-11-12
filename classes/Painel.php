@@ -72,6 +72,12 @@ class Painel
         }
     }
 
+    public static function redirect($url)
+    {
+        echo '<script>location.href="' . $url . '"</script>';
+        die();
+    }
+
     public static function listarUsuariosOnline()
     {
         self::limparUsuariosOnline();
@@ -89,7 +95,7 @@ class Painel
     public static function listarUsuariosCadastrado()
     {
         //self::limparUsuariosOnline();
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios`");
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE status = 1");
         $sql->execute();
         return $sql->fetchAll();
     }

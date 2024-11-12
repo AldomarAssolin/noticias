@@ -51,7 +51,7 @@ class Site
             $ip = $_SERVER['REMOTE_ADDR'];
             $agora = date('Y-m-d H:i:s');
             $usuario_id = $_SESSION['id'];
-            //$expira = date('Y-m-d H:i:s',strtotime('+5 minutes',strtotime($agora)));
+            $expira = date('Y-m-d H:i:s',strtotime('+5 minutes',strtotime($agora)));
             $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.online` VALUES (null,?,?,?,?)");
             $sql->execute(array($ip, $agora, $usuario_id, $token));
         }

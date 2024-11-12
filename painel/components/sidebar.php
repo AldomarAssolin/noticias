@@ -56,6 +56,14 @@
                     Slides
                   </a>
                 </li>
+                <li class="nav-item shadow">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_sobre">
+                    <svg class="bi">
+                      <use xlink:href="#file-earmark" />
+                    </svg>
+                    Sobre
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -131,7 +139,7 @@
           <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body px-0">
               <ul class="nav flex-column">
-              <li class="nav-item shadow">
+                <li class="nav-item shadow">
                   <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_artigo">
                     <svg class="bi">
                       <use xlink:href="#file-earmark" />

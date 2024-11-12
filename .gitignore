@@ -1,0 +1,50 @@
+
+# Ignore the XAMPP specific files
+/xamppfiles/
+
+# Ignore the local environment configuration files
+.env
+.env.local
+.env.*.local
+
+# Ignore the node_modules directory
+node_modules/
+
+# Ignore log files and directories
+logs/
+*.log
+
+# Ignore temporary files and directories
+tmp/
+temp/
+*.tmp
+
+# Ignore compiled files
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore Composer dependencies
+/vendor/
+
+# Ignore Laravel specific files
+/public/storage
+/storage/*.key
+/storage/*.log
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*

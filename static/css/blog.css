@@ -45,9 +45,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .img-card-list {
   width: 100%;
-  max-height: 100px;
+  height: 100%;
   margin: auto;
-  object-fit: fill;
+  object-fit: contain;
   object-position: center;
   -webkit-object-fit: cover; /* For Safari */
   -moz-object-fit: cover; /* For Firefox */
@@ -73,14 +73,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .image-card {
   width: 100%;
-  height: 220px;
+  height: 100%;
+  max-height: 150px;
   margin: auto;
   object-fit: fill;
   object-position: center;
-  -webkit-object-fit: cover; /* For Safari */
-  -moz-object-fit: cover; /* For Firefox */
-  -o-object-fit: cover; /* For older Opera versions */
-  -ms-object-fit: cover; /* For Internet Explorer */
+  -webkit-object-fit: fill; /* For Safari */
+  -moz-object-fit: fill; /* For Firefox */
+  -o-object-fit: fill; /* For older Opera versions */
+  -ms-object-fit: fill; /* For Internet Explorer */
   -webkit-object-position: center; /* For Safari */
   -moz-object-position: center; /* For Firefox */
   -o-object-position: center; /* For older Opera versions */
@@ -95,6 +96,14 @@ h1, h2, h3, h4, h5, h6 {
 .slide-home{
   height: 25vh;
 }
+
+pre{
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  padding: 1.5rem;
+  border-radius: .75rem;
+}
+
 
 @media (min-width: 768px) {
   .h-md-250 { height: 250px; }

@@ -3,18 +3,8 @@
 $id = $_GET['id'];
 
 $artigos = Artigos::listarArtigosAutor($id);
-//var_dump($artigos);
 
 ?>
-
-<!-- <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light"><?php echo $artigos[0]['autor'] ?></h1>
-        <p class="lead text-body-secondary">Veja os melhores artigos do autor.</p>
-      </div>
-    </div>
-  </section> -->
 
 <div class="container my-5">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">

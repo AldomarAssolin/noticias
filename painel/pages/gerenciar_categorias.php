@@ -9,8 +9,57 @@
     </div>
 </div>
 
+<!-- Modal de confirmação -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<?php
+//Exibe alerta de sucesso ou erro ao excluir categoria 
+var_dump(http_response_code());
+try	{
+    if (isset($_GET['excluir-categoria']) && isset($_GET['id']) && $_GET['excluir-categoria'] == 'ok') {
+        $id = intval($_GET['id']);
+        if (http_response_code() >= 200 && http_response_code() < 300) {
+            Categorias::delete($id);
+        } 
+    }
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+?>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Tem certeza que deseja excluir?</h1>
+                <a href="<?php echo INCLUDE_PATH_PAINEL ?>gerenciar_categorias" class="btn-close"></a>
+            </div>
+            <div class="modal-body">
+                <p>Essa ação não poderá ser desfeita!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <!-- Link para exclusão que será atualizado com o ID via JS -->
+                <a id="confirmExcluir" class="btn btn-danger">Excluir</a>
+            </div>
+        </div><!--modal-content-->
+    </div><!--modal-dialog-->
+</div><!-- Modal de confirmação -->
+<!-- Modal de confirmação -->
+
+
+
+<!-- Tabela de categorias -->
 <div class="table-responsive">
     <table class="table table-striped table-sm">
+        <?php
+
+        ?>
+        <!-- <div class="alert alert-danger" role="alert">
+  A simple danger alert—check it out!
+</div> -->
+        <?php
+
+        ?>
         <thead class="thead-dark">
             <tr class="table-success">
                 <th>#</th>
@@ -20,58 +69,10 @@
         </thead>
         <tbody>
             <?php
-
-
-            // Verifica se o usuário clicou no botão de excluir
-            if (isset($_GET['excluir'])) {
-                $modal = true;
-                $modalID = 
-                $idExcluir = intval($_GET['excluir']);
-                Categorias::delete($idExcluir);
-                Painel::alert('sucesso', 'Categoria excluída com sucesso!');
-            } else if (isset($_GET['order']) && isset($_GET['id'])) {
-                Categorias::orderItem('tb_site.categorias', $_GET['order'], $_GET['id']);
-            }
-
-            
-
-            
-            ?>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir esta categoria?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Se você realmente deseja excluir esta categoria, clique no botão excluir.
-                            <?php var_dump($_GET) ?>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <a href='<?php echo INCLUDE_PATH_PAINEL ?>gerenciar_categorias?excluir=<?php echo $_GET['id'] ?>' class="btn btn-danger">
-                                Excluir
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal -->
-            <?php
-
-
-            //lista as categorias
+            // Lista as categorias
             $categorias = Categorias::listarCategorias();
-
             foreach ($categorias as $key => $value) {
-
-
             ?>
-
-
                 <tr>
                     <td><?php echo $value['id'] ?></td>
                     <td><?php echo $value['nome'] ?></td>
@@ -83,19 +84,29 @@
                             </svg>
                         </a>
                         <!-- Botão para excluir categoria -->
-                        <!-- Button trigger modal -->
-                        <button type="button" onclick="excluir()" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?php echo $value['id']; ?>">
                             <svg class='bi'>
                                 <use xlink:href='#trash' />
                             </svg>
                         </button>
-
                     </td>
                 </tr>
-
             <?php
             }
             ?>
         </tbody>
     </table>
 </div>
+<!-- Tabela de categorias -->
+
+<script>
+    // Quando o modal é acionado, atualiza o link de confirmação com o ID correto
+    const modalExcluirLinks = document.querySelectorAll('.btn-danger[data-bs-toggle="modal"]');
+    modalExcluirLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            const categoriaId = link.getAttribute('data-id');
+            const confirmLink = document.getElementById('confirmExcluir');
+            confirmLink.setAttribute('href', '<?php echo INCLUDE_PATH_PAINEL ?>gerenciar_categorias?excluir-categoria=ok&id=' + categoriaId);
+        });
+    });
+</script>

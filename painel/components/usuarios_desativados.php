@@ -1,14 +1,14 @@
 <!-- Modal de confirmação -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ativarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
     <?php
     //Exibe alerta de sucesso ou erro ao excluir categoria 
     var_dump(http_response_code());
     try {
-        if (isset($_GET['excluir']) && isset($_GET['id']) && $_GET['excluir'] == 'ok') {
+        if (isset($_GET['ativar']) && isset($_GET['id']) && $_GET['ativar'] == 'ok') {
             $id = intval($_GET['id']);
             if (http_response_code() >= 200 && http_response_code() < 300) {
-                Usuario::deletarUsuario($id);
+                Usuario::ativarUsuario($id);
             }
             Painel::redirect(INCLUDE_PATH_PAINEL);
         }
@@ -20,16 +20,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Tem certeza que deseja excluir?</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Tem certeza que deseja ativar?</h1>
                 <a href="<?php echo INCLUDE_PATH_PAINEL . $_GET['url'] ?>" class="btn-close"></a>
             </div>
             <div class="modal-body">
-                <p>Essa ação não poderá ser desfeita!</p>
+                <p>O usuário será reativado!</p>
+                <p><?php var_dump($_GET)  ?></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <!-- Link para exclusão que será atualizado com o ID via JS -->
-                <a id="confirmExcluir" class="btn btn-danger">Excluir</a>
+                <a id="confirmAtivar" class="btn btn-danger">Ativar</a>
             </div>
         </div><!--modal-content-->
     </div><!--modal-dialog-->
@@ -45,7 +46,7 @@
             <svg class="bi">
                 <use xlink:href="#people" />
             </svg>
-            <span class="mx-2 lead">Usuários do Painel</span>
+            <span class="mx-2 lead">Usuários Desativados</span>
         </h6>
         <table class="table my-3">
             <thead>
@@ -60,7 +61,7 @@
 
 
 
-                foreach ($totalUsuariosCadastrados as $key => $value) {
+                foreach ($usuariosDesativados as $key => $value) {
 
                 ?>
                     <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
@@ -87,10 +88,11 @@
                                     <use xlink:href='#pencil' />
                                 </svg>
                             </a>
-                            <!-- Botão para excluir categoria -->
-                            <button title="Excluir usuário" type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?php echo $value['id']; ?>">
-                                <svg class='bi'>
-                                    <use xlink:href='#trash' />
+                            <!-- Botão para ativar usuario -->
+                            <button type="button" class="modal-ativar btn btn-success btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#ativarUsuario" data-id="<?php echo $value['id']; ?>" title="Ativar usuário" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+                                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                                 </svg>
                             </button>
                         </td><!--acoes-->
@@ -105,12 +107,12 @@
 
 <script>
     // Quando o modal é acionado, atualiza o link de confirmação com o ID correto
-    const modalExcluirLinks = document.querySelectorAll('.btn-danger[data-bs-target="#exampleModal"');
-    modalExcluirLinks.forEach(link => {
+    const modalAtivarLinks = document.querySelectorAll('.btn-success[data-bs-target="#ativarUsuario"]');
+    modalAtivarLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             const categoriaId = link.getAttribute('data-id');
-            const confirmLink = document.getElementById('confirmExcluir');
-            confirmLink.setAttribute('href', '<?php echo INCLUDE_PATH_PAINEL ?>?excluir=ok&id=' + categoriaId);
+            const confirmLink = document.getElementById('confirmAtivar');
+            confirmLink.setAttribute('href', '<?php echo INCLUDE_PATH_PAINEL ?>?ativar=ok&id=' + categoriaId);
         });
     });
 </script>

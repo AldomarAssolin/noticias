@@ -1,8 +1,5 @@
 <div class="row g-5">
-  <div class="col-md-8">
-    <h3 class="pb-2 fst-italic">
-      Posts mais Recentes
-    </h3>
+  <div class="col-md-8 px-0">
     <?php
     include('./components/navbarCategory.php');
     include('./components/lista_artigos.php');

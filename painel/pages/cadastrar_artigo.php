@@ -38,7 +38,7 @@
                 //Existe o upload de imagem.
                 if (Painel::imagemValida($img)) {
                     $img = Painel::uploadFile($img);
-                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null)) {
+                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null,1)) {
                         Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
                     } else {
                         Painel::alert('sucesso', 'Cadastro efetuado com sucesso!');
@@ -91,7 +91,7 @@
             </div>
             <div class="col-md-12">
                 <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
-                <textarea id="tinymce" class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo"></textarea>
+                <textarea id="editor" class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo"></textarea>
             </div>
             <div class="col-12">
                 <label for="inputAddress" class="form-label">Thumbnail</label>

@@ -1,0 +1,11 @@
+{
+    "authors": [
+        {
+            "name": "Aldomar Assolin",
+            "email": "assolinaldomar@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
