@@ -18,6 +18,7 @@
             </thead>
             <tbody>
             <?php
+            
             foreach ($usuariosOnline as $key => $value) {
             ?>
                 <tr>

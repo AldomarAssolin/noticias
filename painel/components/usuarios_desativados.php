@@ -71,10 +71,10 @@
                             <?php
 
                             ?>
-                            <img src="<?php echo $value['img'] ?>" alt="Imagem Perfil" width="24" height="24"
+                            <img src="<?php echo $value['img'] == NULL ? $imagem : $value['img']?>" alt="Imagem Perfil" width="24" height="24"
                                 class="rounded-circle <?php echo  $value['logado'] == 1 ? 'border-success border-2' : '' ?> img-thumbnail mx-2">
 
-                            <?php echo $value['nome'] ?>
+                            <?php echo $value['nome'] == NULL ? $value['email'] : $value['nome'] ?>
                         </th>
                         <td class="text-end"><?php echo Painel::$cargos[$value['cargo']] ?></td>
                         <td class='text-end'>

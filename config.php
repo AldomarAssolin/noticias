@@ -5,10 +5,8 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $autoload = function ($class) {
     if (file_exists('./classes/' . $class . '.php')) {
-        //var_dump($class);
         include('./classes/' . $class . '.php');
     } else {
-        //var_dump($class);
         include('../classes/' . $class . '.php');
     }
 };

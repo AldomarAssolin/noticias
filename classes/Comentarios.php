@@ -13,7 +13,7 @@ class Comentarios{
     }
 
     public static function listarComentarios($artigo_id){
-        $sql = MySql::connect()->prepare("SELECT u.nome, u.img, c.comentario, c.status, c.data_criacao 
+        $sql = MySql::connect()->prepare("SELECT u.nome, u.img, u.email, c.comentario, c.status, c.data_criacao 
         FROM `tb_site.comentarios` AS c
         JOIN `tb_admin.usuarios` AS u
         WHERE artigo_id = ? 

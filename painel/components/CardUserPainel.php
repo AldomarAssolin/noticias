@@ -2,8 +2,8 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
     <?php
-    //Exibe alerta de sucesso ou erro ao excluir categoria 
-    var_dump(http_response_code());
+    
+
     try {
         if (isset($_GET['excluir']) && isset($_GET['id']) && $_GET['excluir'] == 'ok') {
             $id = intval($_GET['id']);
@@ -57,9 +57,8 @@
             </thead>
             <tbody>
                 <?php
-
-
-
+                $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+                // Exibe os usuários cadastrados
                 foreach ($totalUsuariosCadastrados as $key => $value) {
 
                 ?>
@@ -67,13 +66,10 @@
 
                     <tr>
                         <th scope="row">
-                            <?php
-
-                            ?>
-                            <img src="<?php echo $value['img'] ?>" alt="Imagem Perfil" width="24" height="24"
+                            <img src="<?php echo $value['img'] != NULL ? $value['img'] : $imagem ?>" alt="Imagem Perfil" width="32" height="32"
                                 class="rounded-circle <?php echo  $value['logado'] == 1 ? 'border-success border-2' : '' ?> img-thumbnail mx-2">
 
-                            <?php echo $value['nome'] ?>
+                            <?php echo $value['nome'] != NULL ? $value['nome'] : $value['email'] ?>
                         </th>
                         <td class="text-end"><?php echo Painel::$cargos[$value['cargo']] ?></td>
                         <td class='text-end'>

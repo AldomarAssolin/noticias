@@ -92,13 +92,7 @@ class Painel
         $sql = MySql::connect()->exec("DELETE FROM `tb_admin.online` WHERE ultima_acao < '$date' - INTERVAL 1 MINUTE");
     }
 
-    public static function listarUsuariosCadastrado()
-    {
-        //self::limparUsuariosOnline();
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE status = 1");
-        $sql->execute();
-        return $sql->fetchAll();
-    }
+
 
     public static function totalDeVisitas()
     {
@@ -117,9 +111,11 @@ class Painel
     public static function alert($tipo, $mensagem)
     {
         if ($tipo == 'sucesso') {
-            echo '<div class="alert alert-success">' . $mensagem . '</div>';
+            echo'<div id="alert" class="alert alert-success alert-dismissible fade show row"><div class="col-10">' . $mensagem .  '</div><div class="col-2 text-end"><button type="button" id="btn-alert-close" class="btn close" data-dismiss="alert"><i class="bi bi-x-sm"></i></button></div></div>
+';
         } else if ($tipo == 'erro') {
-            echo '<div class="alert alert-danger">' . $mensagem . '</div>';
+            echo'<div id="alert" class="alert alert-success alert-dismissible fade show row"><div class="col-10">' . $mensagem .  '</div><div class="col-2 text-end"><button type="button" id="btn-alert-close" class="btn close" data-dismiss="alert"><i class="bi bi-x-sm"></i></button></div></div>
+';
         }
     }
 
@@ -183,5 +179,4 @@ class Painel
             echo Painel::alert('erro', 'Erro ao verificar usuário online!');
         }
     }
-
 }

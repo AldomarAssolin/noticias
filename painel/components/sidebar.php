@@ -19,7 +19,7 @@
         <img class="rounded-circle img-thumbnail" width="120" height="120" src="<?php echo $_SESSION['img'] ?>" alt="Imagem do perfil">
 
         <div class="mt-3">
-          <h4><?php echo $_SESSION['nome'] ?></h4>
+          <h4><?php echo $_SESSION['nome'] ? $_SESSION['nome'] : $_SESSION['user'] ?></h4>
           <p class="text-secondary mb-1"><?php echo pegaCargo($_SESSION['cargo']) ?></p>
         </div>
       </div>

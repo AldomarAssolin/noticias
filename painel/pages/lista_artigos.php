@@ -74,7 +74,7 @@
                         <tr>
                             <td>
                                 <img src="<?php echo htmlspecialchars($artigo['avatar']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
-                                <?php echo htmlspecialchars($artigo['autor']); ?>
+                                <span class="fs-6"><?php echo htmlspecialchars($artigo['autor']); ?></span>
                             </td>
                             <td><?php echo htmlspecialchars($artigo['titulo']); ?></td>
                             <td><?php echo date('d/m/Y', strtotime($artigo['data_criacao'])); ?></td>

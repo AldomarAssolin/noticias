@@ -1,10 +1,8 @@
+
 //atualiza a pagina sem recarregar
 function atualizaPagina(){
     location.reload();
 }
-
-//atualizaPagina();
-
 
 //atribuindo URL às imagens do editor.
 function getImgUrl(){

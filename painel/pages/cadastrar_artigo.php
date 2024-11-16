@@ -12,14 +12,12 @@
 
     <?php
 
-    //var_dump($_SESSION['user']);
-    $sql = MySql::connect()->prepare("SELECT id FROM `tb_admin.usuarios` WHERE user = ?");
-    $sql->execute(array($_SESSION['user']));
+    $sql = MySql::connect()->prepare("SELECT id FROM `tb_admin.usuarios` WHERE id = ?");
+    $sql->execute(array($_SESSION['id']));
     $value = $sql->fetch();
 
-    if ($value) { // Verifica se um resultado foi encontrado
-        //var_dump($_POST);
-        //var_dump($value['id']);
+    // Verifica se um resultado foi encontrado
+    if ($value) {
 
         if (isset($_POST['acao'])) {
             $titulo = $_POST['titulo'];
@@ -33,12 +31,17 @@
             $usuario_id = $value['id'];
 
             $artigo = new Artigos();
-            if ($img['name'] != '') {
 
+            if($titulo == '' || $subtitulo == '' || $descricao == '' || $conteudo == ''){
+                Painel::alert('erro', 'Campos vazios não são permitidos!');
+            }
+
+            if ($img['name'] != '') {
+                Painel::deleteFile($img);
                 //Existe o upload de imagem.
                 if (Painel::imagemValida($img)) {
                     $img = Painel::uploadFile($img);
-                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null,1)) {
+                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null, 1)) {
                         Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
                     } else {
                         Painel::alert('sucesso', 'Cadastro efetuado com sucesso!');
@@ -47,7 +50,7 @@
                     Painel::alert('erro', 'O formato da imagem não é válido');
                 }
             } else {
-                Painel::alert('erro', 'Alguma coisa deu errado');
+                Painel::alert('erro', 'Por favor, insira uma imagem!');
             }
         }
     }

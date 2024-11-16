@@ -28,7 +28,9 @@ Site::contador();
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 
+
   <link href="<?php echo URL_STATIC ?>css/blog.css" rel="stylesheet">
+  <link href="<?php echo URL_STATIC ?>css/css.css" rel="stylesheet">
 
 </head>
 
@@ -56,12 +58,21 @@ Site::contador();
   include('./commons/footer.php')
   ?>
 
+  <script>
+    setTimeout(function() {
+      $('.alert').alert('close');
+      $('#btn-alert-close').click(function() {
+        $('.alert').alert('close');
+      });
+    }, 5000);
+  </script>
 
+
+  <script src="<?php echo INCLUDE_PATH ?>static/js/functions.js"></script>
   <script src="<?php echo INCLUDE_PATH ?>assets/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="<?php echo URL_STATIC ?>/js/functions.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script>
-
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </body>
 
 </html>

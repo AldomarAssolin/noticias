@@ -9,7 +9,7 @@ class Artigos
     //buscar artigo individual
     public static function pegarArtigo($id)
     {
-        $sql = MySql::prepare("SELECT u.id, u.nome, u.img AS avatar, a.id, a.titulo, a.subtitulo, a.descricao, a.categoria, a.tipo, a.conteudo, a.img, a.usuario_id, a.data_criacao, a.data_atualizacao 
+        $sql = MySql::prepare("SELECT u.id, u.nome, u.img AS avatar, u.email, a.id, a.titulo, a.subtitulo, a.descricao, a.categoria, a.tipo, a.conteudo, a.img, a.usuario_id, a.data_criacao, a.data_atualizacao 
                                     FROM `tb_site.artigos` AS a
                                     JOIN `tb_admin.usuarios` u
                                     ON a.usuario_id = u.id
@@ -36,7 +36,7 @@ class Artigos
     public static function listarArtigosCategoria($categoria)
     {
         try {
-            $sql = MySql::prepare("SELECT u.nome AS autor, u.img AS avatar, a.id, a.img AS capa, a.titulo, a.subtitulo, a.descricao, a.categoria, a.data_criacao 
+            $sql = MySql::prepare("SELECT u.nome AS autor, u.img AS avatar, u.email, a.id, a.img AS capa, a.titulo, a.subtitulo, a.descricao, a.categoria, a.data_criacao 
                                     FROM `tb_site.artigos` a
                                     JOIN `tb_admin.usuarios` u ON a.usuario_id = u.id
                                     WHERE categoria = ? 
@@ -52,7 +52,7 @@ class Artigos
     //retorna todos os artigos com o nome do autor
     public static function listarArtigosComAutores()
     {
-        $sql = MySql::connect()->prepare("SELECT u.id AS usuario_id, u.nome AS autor, u.img AS avatar, a.id, a.titulo, a.subtitulo, a.descricao, a.categoria, a.data_criacao, a.img AS capa, a.status
+        $sql = MySql::connect()->prepare("SELECT u.id AS usuario_id, u.nome AS autor, u.img AS avatar, u.email AS email, a.id, a.titulo, a.subtitulo, a.descricao, a.categoria, a.data_criacao, a.img AS capa, a.status
                                            FROM `tb_site.artigos` a 
                                            JOIN `tb_admin.usuarios` u ON a.usuario_id = u.id 
                                            WHERE a.usuario_id = u.id
@@ -66,7 +66,7 @@ class Artigos
     public static function listarArtigosAutor($id)
     {
         try {
-            $sql = MySql::prepare("SELECT  u.nome AS autor, u.img AS avatar, a.id, a.titulo, a.subtitulo, a.data_criacao, a.img AS capa, a.status
+            $sql = MySql::prepare("SELECT  u.nome AS autor, u.img AS avatar, u.email AS email, a.id, a.titulo, a.subtitulo, a.data_criacao, a.img AS capa, a.status
                                     FROM `tb_site.artigos` a 
                                     JOIN `tb_admin.usuarios` u ON a.usuario_id = u.id 
                                     WHERE a.usuario_id = ?

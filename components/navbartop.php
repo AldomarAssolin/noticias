@@ -1,15 +1,36 @@
-<nav class="row border-bottom lh-1 py-2">
+<?php
+
+
+$email = $_SESSION['user'] ?? '';
+$imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+$usuario = new Usuario();
+$UserData = $usuario->buscarUsuario($email);
+
+if($UserData == false){
+    $UserData = [
+        'img' => NULL
+    ];
+}else{
+    $img = $UserData['img'] != NULL ? $UserData['img'] : $imagem;
+    $usuario = $UserData['nome'] ? $UserData['nome'] : $UserData['email'];
+}
+
+
+
+?>
+
+<nav class="row navbar-top border-bottom lh-1 py-2">
     <div class="col-12 col-md-8 mb-2 pb-2 mb-md-0 pb-md-0">
         <div class="row">
             <div class="col-12 col-md-4 pt-1">
                 <div class="px-2">
                     <a class="navbar-brand text-uppercase d-flex justify-content-center align-items-end" href="<?php echo INCLUDE_PATH ?>">
-                        <img src="<?php echo INCLUDE_PATH ?>/static/images/logomarca.png" alt="Logo do Site" width="160" height="40">
+                        <img src="<?php echo INCLUDE_PATH ?>/static/images/logomarca.png" alt="Logo do Site" width="100" height="40">
                     </a>
                 </div>
             </div>
             <div class="col-md-8 d-none d-md-flex justify-content-center align-items-end">
-                <a class="blog-header-logo text-body-emphasis  text-decoration-none" href="<?php echo INCLUDE_PATH ?>">Blog</a>
+                <a class="blog-header-logo text-body-emphasis  text-decoration-none" href="<?php echo INCLUDE_PATH ?>"><?php echo NOME_EMPRESA ?></a>
             </div>
         </div>
     </div>
@@ -27,11 +48,11 @@
             if (isset($_SESSION['login']) == false) {
                 echo '<a class="link-secondary" href="' . INCLUDE_PATH_PAINEL . '">Entrar</a>';
             } else {
-                if($_SESSION['cargo'] >= 1){
-                echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
+                if ($_SESSION['cargo'] >= 1) {
+                    echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
                 }
-                echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '?loggout">Sair</a>';
-                echo '<a href="'. INCLUDE_PATH . 'perfil"><img class="rounded-circle" width="32" height="32" src="' . INCLUDE_PATH_PAINEL . $_SESSION['img'] . '" alt="Imagem do perfil"></a>';
+                echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH . '?logout">Sair</a>';
+                echo '<a href="' . INCLUDE_PATH . 'perfil"><img class="rounded-circle" width="32" height="32" src="' . $img . '" alt="Imagem do perfil" title="'.$usuario.'"></a>';
             }
 
             ?>

@@ -19,7 +19,7 @@
     <div class="mb-2 mb-md-5 text-justify">
         <h2>Objetivo Principal do Blog</h2>
         <p>
-            O [Nome do Blog] foi criado com o objetivo de se tornar uma fonte confiável de informação para aqueles que buscam entender o mundo de uma maneira
+            O <strong><i><?php echo NOME_EMPRESA ?></i></strong> foi criado com o objetivo de se tornar uma fonte confiável de informação para aqueles que buscam entender o mundo de uma maneira
             mais profunda e envolvente. Nossa proposta é trazer artigos diversificados sobre temas relevantes, que vão desde as últimas notícias e tendências,
             até questões mais reflexivas sobre cultura, saúde e tecnologia. Buscamos sempre apresentar um conteúdo bem fundamentado, fácil de entender e de
             interesse para diferentes públicos. O nosso principal objetivo é oferecer aos leitores um espaço onde eles possam se manter informados, aprender e
@@ -29,7 +29,7 @@
     <div class="mb-2 mb-md-5 text-justify">
         <h2>Missão</h2>
         <p>
-            Nossa missão no [Nome do Blog] é informar e inspirar nossos leitores, trazendo conteúdos de alta qualidade que ajudem as pessoas a tomar decisões mais
+            Nossa missão no <strong><i><?php echo NOME_EMPRESA ?></i></strong> é informar e inspirar nossos leitores, trazendo conteúdos de alta qualidade que ajudem as pessoas a tomar decisões mais
             informadas e conscientes. Buscamos não apenas relatar fatos, mas também apresentar diferentes perspectivas sobre temas importantes, incentivando o
             pensamento crítico e a reflexão. Acreditamos que um bom conteúdo pode transformar vidas, por isso, nos comprometemos a ser uma fonte de aprendizado,
             entretenimento e crescimento pessoal para cada um que acompanha o nosso trabalho.
@@ -38,7 +38,7 @@
     <div class="mb-2 mb-md-5 text-justify">
         <h2>Valores</h2>
         <p>
-            No [Nome do Blog], temos como pilares os seguintes valores:
+            No <strong><i><?php echo NOME_EMPRESA ?></i></strong>, temos como pilares os seguintes valores:
     
         <ul>
             <li>Transparência: Prezamos pela honestidade e pela clareza em tudo o que publicamos. Nossos leitores merecem saber de onde vem a informação e como ela foi obtida.</li>

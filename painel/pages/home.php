@@ -5,8 +5,10 @@
         $usuariosOnline = Painel::listarUsuariosOnline();
         $totalDeVisitas = Painel::totalDeVisitas();
         $VisitasDoDia = Painel::VisitasDoDia();
-        $totalUsuariosCadastrados = Painel::listarUsuariosCadastrado();
+        $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrado();
         $usuariosDesativados = Usuario::listarUsuariosDesativados();
+
+        $imagem = '../static/uploads/avatar.jpg';
 
         if($_SESSION['cargo'] >= 1){
                 include('./components/cardCPainel.php');

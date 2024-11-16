@@ -7,21 +7,25 @@ if (isset($_GET['id'])) {
 
     // Chama a função pegarArtigo para pegar o artigo selecionado
     $artigo = Artigos::pegarArtigo($id);
+    
     $usuario_id = $artigo['usuario_id'];
 
     // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
     $artigos = Artigos::listarArtigosAutor($usuario_id);
+
+    $img = INCLUDE_PATH.'static/uploads/avatar.jpg';
+    $avatar = $artigo['avatar'];
+
+    if($avatar == null){
+        $avatar = $img;
+    }else{
+        $avatar = INCLUDE_PATH_PAINEL . $artigo['avatar'];
+    }
+
 }
 
 
 ?>
-
-<!-- botões para comentarios
-<div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-<button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Primary button</button>
-<button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
-</div> 
--->
 
 <section class="px-4 pt-2 my-5 border-bottom  bg-body-secondary">
     <div class="text-center">
@@ -42,9 +46,9 @@ if (isset($_GET['id'])) {
             <p class="lead mb-4"><?php echo $artigo['subtitulo'] ?></p>
             <blockquote class="blockquote mb-0">
                 <footer class="blockquote-footer">
-                    <img src="<?php echo INCLUDE_PATH_PAINEL . $artigo['avatar'] ?>" alt="" width="32" height="32" class="rounded-circle mx-2">
+                    <img src="<?php echo $avatar ?>" alt="" width="32" height="32" class="rounded-circle mx-2">
                     <cite title="Source Title">
-                        <?php echo $artigo['nome'] ?>
+                        <?php echo $artigo['nome'] ? $artigo['nome'] : $artigo['email'] ?>
                         <span class="mb-3"><?php echo date('My', strtotime($artigo['data_criacao'])); ?></span>
                     </cite>
                 </footer>
@@ -79,8 +83,8 @@ if (isset($_GET['id'])) {
                             <div class="row">
                                 <div class="col-7">
                                     <h4>
-                                        <img src="<?php echo INCLUDE_PATH_PAINEL . $value['img'] ?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
-                                        <?php echo $value['nome'] ?>
+                                        <img src="<?php echo $img ? $img : INCLUDE_PATH_PAINEL. $value['img']?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
+                                        <?php echo $value['nome'] ? $value['nome'] : $value['email'] ?>
                                     </h4>
                                 </div>
                                 <div class="col-5 text-end">

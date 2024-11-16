@@ -1,6 +1,9 @@
 <div>
     <?php
 
+    $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+    $img = $imagem;
+
     ?>
     <ul class="list-unstyled px-2">
         <?php
@@ -43,7 +46,6 @@
                 break;
         }
 
-
         foreach ($artigo as $key => $value) {
         ?>
             <li class="p-2 border-top">
@@ -64,13 +66,13 @@
                                 </div><!--row-->
                             </div>
                             <div class="card-body">
-                                <p class="text-body-secondary mt-2"><?php echo $value['subtitulo'] ?></p>
+                                <p class="text-body-secondary mt-2"><?php echo $value['descricao'] ?></p>
                             </div>
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-6">
-                                        <img src="<?php echo INCLUDE_PATH_PAINEL . $value['avatar'] ?>" alt="imagem descritiva" class="rounded-circle" width="16" height="16">
-                                        <span class="fs-6 fst-italic"><?php echo $value['autor'] ?></span>
+                                        <img src="<?php echo INCLUDE_PATH_PAINEL . $value['avatar'] == NULL ? INCLUDE_PATH_PAINEL . $value['avatar'] : $img ?>" alt="imagem descritiva" class="rounded-circle" width="16" height="16">
+                                        <span class="fs-6 fst-italic"><?php echo $value['autor'] != NULL ? $value['autor'] : $value['email'] ?></span>
                                     </div><!--col-->
                                     <div class="col-6 text-end">
                                         <small class="text-body-secondary"><?php echo date('M y', strtotime($value['data_criacao'])); ?></small>

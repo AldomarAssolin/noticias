@@ -4,16 +4,35 @@ $id = $_GET['id'];
 
 $artigos = Artigos::listarArtigosAutor($id);
 
+//seta avatar padrão
+$img = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+$avatar = $artigos[0]['avatar'];//seta avatar do autor
+$autor = $artigos[0]['autor']; //seta nome do autor
+
+//verifica se autor é nulo
+if($autor == null){
+    $autor = $artigos[0]['email'];
+}else{
+    $autor = $artigos[0]['autor'];
+}
+
+//verifica se avatar é nulo
+if ($avatar == null) {
+    $avatar = $img;
+} else {
+    $avatar = INCLUDE_PATH_PAINEL . $artigos['avatar'];
+}
+
 ?>
 
 <div class="container my-5">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $artigos[0]['autor'] ?></h1>
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $autor ?></h1>
             <p class="lead">Veja todos os artigos do autor.</p>
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-            <img class="rounded-lg-3" src="<?php echo INCLUDE_PATH_PAINEL . $artigos[0]['avatar'] ?>" alt="" width="450" height="320">
+            <img class="rounded-lg-3" src="<?php echo $avatar ?>" alt="" width="450" height="320">
         </div>
     </div>
 </div>
@@ -41,7 +60,7 @@ $artigos = Artigos::listarArtigosAutor($id);
                                     <div class="btn-group">
                                         <a href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>" class="btn btn-sm btn-outline-secondary">Ver</a>
                                     </div><!-- /.btn-group -->
-                                    <small class="text-body-secondary"><?php echo date('M y', strtotime($value['data_criacao'])) ?></small>
+                                    <small class="text-body-secondary"><?php echo date('d M y', strtotime($value['data_criacao'])) ?></small>
                                 </div><!-- /.d-flex -->
                             </div><!-- /.card-body -->
                         </div><!-- /.card -->

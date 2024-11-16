@@ -1,11 +1,10 @@
 
 
 <?php
-
 try {
   $result = Artigos::listarArtigosComAutores();
 } catch (Exception $e) {
-  echo '<div class="alert alert-danger p-2"><h3>Erro ao listar os artigos!</h3><p></p></div>';
+  echo '<div class="alert alert-danger alert-dismissible fade show">' . $mensagem .  '<button type="button" class="close bg-transparente" data-dismiss="alert">&times;</button></div>';
 }
 
 $imagem = './static/uploads/imagem-notfound.jpg';
