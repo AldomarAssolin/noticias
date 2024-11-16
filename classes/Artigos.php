@@ -4,7 +4,7 @@
 class Artigos
 {
     //retorna artigos com autores
-    
+
 
     //buscar artigo individual
     public static function pegarArtigo($id)
@@ -27,9 +27,7 @@ class Artigos
             return $sql->fetchAll();  // Retorna todos os resultados
         } catch (Exception $e) {
             return false;
-        }    
-        
-        
+        }
     }
 
     //retorna todos os artigos por categoria
@@ -76,14 +74,13 @@ class Artigos
         } catch (Exception $e) {
             return false;
         }
-       
     }
 
-    public static function adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, $data_atualizacao,$status)
+    public static function adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, $data_atualizacao, $status)
     {
         $data_criacao = date('Y-m-d H:i:s');
         $sql = MySql::connect()->prepare("INSERT INTO `tb_site.artigos` VALUES (null,?,?,?,?,?,?,?,?,?,?,?)");
-        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null,1));
+        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null, 1));
     }
 
     public static function deletarArtigo($id, $usuario_id)
@@ -93,12 +90,23 @@ class Artigos
     }
 
     public static function editarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $id)
-{
-    $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET titulo = ?, subtitulo = ?, descricao = ?, categoria = ?, tipo = ?, conteudo = ?, img = ?, usuario_id = ?, data_atualizacao = ? WHERE id = ?");
-    $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $id));
-}
-}
+    {
+        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET titulo = ?, subtitulo = ?, descricao = ?, categoria = ?, tipo = ?, conteudo = ?, img = ?, usuario_id = ?, data_atualizacao = ? WHERE id = ?");
+        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $id));
+    }
 
+    public static function listarArtigosMes()
+    {
+        $sql = MySql::connect()->prepare("SELECT data_criacao FROM `tb_site.artigos`");
+        $sql->execute(array());
+        return $sql->fetchAll();
+    }
 
+    public static function listarArtigosPorMes($mes){
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.artigos` WHERE MONTH(data_criacao) = ?");
+        $sql->execute(array($mes));
+        return $sql->fetchAll();
+    }
+}
 
 ?>
