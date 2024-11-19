@@ -12,12 +12,8 @@ $dotenv->load();
 
 // Obter a variável de ambiente
 $NEWS_API = getenv('NEWS_API');
+//$url = 'https://api.thenewsapi.com/v1/news/top?locale=br&language=pt&api_token='.$NEWS_API;
 
-try{
-$url = 'https://api.thenewsapi.com/v1/news/top?locale=br&language=pt&api_token='.$NEWS_API;
-}catch(Exception $e){
-    echo Painel::alert('Erro: ', $e->getMessage());
-}
 
 // Inicia a sessão cURL
 $ch = curl_init($url);

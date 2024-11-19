@@ -61,10 +61,10 @@ class Usuario
 	/* ************************************************** */
 
 	//atualizar usuario pela $_SESSION. (logado)
-	public function atualizarUsuario($nome, $senha, $imagem)
+	public function atualizarUsuario($nome, $cargo, $imagem)
 	{
-		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET nome = ?, senha = ?,img = ? WHERE user = ?");
-		if ($sql->execute(array($nome, $senha, $imagem, $_SESSION['user']))) {
+		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET nome = ?, cargo = ? ,img = ? WHERE user = ?");
+		if ($sql->execute(array($nome, $cargo, $imagem, $_SESSION['user']))) {
 			return true;
 		} else {
 			return false;

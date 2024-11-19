@@ -2,6 +2,10 @@
 
 include('../config.php');
 
+if (isset($_GET['logout'])) {
+  Auth::logout();
+  Painel::redirect(INCLUDE_PATH);
+}
 
   // Verifica se o usuário está logado
   if (Painel::logado() == false) {

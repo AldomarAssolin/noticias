@@ -1,20 +1,22 @@
 <?php
 
-require_once('./conn/getAPI.php');
-//var_dump($dataDestaque);
+// require_once('./conn/getAPI.php');
+// //var_dump($dataDestaque);
 
-if ($dataDestaque) {
-    if ($dataDestaque['error']) {
-        $noticias = $dataDestaque['error'];
-    } else {
-        $noticias = $dataDestaque['data'];
-    }
-}
+// if ($dataDestaque == null || $dataDestaque['data'] == null) {
+//     if ($dataDestaque['error']) {
+//         $noticias = $dataDestaque['error'];
+//     } else {
+//         $noticias = $dataDestaque['data'];
+//     }
+// }
 
-
+include('./components/noticias_off.php');
 ?>
 
-<div>
+
+
+<!-- <div>
     <h4 class="fst-italic">Notícias recentes</h4>
     <ul class="list-unstyled">
         <?php
@@ -48,4 +50,4 @@ if ($dataDestaque) {
         ?>
 
     </ul>
-</div>
+</div> -->

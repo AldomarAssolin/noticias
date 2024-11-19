@@ -189,7 +189,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>?loggout">
+          <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>?logout">
             <svg class="bi">
               <use xlink:href="#door-closed" />
             </svg>

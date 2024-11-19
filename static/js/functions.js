@@ -1,11 +1,11 @@
 
 //atualiza a pagina sem recarregar
-function atualizaPagina(){
+function atualizaPagina() {
     location.reload();
 }
 
 //atribuindo URL às imagens do editor.
-function getImgUrl(){
+function getImgUrl() {
     const images = document.querySelectorAll('.conteudo img');
     images.forEach(img => {
         const attr = img.getAttribute('src');
@@ -14,4 +14,6 @@ function getImgUrl(){
 }
 
 window.onload = getImgUrl;
+
+
 

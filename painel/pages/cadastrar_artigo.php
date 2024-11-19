@@ -37,7 +37,7 @@
             }
 
             if ($img['name'] != '') {
-                Painel::deleteFile($img);
+                
                 //Existe o upload de imagem.
                 if (Painel::imagemValida($img)) {
                     $img = Painel::uploadFile($img);

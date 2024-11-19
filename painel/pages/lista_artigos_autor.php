@@ -12,7 +12,7 @@ $url = INCLUDE_PATH_PAINEL . 'lista_artigos_autor?id=' . $id;
 <div class="modal fade" id="excluirArtigo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
     <?php
-    //Exibe alerta de sucesso ou erro ao excluir categoria 
+    //Exibe alerta de sucesso ou erro ao excluir artigo 
     try {
 
         if (isset($_GET['excluir']) && isset($_GET['idArtigo']) && $_GET['excluir'] == 'ok') {
@@ -51,29 +51,36 @@ $url = INCLUDE_PATH_PAINEL . 'lista_artigos_autor?id=' . $id;
 
 <?php
 
-// Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
-$artigos = Artigos::listarArtigosAutor($id);
 
-$autor = $artigos[0]['autor'];// Pega o nome do autor
-$avatar = $artigos[0]['avatar'];// Pega o avatar do autor
-var_dump($avatar);
-// Se o autor não for encontrado, pega o email do autor
-if($autor == NULL){
-    $autor = $artigos[0]['email'];
-}else{
-    $autor = $autor;
+try {
+    // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
+    $artigos = Artigos::listarArtigosAutor($id);
+
+    if ($artigos) {
+        $autor = $artigos[0]['autor']; // Pega o nome do autor
+        $avatar = $artigos[0]['avatar']; // Pega o avatar do autor
+        
+        // Se o autor não for encontrado, pega o email do autor
+        if ($autor == NULL) {
+            $autor = $artigos[0]['email'];
+        } else {
+            $autor = $autor;
+        }
+        
+        if ($avatar == NULL) {
+            $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+        } else {
+            $avatar = $avatar;
+        }
+    }
+
+
+} catch (Exception $e) {
+    echo Painel::alert('erro', $e->getMessage());
 }
-
-if($avatar == NULL){
-    $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
-}else{
-    $avatar = $avatar;
-}
-
-
 
 // Título da página
-$titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $autor . '</b>'; 
+$titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $autor . '</b>';
 
 ?>
 
@@ -102,7 +109,6 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
             <tbody>
                 <?php
 
-                //var_dump($artigos);
                 // Itera sobre os artigos do autor
                 foreach ($artigos as $key => $value) {
 

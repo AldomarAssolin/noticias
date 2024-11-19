@@ -4,8 +4,13 @@
     right: 3%;
 }
 
-.bi-x-lg{
+.img-svg-camera{
+    position: absolute;
+    right: 1rem;
+    bottom: .5rem;
+    cursor: pointer;
+}
+
+.img-perfil{
     position: relative;
-    top: 0;
-    right: 0;
 }

@@ -60,6 +60,8 @@
                 $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
                 // Exibe os usuários cadastrados
                 foreach ($totalUsuariosCadastrados as $key => $value) {
+                    $btnDisable = Artigos::listarArtigosAutor($value['id']);
+                    $disable = $btnDisable ? '' : 'disabled';
 
                 ?>
                     <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
@@ -73,17 +75,19 @@
                         </th>
                         <td class="text-end"><?php echo Painel::$cargos[$value['cargo']] ?></td>
                         <td class='text-end'>
-                            <a title="Ver artigos do usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo $value['id'] ?>" class='btn btn-primary btn-sm my-1 my-md-0'>
+                            <!-- Botão para ver artigos do usuário -->
+                            <a title="Ver artigos do usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo $value['id'] ?>" class='btn btn-primary btn-sm my-1 my-md-0 <?php echo $disable ?>'>
                                 <svg class='bi'>
                                     <use xlink:href='#folder-symlink-fill' />
                                 </svg>
                             </a>
+                            <!-- Botão para atualizar usuario -->
                             <a title="Atualizar usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>atualizar_usuario?id=<?php echo  $value['id'] ?>" class='btn btn-warning btn-sm my-1 my-md-0 mx-lg-2'>
                                 <svg class='bi'>
                                     <use xlink:href='#pencil' />
                                 </svg>
                             </a>
-                            <!-- Botão para excluir categoria -->
+                            <!-- Botão para excluir usuario -->
                             <button title="Excluir usuário" type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?php echo $value['id']; ?>">
                                 <svg class='bi'>
                                     <use xlink:href='#trash' />

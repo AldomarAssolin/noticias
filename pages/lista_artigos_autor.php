@@ -8,6 +8,7 @@ $artigos = Artigos::listarArtigosAutor($id);
 $img = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 $avatar = $artigos[0]['avatar'];//seta avatar do autor
 $autor = $artigos[0]['autor']; //seta nome do autor
+$email = $artigos[0]['email']; //seta email do autor
 
 //verifica se autor é nulo
 if($autor == null){
@@ -20,7 +21,7 @@ if($autor == null){
 if ($avatar == null) {
     $avatar = $img;
 } else {
-    $avatar = INCLUDE_PATH_PAINEL . $artigos['avatar'];
+    $avatar = INCLUDE_PATH_PAINEL . $artigos[0]['avatar'];
 }
 
 ?>
@@ -30,6 +31,7 @@ if ($avatar == null) {
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
             <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $autor ?></h1>
             <p class="lead">Veja todos os artigos do autor.</p>
+            <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $email; ?>" class="btn btn-primary">Ver Perfil</a>
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
             <img class="rounded-lg-3" src="<?php echo $avatar ?>" alt="" width="450" height="320">

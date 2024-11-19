@@ -21,7 +21,6 @@
 
     if (isset($_POST['acao'])) {
         $id = $_GET['id'];
-        $user = $_POST['user'];
         $nome = $_POST['nome'];
         $cargo = $_POST['cargo'];
         $imagem = $_FILES['imagem'];
@@ -34,7 +33,7 @@
             if (Painel::imagemValida($imagem)) {
                 Painel::deleteFile($imagem_atual);
                 $imagem = Painel::uploadFile($imagem);
-                if ($usuario->atualizarUsuarioOutro($user, $nome, $cargo, $imagem, $id)) {
+                if ($usuario->atualizarUsuario($nome, $cargo, $imagem, $id)) {
                     $value['img'] = $imagem;
                     Painel::alert('sucesso', 'Atualizado com sucesso junto com a imagem!');
                 } else {
@@ -56,10 +55,10 @@
     ?>
 
     <form method="post" enctype="multipart/form-data" class="row g-3 border rounded-1 m-0 p-2">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Login</label>
             <input type="text" class="form-control" id="inputEmail4" name="user" value="<?php echo $value['user'] ?>">
-        </div>
+        </div> -->
         <!-- <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Senha</label>
             <input type="password" class="form-control" id="inputPassword4" name="senha">

@@ -70,9 +70,10 @@ class Artigos
                                     WHERE a.usuario_id = ?
                                     ORDER BY a.data_criacao DESC");
             $sql->execute(array($id));
+
             return $sql->fetchAll();  // Retorna todos os resultados
         } catch (Exception $e) {
-            return false;
+            echo Painel::alert('erro', $e->getMessage());
         }
     }
 
@@ -105,6 +106,13 @@ class Artigos
     public static function listarArtigosPorMes($mes){
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.artigos` WHERE MONTH(data_criacao) = ?");
         $sql->execute(array($mes));
+        return $sql->fetchAll();
+    }
+
+    public static function buscarArtigos($buscar)
+    {
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.artigos` WHERE titulo LIKE ? OR descricao LIKE ?");
+        $sql->execute(array('%' . $buscar . '%', '%' . $buscar . '%'));
         return $sql->fetchAll();
     }
 }

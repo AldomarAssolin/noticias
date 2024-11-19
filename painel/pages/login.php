@@ -37,14 +37,12 @@
             } else {
                 // Tenta o login
                 if ($auth->login($email, $senha)) {
-                    if ($_SESSION['status'] == 0) {
+                    if ($_SESSION['login'] == false) {
                         echo '<div class="alert alert-danger">Usuário desativado!</br> Entre em contato com os administradores!</div>';
                         Auth::logout();
-                    } else if ($_SESSION['status'] == 1) {
-                        if ($_SESSION['email'] && $_SESSION['cargo'] >= 1) {
-                            echo '<div class="alert alert-success">Logado com sucesso!</div>';
-                            Painel::redirect(INCLUDE_PATH_PAINEL);
-                        }
+                    } else {
+                        echo '<div class="alert alert-success">Logado com sucesso!</div>';
+                        Painel::redirect(INCLUDE_PATH);
                     }
                 } else {
                     echo '<div class="alert alert-danger">Email ou senha incorretos!</div>';

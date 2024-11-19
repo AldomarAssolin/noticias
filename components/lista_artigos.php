@@ -45,8 +45,10 @@
                 $artigo = $result;
                 break;
         }
+        
+        foreach($artigo as $key => $value){
+        
 
-        foreach ($artigo as $key => $value) {
         ?>
             <li class="p-2 border-top">
                 <a class="py-3 mb-2 link-body-emphasis text-decoration-none" href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>">

@@ -1,20 +1,18 @@
-
 <!-- Modal de confirmação -->
 <div class="modal fade" id="excluirArtigoDoAutor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
     <?php
     //Exibe alerta de sucesso ou erro ao excluir categoria 
     try {
-        
+
         if (isset($_GET['excluir']) && isset($_GET['idArtigo']) && $_GET['excluir'] == 'ok') {
-            $id= intval($_GET['idArtigo']);
+            $id = intval($_GET['idArtigo']);
             $usuario_id = intval($_GET['id']);
 
 
             if (http_response_code() >= 200 && http_response_code() < 300) {
                 Artigos::deletarArtigo($id, $usuario_id);
                 Painel::redirect(INCLUDE_PATH_PAINEL . $_GET['url']);
-                
             }
         }
     } catch (Exception $e) {
@@ -66,11 +64,19 @@
                 <?php
                 $artigos = Artigos::listarArtigosComAutores();  // Chama a função para pegar os artigos
 
+                $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';  // Imagem padrão
+
+
                 if ($artigos) {  // Verifica se há artigos
 
                 ?>
 
-                    <?php foreach ($artigos as $artigo) { ?>
+                    <?php foreach ($artigos as $artigo) {
+                        if ($artigo['avatar'] == null && $artigo['autor'] == null) {
+                            $artigo['avatar'] = $imagem;
+                            $artigo['autor'] = $artigo['email'];
+                        }
+                    ?>
                         <tr>
                             <td>
                                 <img src="<?php echo htmlspecialchars($artigo['avatar']); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
@@ -86,28 +92,28 @@
                                     </svg>
                                 </a>
                                 <?php
-                                if($artigo['status'] == 1){
+                                if ($artigo['status'] == 1) {
                                 ?>
-                                <!-- Botão para excluir artigo -->
-                            <button title="Excluir artigo" type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigoDoAutor" data-idArtigo='<?php echo $artigo['id']; ?>' data-id='<?php echo $artigo['usuario_id']; ?>'>
-                                <svg class='bi'>
-                                    <use xlink:href='#trash' />
-                                </svg>
-                            </button>
-                            <?php 
-                            } else{
+                                    <!-- Botão para excluir artigo -->
+                                    <button title="Excluir artigo" type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigoDoAutor" data-idArtigo='<?php echo $artigo['id']; ?>' data-id='<?php echo $artigo['usuario_id']; ?>'>
+                                        <svg class='bi'>
+                                            <use xlink:href='#trash' />
+                                        </svg>
+                                    </button>
+                                <?php
+                                } else {
 
                                 ?>
-                                <button title="Ativar artigo" type="button" class="btn btn-success btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigoDoAutor" data-idArtigo='<?php echo $artigo['id']; ?>' data-id='<?php echo $artigo['usuario_id']; ?>'>
-                                <svg class='bi'>
-                                    <use xlink:href='#file-earmark' />
-                                </svg>
-                            </button>
+                                    <button title="Ativar artigo" type="button" class="btn btn-success btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigoDoAutor" data-idArtigo='<?php echo $artigo['id']; ?>' data-id='<?php echo $artigo['usuario_id']; ?>'>
+                                        <svg class='bi'>
+                                            <use xlink:href='#file-earmark' />
+                                        </svg>
+                                    </button>
 
-                            <?php
-                            }
-                            
-                            ?>
+                                <?php
+                                }
+
+                                ?>
                             </td>
                         </tr>
                     <?php } ?>
