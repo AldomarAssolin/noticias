@@ -11,8 +11,8 @@ if ($UserData == false) {
         'img' => NULL
     ];
 } else {
-    $img = $UserData['img'] != NULL ? INCLUDE_PATH_PAINEL.$UserData['img'] : $imagem;
-    $usuario = $UserData['nome'] ? $UserData['nome'] : $UserData['email'];
+    $img = $imagem;
+    $usuario = $UserData['email'];
 }
 
 ?>
@@ -78,7 +78,7 @@ if ($UserData == false) {
                         echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
                     }
                     echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH . '?logout">Sair</a>';
-                    echo '<a href="' . INCLUDE_PATH . 'perfil?usuario='.$UserData['email'].'"><img class="rounded-circle" width="32" height="32" src="'. $img . '" alt="Imagem do perfil" title="' . $usuario . '"></a>';
+                    echo '<a href="' . INCLUDE_PATH . 'perfil?usuario='.$UserData['id'].'"><img class="rounded-circle" width="32" height="32" src="'. $img . '" alt="Imagem do perfil" title="' . $usuario . '"></a>';
                 }
                 ?>
             </div>

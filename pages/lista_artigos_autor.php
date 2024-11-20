@@ -1,37 +1,25 @@
 <?php
 
+$avatar = '';
+$capa = '';
+if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
+    $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+    $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
+}
+  
 $id = $_GET['id'];
 
 $artigos = Artigos::listarArtigosAutor($id);
-
-//seta avatar padrão
-$img = INCLUDE_PATH . 'static/uploads/avatar.jpg';
-$avatar = $artigos[0]['avatar'];//seta avatar do autor
-$autor = $artigos[0]['autor']; //seta nome do autor
-$email = $artigos[0]['email']; //seta email do autor
-
-//verifica se autor é nulo
-if($autor == null){
-    $autor = $artigos[0]['email'];
-}else{
-    $autor = $artigos[0]['autor'];
-}
-
-//verifica se avatar é nulo
-if ($avatar == null) {
-    $avatar = $img;
-} else {
-    $avatar = INCLUDE_PATH_PAINEL . $artigos[0]['avatar'];
-}
+$perfil = Perfil::listarPerfilNomeAvatar($id);
 
 ?>
 
 <div class="container my-5">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $autor ?></h1>
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $perfil['nome'] ?></h1>
             <p class="lead">Veja todos os artigos do autor.</p>
-            <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $email; ?>" class="btn btn-primary">Ver Perfil</a>
+            <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo Painel::generateSlug($perfil['usuario_id']); ?>" class="btn btn-primary">Ver Perfil</a>
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
             <img class="rounded-lg-3" src="<?php echo $avatar ?>" alt="" width="450" height="320">
@@ -52,12 +40,12 @@ if ($avatar == null) {
             ?>
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="<?php echo INCLUDE_PATH_PAINEL . $value['capa'] ?>" class="bd-placeholder-img card-img-top" width="100%" height="225">
+                            <img src="<?php echo $value['capa'] ? $value['capa'] : $capa ?>" class="bd-placeholder-img card-img-top" width="100%" height="225">
                             <div class="card-header">
                                 <h4 class="my-0 fw-normal"><?php echo $value['titulo'] ?></h4>
                             </div>
                             <div class="card-body">
-                                <p class="card-text"><?php echo $value['subtitulo'] ?></p>
+                                <p class="card-text"><?php echo $value['descricao'] ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>" class="btn btn-sm btn-outline-secondary">Ver</a>

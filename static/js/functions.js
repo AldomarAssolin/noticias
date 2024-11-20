@@ -9,7 +9,7 @@ function getImgUrl() {
     const images = document.querySelectorAll('.conteudo img');
     images.forEach(img => {
         const attr = img.getAttribute('src');
-        img.setAttribute('src', 'painel/' + attr);
+        img.setAttribute('src', attr);
     });
 }
 

@@ -1,15 +1,10 @@
 <?php
 
-// require_once('./conn/getAPI.php');
-// //var_dump($dataDestaque);
+//require_once('./model/GetAPI.php');
+//var_dump($dataDestaque);
 
-// if ($dataDestaque == null || $dataDestaque['data'] == null) {
-//     if ($dataDestaque['error']) {
-//         $noticias = $dataDestaque['error'];
-//     } else {
-//         $noticias = $dataDestaque['data'];
-//     }
-// }
+//$noticias = $dataDestaque['data'];
+
 
 include('./components/noticias_off.php');
 ?>

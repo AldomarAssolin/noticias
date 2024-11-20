@@ -1,15 +1,7 @@
 <?php
-// Incluir o arquivo de autoload do composer
-require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Dotenv\Dotenv;
-
-// Carregar o arquivo .env
-$dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../../');
-$dotenv->load();
-
-// Obter a variável de ambiente
-$API_KEY = getenv('TINY_KEY');
+//Obtem a variável de ambiente
+$API_KEY = Env::getEnv('TINY_KEY');
 
 
 ?>

@@ -1,8 +1,20 @@
 <div>
     <?php
 
-    $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
-    $img = $imagem;
+
+//Padrao de imagem
+$avatar = '';
+$capa = '';
+if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
+    $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+    $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
+}
+
+    $artigo = Artigos::listarArtigosComAutores();
+
+    if (!$artigo) {
+        echo '<h3 class="text-center">Nenhum artigo encontrado</h3>';
+    }
 
     ?>
     <ul class="list-unstyled px-2">
@@ -42,19 +54,19 @@
                 }
                 break;
             default:
-                $artigo = $result;
+                $artigo = $artigo;
                 break;
         }
-        
+
         foreach($artigo as $key => $value){
         
 
         ?>
             <li class="p-2 border-top">
-                <a class="py-3 mb-2 link-body-emphasis text-decoration-none" href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>">
+                <a class="py-3 mb-2 link-body-emphasis text-decoration-none" href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['artigoId']) ?>">
                     <div class="card mb-2 border-0 d-flex flex-column flex-lg-row align-items-center">
                         <div class="col-lg-3 px-2 mb-2 mb-md-0">
-                            <img src="<?php echo INCLUDE_PATH_PAINEL . $value['capa'] ?>" alt="imagem descritiva" width="200" height="200">
+                            <img src="<?php echo $value['img'] != NULL ? $value['img'] : $capa ?>" alt="imagem descritiva" width="200" height="200">
                         </div>
                         <div class="col-lg-9">
                             <div class="card-header">
@@ -72,9 +84,9 @@
                             </div>
                             <div class="card-footer">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <img src="<?php echo INCLUDE_PATH_PAINEL . $value['avatar'] == NULL ? INCLUDE_PATH_PAINEL . $value['avatar'] : $img ?>" alt="imagem descritiva" class="rounded-circle" width="16" height="16">
-                                        <span class="fs-6 fst-italic"><?php echo $value['autor'] != NULL ? $value['autor'] : $value['email'] ?></span>
+                                    <div class="col-6 d-flex align-items-end">
+                                        <img src="<?php echo $value['avatar'] != NULL ? $value['avatar'] : $imagem ?>" alt="imagem descritiva" class="rounded-circle border border-secondary-2 mx-2" width="32" height="32">
+                                        <span class="fs-6 fst-italic"><?php echo $value['nome'] ?? '' ?></span>
                                     </div><!--col-->
                                     <div class="col-6 text-end">
                                         <small class="text-body-secondary"><?php echo date('M y', strtotime($value['data_criacao'])); ?></small>

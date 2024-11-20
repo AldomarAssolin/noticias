@@ -1,27 +1,23 @@
 <?php
+//Padrao de imagem
+$avatar = '';
+$capa = '';
+if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
+    $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+    $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
+};
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    
-
     // Chama a função pegarArtigo para pegar o artigo selecionado
     $artigo = Artigos::pegarArtigo($id);
-    
-    $usuario_id = $artigo['usuario_id'];
 
-    // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
-    $artigos = Artigos::listarArtigosAutor($usuario_id);
-
-    $img = INCLUDE_PATH.'static/uploads/avatar.jpg';
-    $avatar = $artigo['avatar'];
-
-    if($avatar == null){
-        $avatar = $img;
-    }else{
-        $avatar = INCLUDE_PATH_PAINEL . $artigo['avatar'];
-    }
-
+    // Chama a função listarPerfilUsuario para pegar o perfil do usuário
+    $perfil = Perfil::listarPerfilNomeAvatar($artigo['usuario_id']);
+} else {
+    header('Location: ' . INCLUDE_PATH);
+    die();
 }
 
 
@@ -39,16 +35,16 @@ if (isset($_GET['id'])) {
         </h1>
         <div class="overflow-hidden " style="max-height: 30vh;">
             <div class="container px-5">
-                <img src="<?php echo INCLUDE_PATH_PAINEL . $artigo['img'] ?>" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+                <img src="<?php echo $artigo['img'] ? $artigo['img'] : $capa ?>" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
             </div>
         </div>
         <div class="mx-auto mt-5">
             <p class="lead mb-4"><?php echo $artigo['subtitulo'] ?></p>
             <blockquote class="blockquote mb-0">
                 <footer class="blockquote-footer">
-                    <img src="<?php echo $avatar ?>" alt="" width="32" height="32" class="rounded-circle mx-2">
+                    <img src="<?php echo $perfil['avatar'] ?>" alt="" width="32" height="32" class="rounded-circle mx-2">
                     <cite title="Source Title">
-                        <?php echo $artigo['nome'] ? $artigo['nome'] : $artigo['email'] ?>
+                        <?php echo $perfil['nome'] ?? 'John Doe' ?> -
                         <span class="mb-3"><?php echo date('My', strtotime($artigo['data_criacao'])); ?></span>
                     </cite>
                 </footer>
@@ -83,7 +79,7 @@ if (isset($_GET['id'])) {
                             <div class="row">
                                 <div class="col-7">
                                     <h4>
-                                        <img src="<?php echo $img ? $img : INCLUDE_PATH_PAINEL. $value['img']?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
+                                        <img src="<?php echo $value['avatar'] ? $value['avatar'] : $img ?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
                                         <?php echo $value['nome'] ? $value['nome'] : $value['email'] ?>
                                     </h4>
                                 </div>

@@ -3,16 +3,6 @@
 session_start();
 date_default_timezone_set('America/Sao_Paulo');
 
-$autoload = function ($class) {
-    if (file_exists('./classes/' . $class . '.php')) {
-        include('./classes/' . $class . '.php');
-    } else {
-        include('../classes/' . $class . '.php');
-    }
-};
-
-spl_autoload_register($autoload);
-
 //Constantes para o site
 define('INCLUDE_PATH', 'http://localhost/noticias/');
 define('URL_STATIC', 'http://localhost:80/noticias/static/');
@@ -20,18 +10,38 @@ define('URL_STATIC', 'http://localhost:80/noticias/static/');
 //Constantes para o painel de controle
 define('INCLUDE_PATH_PAINEL', INCLUDE_PATH . 'painel/');
 define('BASE_DIR_PAINEL', __DIR__ . '/painel');
+define('BASE_DIR', __DIR__);
+
+$autoload = function ($class) {
+    if (file_exists('./model/' . $class . '.php')) {
+        include('./model/' . $class . '.php');
+    } else {
+        include('../model/' . $class . '.php');
+    }
+};
+
+spl_autoload_register($autoload);
+
+//Busca variaveis de ambiente
+$host = Env::getEnv('DB_HOST_MYSQL');
+$user = Env::getEnv('DB_USER_MYSQL');
+$pass = Env::getEnv('DB_PASS_MYSQL');
+$db = Env::getEnv('DB_NAME_MYSQL');
 
 
 //Conectar com banco de dados!
-define('HOST', 'localhost');
-define('USER', 'root');
-define('PASSWORD', '');
-define('DATABASE', 'blog');
+define('HOST', $host);
+define('USER', $user);
+define('PASSWORD', $pass);
+define('DATABASE', $db);
 
 
 define('NOME_EMPRESA', 'BLOG News');
 
 $css = URL_STATIC . 'css/';
+
+$avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+$capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
 
 //Funcoes do painel
 function pegaCargo($indice)

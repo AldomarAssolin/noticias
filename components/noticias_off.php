@@ -3,7 +3,7 @@
     <ul class="list-unstyled">
         <?php
 
-        $imagem = 'https://via.placeholder.com/250x150';
+        $imagem = INCLUDE_PATH . 'static/images/1.png';
 
         for ($i = 0; $i < 3; $i++) {
 
