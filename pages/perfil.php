@@ -4,20 +4,14 @@
 $avatar = '';
 $capa = '';
 $redesImg = '';
-if($avatar == null || $avatar == '' || $capa == null || $capa == '' || $redes == null || $redes == ''){
+if ($avatar == null || $avatar == '' || $capa == null || $capa == '' || $redes == null || $redes == '') {
     $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
     $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
     $redesImg = INCLUDE_PATH . 'static/uploads/redes_sociais.jpeg';
 };
 
 //var_dump($_SESSION);
-$id = $_GET['usuario'];
-
-//Busca View do perfil do usuário
-$perfil = Perfil::viewUsuarioPerfil($id);
-$redes = Perfil::getAllRedesSociais($id);
-$formacao = Perfil::getFormacao($id);
-$interesses = Perfil::getInteresses($id);
+$id = isset($_GET['usuario']);
 
 
 
@@ -42,7 +36,7 @@ $interesses = Perfil::getInteresses($id);
             $usuario = $_GET;
             if (isset($_GET['usuario'])) {
                 include('components/info_adicionais.php');
-            } elseif (isset($_GET['usuario_edit'])) {
+            } else if (isset($_GET['usuario_edit'])) {
                 include('components/edit_info_adicionais.php');
             }
 

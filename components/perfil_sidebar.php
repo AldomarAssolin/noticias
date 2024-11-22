@@ -1,8 +1,12 @@
 <?php
+$id = $_GET['usuario'];
+//Busca View do perfil do usuário
+$perfil = Perfil::viewUsuarioPerfil($id);
+$redes = Perfil::getAllRedesSociais($id);
 
 ?>
 
-<div class="card">
+<div class="card p-2">
     <img src="<?php echo $perfil['avatar'] ?? $avatar ?>" class="card-img-top" alt="User Image">
     <div class="card-body">
         <h5 class="card-title"><?php echo $perfil['nome'] ?? 'Nome' ?></h5>
@@ -18,7 +22,7 @@
                 <?php
                 foreach ($redes as $key => $value) {
                 ?>
-                    <a href="<?php echo  $value['link'] ?>" class="btn btn-outline-<?php echo  $value['cor'] ?> btn-sm">
+                    <a href="<?php echo  $value['link'] ?>" class="btn btn-outline-<?php echo  $value['cor'] ?> btn-sm my-1" target="_blank">
                         <?php echo  $value['nome'] ?>
                     </a>
 

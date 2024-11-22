@@ -11,6 +11,7 @@ $perfil = Perfil::listarPerfilUsuario($id);
 $nome = $perfil['nome'] ?? $email;
 $sobrenome = $perfil['sobrenome'] ?? 'Sobrenome';
 $bio = $perfil['bio'] ?? 'Resuma aqui sua biografia.';
+$sobre = $perfil['sobre'] ?? 'Sobre mim';
 $img = $perfil['avatar'] ?? $imagem;
 $cidade = $perfil['cidade'] ?? 'Cidade';
 $data_nasc = $perfil['data_nasc'] ?? '10/10/2000';
@@ -19,7 +20,7 @@ $avatar = $perfil['avatar'] ?? $imagem;
 $capa = $perfil['capa'] ?? $capa_ficticia;
 
 
-if (isset($_GET['usuario_edit'])) {
+if (isset($_POST['edit_perfil'])) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nome = trim($_POST['nome']);
         $sobrenome = trim($_POST['sobrenome']);
@@ -47,19 +48,19 @@ if (isset($_GET['usuario_edit'])) {
             echo Painel::alert('Erro', 'Erro no upload da capa ou arquivo não enviado.');
         }
 
-        if($avatar['name'] != '' || $avatar['name'] != null){
+        if ($avatar['name'] != '' || $avatar['name'] != null) {
             Painel::deleteFile($imagen_atual);
             $avatar = Painel::uploadFile($avatar);
             echo Painel::alert('sucesso', 'Imagem de perfil atualizada com sucesso!');
-        }else{
+        } else {
             $avatar = $imagen_atual;
             echo Painel::alert('sucesso', 'Imagem de perfil mantida!');
         }
 
-        if($capa['name'] != ''){
+        if ($capa['name'] != '') {
             $capa_atual = Painel::deleteFile($capa_atual);
             $capa = Painel::uploadFile($capa);
-        }else{
+        } else {
             $capa = $capa_atual;
         }
 
@@ -106,6 +107,8 @@ if (isset($_GET['usuario_edit'])) {
             <h5 class="card-title"><input type="date" class="form-control" name="data_nasc" value="<?php echo $data_nasc ?? '10/10/2000' ?>"></h5>
             <label for="bio" class="form-label">Bio:</label>
             <p class="card-text"><textarea type="text" rows="5" class="form-control" name="bio" placeholder="<?php echo $bio ?>"></textarea></p>
+            <label for="sobre" class="form-label">Sobre mim:</label>
+            <p class="card-text"><textarea type="text" rows="5" class="form-control" name="sobre" placeholder="<?php echo $sobre ?>"></textarea></p>
             <div class="card-header"><!-- Imagem de Capa do Usuario -->
                 <img src="<?php echo $capa ?? $imagem ?>" class="card-img-top" alt="User Image">
                 <div class="d-flex align-items-center my-2" title="editar imagem de perfil">
@@ -122,7 +125,7 @@ if (isset($_GET['usuario_edit'])) {
             <?php
             if ($_SESSION) {
             ?>
-                <input type="submit" class="btn btn-success" name="acao" value="Salvar">
+                <input type="submit" class="btn btn-success" name="edit_perfil" value="Salvar">
                 <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $_SESSION['user'] ?>" class="btn btn-secondary">Cancelar</a>
             <?php
             }

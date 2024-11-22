@@ -10,7 +10,7 @@ define('URL_STATIC', 'http://localhost:80/noticias/static/');
 //Constantes para o painel de controle
 define('INCLUDE_PATH_PAINEL', INCLUDE_PATH . 'painel/');
 define('BASE_DIR_PAINEL', __DIR__ . '/painel');
-define('BASE_DIR', __DIR__);
+define('BASE_DIR', __DIR__ . '/');
 
 $autoload = function ($class) {
     if (file_exists('./model/' . $class . '.php')) {

@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
                             <div class="row">
                                 <div class="col-7">
                                     <h4>
-                                        <img src="<?php echo $value['avatar'] ? $value['avatar'] : $img ?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
+                                        <img src="<?php echo $value['avatar'] ?? $avatar ?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
                                         <?php echo $value['nome'] ? $value['nome'] : $value['email'] ?>
                                     </h4>
                                 </div>

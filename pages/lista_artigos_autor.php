@@ -12,17 +12,19 @@ $id = $_GET['id'];
 $artigos = Artigos::listarArtigosAutor($id);
 $perfil = Perfil::listarPerfilNomeAvatar($id);
 
+
+
 ?>
 
 <div class="container my-5">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
             <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $perfil['nome'] ?></h1>
-            <p class="lead">Veja todos os artigos do autor.</p>
-            <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo Painel::generateSlug($perfil['usuario_id']); ?>" class="btn btn-primary">Ver Perfil</a>
+            <p class="lead"><?php echo $perfil['bio'] ?></p>
+            <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $perfil['usuario_id']; ?>" class="btn btn-primary">Ver Perfil</a>
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-            <img class="rounded-lg-3" src="<?php echo $avatar ?>" alt="" width="450" height="320">
+            <img class="rounded-lg-3" src="<?php echo $perfil['avatar'] ?? $avatar ?>" alt="" width="450" height="320">
         </div>
     </div>
 </div>

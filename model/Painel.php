@@ -140,7 +140,7 @@ class Painel
     public static function uploadFile($imagem)
     {
         // Verifica se o diretório de uploads existe
-        $uploadDir = INCLUDE_PATH . 'uploads/';
+        $uploadDir = BASE_DIR . 'uploads/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true); // Cria o diretório, se não existir
         }
@@ -173,7 +173,7 @@ class Painel
     public static function deleteFile($file)
     {
         // Define o caminho do arquivo
-        $filePath = INCLUDE_PATH . '/uploads/' . $file;
+        $filePath = BASE_DIR . 'uploads/' . $file;
         // Verifica se o arquivo existe
         if (file_exists($filePath)) {
             if(unlink($filePath)){

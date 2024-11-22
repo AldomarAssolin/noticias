@@ -200,7 +200,7 @@ class Perfil extends Usuario
 
     public static function listarPerfilNomeAvatar($id)
     {
-        $sql = MySql::connect()->prepare("SELECT concat(nome, ' ', sobrenome) AS nome, avatar, usuario_id FROM `tb_admin.perfil` WHERE usuario_id = ?");
+        $sql = MySql::connect()->prepare("SELECT concat(nome, ' ', sobrenome) AS nome, bio, avatar, usuario_id FROM `tb_admin.perfil` WHERE usuario_id = ?");
         $sql->execute(array($id));
         return $sql->fetch();
     }
@@ -238,5 +238,36 @@ class Perfil extends Usuario
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.interesses` WHERE usuario_id = ? AND area = ?");
         $sql->execute(array($id, $area));
         return $sql->fetchAll();
+    }
+
+    //Busca uma rede social pelo id
+    public static function getRedesById($id){
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.redes_sociais` WHERE id = ?");
+        $sql->execute(array($id));
+        return $sql->fetch();
+    }
+
+    //Cadastra uma nova rede social
+    public function createRedeSocial($nome, $link, $imagem, $cor, $usuario_id){
+        $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.redes_sociais` VALUES (null, ?, ?, ?, ?, ?)");
+        if($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))){
+            echo Painel::alert('sucesso', 'Rede social cadastrada com sucesso!');
+            return true;
+        }else{
+            echo Painel::alert('erro', 'Erro ao cadastrar rede social!');
+            return false;
+        }
+    }
+
+    //Atualiza uma rede social
+    public function updateRedeSocial($nome, $link, $imagem, $cor, $usuario_id){
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.redes_sociais` SET nome = ?, link = ?, imagem = ?, cor = ? WHERE usuario_id = ?");
+        if($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))){
+            echo Painel::alert('sucesso', 'Rede social atualizada com sucesso!');
+            return true;
+        }else{
+            echo Painel::alert('erro', 'Erro ao atualizar rede social!');
+            return false;
+        }
     }
 }
