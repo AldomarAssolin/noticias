@@ -12,7 +12,7 @@ $mensagem = '';
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>">Home</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $id ?>">Perfil</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>perfil_usuario?usuario=<?php echo $id ?>">Perfil</a></li>
                 <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=<?php echo $id ?>">Editando</a></li>
             </ol>
         </nav>

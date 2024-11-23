@@ -14,7 +14,8 @@ class Painel
         '1' => 'brasil',
         '2' => 'ti',
         '3' => 'programacao',
-        '4' => 'curiosidades'
+        '4' => 'tutorial',
+        '5' => 'tecnologia',
     ];
 
     public static $tipos = [

@@ -35,6 +35,12 @@ if (isset($_POST['acao'])) {
 </div>
 
 <div class="container mt-5 px-3 py-5 shadow">
+    <nav class="navbar">
+        <form class="container-fluid justify-content-end">
+            <a href="<?php echo INCLUDE_PATH_PAINEL ?>" class="btn btn-sm btn-outline-secondary mx-2" type="button">Voltar</a>
+            <a href="<?php echo INCLUDE_PATH_PAINEL ?>lista_slides" class="btn btn-sm btn-outline-info" type="button">Ver todos</a>
+        </form>
+    </nav>
     <form method="post" enctype="multipart/form-data" class=" mt-2 mt-md-5">
         <div class="form-group mb-2">
             <label for="titulo">Título</label>
@@ -48,12 +54,15 @@ if (isset($_POST['acao'])) {
             <label for="link">Link</label>
             <input type="text" class="form-control" id="link" name="link" required>
         </div>
-        <div class="form-group mb-2">
-            <label for="imagem">Imagem</label>
-            <div class=" border rounded-2">
-                <input type="file" class="form-control-file" id="imagem" name="imagem" required>
-            </div>
+        <div class="form-group mb-3">
+            <label class="form-label file btn btn-outline-success" for="imagem">Escolha uma imagem:</label><br>
+            <input type="file" class="btn btn-primary btn-sm" id="imagem" name="imagem">
         </div>
+        <?php if (!empty($redes['imagem'])): ?>
+            <div class="mb-3">
+                <img src="" alt="Imagem atual" class="img-thumbnail" style="max-width: 200px;">
+            </div>
+        <?php endif; ?>
         <div class="mt-1">
             <input type="submit" class="btn btn-primary" name="acao" value="Cadastrar">
         </div>

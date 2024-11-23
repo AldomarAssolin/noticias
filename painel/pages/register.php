@@ -32,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/', $senha)) {
         $message .= Painel::alert('erro', 'A senha deve ter pelo menos 6 caracteres, incluindo uma letra, um número e um caractere especial!');
     }
-    echo $message;
-    var_dump($message);
+    
     
     // Se não houver erros, cria o usuário
     if(empty($message)){

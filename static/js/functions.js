@@ -20,7 +20,7 @@ function getImgUrl() {
     const images = document.querySelectorAll('.conteudo img');
     images.forEach(img => {
         const attr = img.getAttribute('src');
-        img.setAttribute('src', attr);
+        img.setAttribute('src', 'painel/' + attr);
     });
 }
 

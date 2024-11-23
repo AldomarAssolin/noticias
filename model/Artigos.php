@@ -9,7 +9,7 @@ class Artigos
     //buscar artigo individual
     public static function pegarArtigo($id)
     {
-        $sql = MySql::prepare("SELECT id, titulo, subtitulo, descricao, categoria, tipo, conteudo, img, usuario_id, data_criacao, data_atualizacao, status
+        $sql = MySql::prepare("SELECT id, titulo, subtitulo, descricao, categoria, conteudo, img, usuario_id, data_criacao, data_atualizacao, status
                                  FROM `tb_site.artigos` 
                                  where id = ?");
         $sql->execute(array($id));
@@ -68,11 +68,10 @@ class Artigos
         }
     }
 
-    public static function adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, $data_atualizacao, $status)
+    public static function adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_criacao, $data_atualização, $status)
     {
-        $data_criacao = date('Y-m-d H:i:s');
-        $sql = MySql::connect()->prepare("INSERT INTO `tb_site.artigos` VALUES (null,?,?,?,?,?,?,?,?,?,?,?)");
-        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null, 1));
+        $sql = MySql::connect()->prepare("INSERT INTO `tb_site.artigos` VALUES (null,?,?,?,?,?,?,?,?,?,?)");
+        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_criacao,null, 1));
     }
 
     public static function deletarArtigo($id, $usuario_id)
@@ -81,10 +80,10 @@ class Artigos
         $sql->execute(array($id, $usuario_id));
     }
 
-    public static function editarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $id)
+    public static function editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $id)
     {
         $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET titulo = ?, subtitulo = ?, descricao = ?, categoria = ?, tipo = ?, conteudo = ?, img = ?, usuario_id = ?, data_atualizacao = ? WHERE id = ?");
-        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $id));
+        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $id));
     }
 
     public static function listarArtigosMes()

@@ -16,6 +16,7 @@ class Perfil extends Usuario
     private $uf;
     private $usuario_id;
 
+    //Construtor
     public function __construct($id = null, $nome = null, $sobrenome = null, $data_nasc = null, $bio = null, $avatar = null, $capa = null, $cidade = null, $uf = null, $usuario_id = null)
     {
 
@@ -30,6 +31,8 @@ class Perfil extends Usuario
         $this->uf = $uf;
         $this->usuario_id = $usuario_id;
     }
+
+    //Getters e Setters
 
     public function getId()
     {
@@ -126,10 +129,15 @@ class Perfil extends Usuario
         $this->usuario_id = $usuario_id;
     }
 
+    //Metodos
+
+    //PERFIL
+    //Inicializa uma view do perfil do usuario
     public function createPerfil($usuario_id)
     {
 
-        // Check if usuario_id exists in tb_admin.usuarios
+        
+        //Verifica se o usuário existe
         $checkSql = MySql::connect()->prepare("SELECT id , email FROM `tb_admin.usuarios` WHERE id = ?");
         $checkSql->execute(array($usuario_id));
         if ($checkSql->rowCount() == 0) {
@@ -137,6 +145,7 @@ class Perfil extends Usuario
             return false;
         }
 
+        //Cria um perfil padrão
         $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
         $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
         $nome = $checkSql->fetch()['email'];
@@ -149,8 +158,10 @@ class Perfil extends Usuario
             echo Painel::alert('erro', 'Erro ao criar perfil!');
             return false;
         }
+
     }
 
+    //Atualiza o perfil
     public static function atualizarPerfil($nome, $sobrenome, $data_nasc, $bio, $sobre, $avatar, $capa, $cidade, $uf, $id)
     {
         $sql = MySql::connect()->prepare("UPDATE `tb_admin.perfil` SET nome = ?, sobrenome = ?, data_nasc = ?, bio = ?, sobre = ?, avatar = ?, capa = ?, cidade = ?, uf = ?, usuario_id = ? WHERE usuario_id = ?");
@@ -164,6 +175,7 @@ class Perfil extends Usuario
         }
     }
 
+    //Cria um perfil
     public function criarPerfil()
     {
         $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.perfil` VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE usuario_id = ?");
@@ -174,6 +186,7 @@ class Perfil extends Usuario
         }
     }
 
+    //Exclui um perfil
     public function excluirPerfil()
     {
         $sql = MySql::connect()->prepare("DELETE FROM `tb_admin.perfil` WHERE usuario_id = ?");
@@ -184,7 +197,6 @@ class Perfil extends Usuario
         }
     }
 
-    //PERFIL
     //Busca todos os perfis
     public static function listarPerfis()
     {
@@ -280,6 +292,19 @@ class Perfil extends Usuario
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.formacao` WHERE usuario_id = ?");
         $sql->execute(array($id));
         return $sql->fetchAll();
+    }
+
+    //Cadastra uma nova formacao
+    public function createFormacao($instituicao, $curso, $data_inicio, $data_fim, $usuario_id)
+    {
+        $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.formacao` VALUES (null, ?, ?, ?, ?, ?)");
+        if ($sql->execute(array($instituicao, $curso, $data_inicio, $data_fim, $usuario_id))) {
+            echo Painel::alert('sucesso', 'Formação cadastrada com sucesso!');
+            return true;
+        } else {
+            echo Painel::alert('erro', 'Erro ao cadastrar formação!');
+            return false;
+        }
     }
 
     //deleta uma formacao

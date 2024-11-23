@@ -22,14 +22,14 @@ class Slides{
     }
 
     public static function deleteSlide($id){
-        $slide = MySql::connect()->prepare("SELECT * FROM `tb_site.slides` WHERE id = ?");
-        $slide->execute(array($id));
-        $slide = $slide->fetch();
-        if($slide['img'] != ''){
-            PAINEL::deleteFile($slide['img']);
-        }
         $sql = MySql::connect()->prepare("DELETE FROM `tb_site.slides` WHERE id = ?");
-        $sql->execute(array($id));
+        if($sql->execute(array($id))){
+            echo Painel::alert('sucesso','Slide excluído com sucesso!');
+            return true;
+        }else{
+            echo Painel::alert('erro','Erro ao excluir o slide. Tente novamente.');
+            return false;
+        }
     }
 
     public static function updateSlide($titulo,$descricao,$link,$imagem,$id){

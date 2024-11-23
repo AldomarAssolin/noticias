@@ -1,3 +1,13 @@
+<?php
+//Objetivo: Sidebar para o painel de controle
+
+$perfil = Perfil::viewUsuarioPerfil($_SESSION['id']);
+
+
+$imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+
+?>
+
 <div class="sidebar border border-right p-0">
   <div class="offcanvas-md offcanvas-end   overflow-y-auto" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
     <div class="offcanvas-header">
@@ -7,20 +17,10 @@
 
     <section class="user shadow">
       <div class="d-flex flex-column align-items-center text-center p-3">
-        <?php
-        if ($_SESSION['img'] == '') {
-          $_SESSION['img'] = URL_STATIC . 'uploads/avatar.jpg';
-        } else {
-          $_SESSION['img'] = $_SESSION['img'];
-        }
-
-        ?>
-
-        <img class="rounded-circle img-thumbnail" width="120" height="120" src="<?php echo $_SESSION['img'] ?>" alt="Imagem do perfil">
-
+        <a href="<?php echo INCLUDE_PATH ?>perfil_usuario?usuario=<?php echo $_SESSION['id'] ?>" title="Ir para perfil"><img class="rounded-circle img-thumbnail" width="120" height="120" src="<?php echo $perfil['avatar'] ?? $imagem ?>" alt="Imagem do perfil"></a>
         <div class="mt-3">
-          <h4><?php echo $_SESSION['nome'] ? $_SESSION['nome'] : $_SESSION['user'] ?></h4>
-          <p class="text-secondary mb-1"><?php echo pegaCargo($_SESSION['cargo']) ?></p>
+          <h4><?php echo $perfil['nome'] ?? $_SESSION['user'] ?></h4>
+          <p class="text-secondary mb-1"><?php echo pegaCargo($perfil['cargo']) ?? $_SESSION['catgo'] ?></p>
         </div>
       </div>
     </section>

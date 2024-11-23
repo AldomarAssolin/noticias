@@ -1,6 +1,6 @@
 <?php
-$formacao = Perfil::getFormacao($id);
 
+echo $mensagem;
 foreach ($formacao as $key => $value) {
 ?>
     <div class="card mb-3">

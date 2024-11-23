@@ -12,53 +12,47 @@
 
     <?php
 
-    $sql = MySql::connect()->prepare("SELECT id FROM `tb_admin.usuarios` WHERE id = ?");
-    $sql->execute(array($_SESSION['id']));
-    $value = $sql->fetch();
+    $id = $_SESSION['id'];
+    $mensagem = '';
 
-    // Verifica se um resultado foi encontrado
-    if ($value) {
+    if (isset($_POST['acao'])) {
+        $titulo = $_POST['titulo'];
+        $subtitulo = $_POST['subtitulo'];
+        $descricao = $_POST['descricao'];
+        $categoria = $_POST['categoria'];
+        $conteudo = $_POST['conteudo'];
+        $img = $_FILES['img'];
+        $data_criacao = date('Y-m-d H:i:s');
+        $usuario_id = $id;
 
-        if (isset($_POST['acao'])) {
-            $titulo = $_POST['titulo'];
-            $subtitulo = $_POST['subtitulo'];
-            $descricao = $_POST['descricao'];
-            $categoria = $_POST['categoria'];
-            $tipo = $_POST['tipo'];
-            $conteudo = $_POST['conteudo'];
-            $img = $_FILES['img'];
-            $data_criacao = date('Y-m-d H:i:s');
-            $usuario_id = $value['id'];
+        if ($titulo == '' || $subtitulo == '' || $descricao == '' || $conteudo == '') {
+            $mensagem .= Painel::alert('erro', 'Campos vazios não são permitidos!');
+        }
 
-            $artigo = new Artigos();
+        if ($img['name'] != '') {
 
-            if($titulo == '' || $subtitulo == '' || $descricao == '' || $conteudo == ''){
-                Painel::alert('erro', 'Campos vazios não são permitidos!');
-            }
-
-            if ($img['name'] != '') {
-                
-                //Existe o upload de imagem.
-                if (Painel::imagemValida($img)) {
-                    $img = Painel::uploadFile($img);
-                    if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $tipo, $conteudo, $img, $usuario_id, $data_criacao, null, 1)) {
-                        Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
-                    } else {
-                        Painel::alert('sucesso', 'Cadastro efetuado com sucesso!');
-                    }
+            //Existe o upload de imagem.
+            if (Painel::imagemValida($img)) {
+                $img = Painel::uploadFile($img);
+                $artigo = new Artigos();
+                if ($artigo->adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_criacao, null, 1)) {
+                    $mensagem .= Painel::alert('sucesso', 'Cadastro com sucesso junto com a imagem!');
                 } else {
-                    Painel::alert('erro', 'O formato da imagem não é válido');
+                    $mensagem .= Painel::alert('sucesso', 'Cadastro efetuado com sucesso!');
                 }
             } else {
-                Painel::alert('erro', 'Por favor, insira uma imagem!');
+                $mensagem .= Painel::alert('erro', 'O formato da imagem não é válido');
             }
+        } else {
+            $mensagem .= Painel::alert('erro', 'Por favor, insira uma imagem!');
         }
     }
 
-
-
     ?>
     <div class="container">
+        <div class="alert">
+            <?php echo $mensagem; ?>
+        </div>
         <form method="post" enctype="multipart/form-data" class="row g-3 mt-2 mt-md-5 px-3 py-5 shadow">
             <div class="col-md-12">
                 <label for="inputEmail4" class="form-label">Título</label>
@@ -82,23 +76,15 @@
                     ?>
                 </select>
             </div>
-            <div class="col-12">
-                <label for="inputSelect" class="form-label">Tipo</label>
-                <select class="form-select" name="tipo" aria-label="Default select example" id="inputSelect">
-                    <?php
-                    foreach (Painel::$tipos as $key => $val) {
-                        echo '<option selected value="' . $key . '">' . $val . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
             <div class="col-md-12">
                 <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
                 <textarea id="editor" class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo"></textarea>
             </div>
-            <div class="col-12">
-                <label for="inputAddress" class="form-label">Thumbnail</label>
-                <input type="file" class="form-control" name="img">
+            <div class="form-group mb-2">
+                <div class="form-group mb-3">
+                    <label class="form-label w-25 file btn btn-outline-success" for="img">Imagem</label><br>
+                    <input type="file" class="btn btn-primary btn-sm" id="img" name="img" accept="image/*">
+                </div>
             </div>
             <div class="col-12">
                 <input type="submit" name="acao" class="btn btn-success" value="Cadastrar">

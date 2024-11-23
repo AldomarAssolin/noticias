@@ -42,7 +42,7 @@ class Usuario
 		return $sql->fetch(PDO::FETCH_ASSOC);
 	}
 
-	public static function listarUsuariosCadastrado()
+	public static function listarUsuariosCadastrados()
     {
         //self::limparUsuariosOnline();
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE status = 1");

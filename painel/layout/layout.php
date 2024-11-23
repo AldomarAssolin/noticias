@@ -69,6 +69,14 @@ $API_KEY = Env::getEnv('TINY_KEY');
           include('./commons/footer.php');
           ?>
         </div>
+        <script>
+          setTimeout(function() {
+            $('.alert').alert('close');
+            $('#btn-alert-close').click(function() {
+              $('.alert').alert('close');
+            });
+          }, 5000);
+        </script><!-- Alert auto close -->
       </main>
     </div>
 
@@ -163,15 +171,7 @@ $API_KEY = Env::getEnv('TINY_KEY');
 
     });
   </script>
-  <script>
-    setTimeout(function() {
-      $('.alert').alert('close');
-      $('#btn-alert-close').click(function() {
-        $('.alert').alert('close');
-      });
-    }, 5000);
-  </script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 </body>
 

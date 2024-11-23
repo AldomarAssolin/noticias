@@ -28,7 +28,6 @@
             $subtitulo = $_POST['subtitulo'];
             $descricao = $_POST['descricao'];
             $categoria = $_POST['categoria'];
-            $tipo = $_POST['tipo'];
             $conteudo = $_POST['conteudo'];
             $imagem = $_FILES['imagem'];
             $imagem_atual = $_POST['imagem_atual'];
@@ -47,7 +46,7 @@
                     //$img = $imagem_atual;
                     $img = $imagem;
 
-                    if ($artigo->editarArtigo($titulo, $subtitulo, $descricao,  $categoria, $tipo, $conteudo, $img, $usuario_id, $data_atualizacao, $_GET['id'])) {
+                    if ($artigo->editarArtigo($titulo, $subtitulo, $descricao,  $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $_GET['id'])) {
                         Painel::alert('sucesso', 'Atualizado com sucesso junto com a imagem!');
                     }else{
                         Painel::alert('sucesso', 'Atualizado com sucesso!');
@@ -90,17 +89,6 @@
                 ?>
             </select>
         </div>
-        <div class="col-12">
-            <label for="inputSelect" class="form-label">Tipo</label>
-            <select class="form-select" name="tipo" aria-label="Default select example" id="inputSelect">
-                <?php
-                //echo '<option selected value="' . $tipo . '">' . $tipo . '</option>';
-                foreach (Painel::$tipos as $key => $val) {
-                    echo '<option selected value="' . $key . '">' . $val . '</option>';
-                }
-                ?>
-            </select>
-        </div>
         <div class="col-md-12">
             <label for="exampleFormControlTextarea1" class="form-label">Conteúdo</label>
             <textarea id="editor" class="form-control" rows="6" name="conteudo" placeholder="Digite seu conteúdo">
@@ -110,7 +98,18 @@
         <div class="col-12">
             <label for="inputAddress" class="form-label">Thumbnail</label>
             <input type="file" class="form-control" name="imagem">
-            <input type="hidden" name="imagem_atual" value="<?php echo $value['img'] ?>">
+        </div>
+        <div class="form-group mb-2">
+            <div class="form-group mb-3">
+                <label class="form-label w-25 file btn btn-outline-success" for="imagem">Imagem</label><br>
+                <input type="file" class="btn btn-primary btn-sm" id="imagem" name="imagem" accept="image/*">
+                <input type="hidden" id="imagem_atual" name="imagem_atual" value="<?php echo $slide['imagem'] ?>">
+            </div>
+            <?php if (!empty($value['img'])): ?>
+                <div class="mb-3">
+                    <img src="<?php echo $value['img'] ?>" alt="Imagem atual" class="img-thumbnail" style="max-width: 200px;">
+                </div>
+            <?php endif; ?>
         </div>
         <div class="col-12">
             <input type="submit" name="acao" class="btn btn-success" value="Atualizar">

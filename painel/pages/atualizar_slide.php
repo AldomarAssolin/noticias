@@ -16,10 +16,9 @@ try {
         if ($imagem['name'] != '') {
             Slides::updateSlide($titulo, $descricao, $link, $imagem, $_GET['id']);
             Painel::alert('sucesso', 'Slide atualizado com sucesso!');
-
-        }else{
+            $slide = Slides::getSlide($_GET['id']);
+        } else {
             Painel::alert('erro', 'Erro ao atualizar a imagem!');
-
         }
 
         //$slide = Slides::getSlide($_GET['id']);
@@ -45,8 +44,15 @@ try {
     </div>
 </div>
 
+
 <div class="container mt-5">
-    <form method="post" enctype="multipart/form-data" class=" mt-2 mt-md-5">
+    <nav class="navbar">
+      <form class="container-fluid justify-content-end">
+        <a href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_slides" class="btn btn-sm  btn-outline-success me-2" type="button">Criar</a>
+        <a href="<?php echo INCLUDE_PATH_PAINEL ?>lista_slides" class="btn btn-sm btn-outline-secondary" type="button">Voltar</a>
+      </form>
+    </nav>
+    <form method="post" enctype="multipart/form-data" class=" mt-2 mt-md-5 px-3 shadow">
         <div class="form-group mb-2">
             <label for="titulo">Título</label>
             <input type="text" class="form-control" id="titulo" name="titulo" value="<?php echo $slide['titulo'] ?>">
@@ -60,11 +66,16 @@ try {
             <input type="text" class="form-control" id="link" name="link" value="<?php echo $slide['link'] ?>">
         </div>
         <div class="form-group mb-2">
-            <label for="imagem">Imagem</label>
-            <div class=" border rounded-2">
-                <input type="file" class="form-control-file" id="imagem" name="imagem">
-                <input type="hidden" name="imagem_atual" value="<?php echo $slide['imagem'] ?>">
+            <div class="form-group mb-3">
+                <label class="form-label w-25 file btn btn-outline-success" for="imagem">Imagem</label><br>
+                <input type="file" class="btn btn-primary btn-sm" id="imagem" name="imagem" accept="image/*">
+                <input type="hidden" id="imagem_atual" name="imagem_atual" value="<?php echo $slide['imagem'] ?>">
             </div>
+            <?php if (!empty($redes['imagem'])): ?>
+                <div class="mb-3">
+                    <img src="" alt="Imagem atual" class="img-thumbnail" style="max-width: 200px;">
+                </div>
+            <?php endif; ?>
         </div>
         <div class="mt-1">
             <input type="submit" class="btn btn-primary" name="acao" value="Cadastrar">
