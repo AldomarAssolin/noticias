@@ -34,7 +34,7 @@ $redes = Perfil::getAllRedesSociais($id);
     </div><!--card-body-->
     <?php
     if ($_SESSION) {
-        if ($_SESSION['user'] == $_GET['usuario']) {
+        if ($_SESSION['user'] == $perfil['email'] && $_GET['usuario'] == $perfil['id']) {
     ?>
             <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=<?php echo $_SESSION['id'] ?>" class="btn btn-primary">Editar Perfil</a>
     <?php

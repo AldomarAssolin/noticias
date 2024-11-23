@@ -1,6 +1,6 @@
 <?php
 
-class RedeSociais{
+class RedesSociais{
 
     private $id;
     private $nome;
@@ -87,13 +87,11 @@ class RedeSociais{
     }
 
     //Atualiza uma rede social
-    public function update($nome, $link, $cor, $imagem, $usuario_id){
-        $sql = MySql::connect()->prepare("UPDATE `tb_admin.redes_sociais` SET nome = ?, link = ?, cor = ?, imagem = ? WHERE usuario_id = ?");
-        if($sql->execute(array($this->$nome, $this->$link, $this->$cor, $this->$imagem, $this->$usuario_id))){
-            echo Painel::alert('sucesso', 'Rede social atualizada com sucesso!');
+    public function update($nome, $link, $imagem, $cor, $usuario_id) {
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.redes_sociais` SET nome = ?, link = ?, imagem = ?, cor = ? WHERE usuario_id = ?");
+        if ($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))) {
             return true;
-        }else{
-            echo Painel::alert('erro', 'Erro ao atualizar rede social!');
+        } else {
             return false;
         }
     }

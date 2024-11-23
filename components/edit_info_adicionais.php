@@ -7,127 +7,104 @@ $mensagem = '';
 
 <!--nav-tabs-->
 <div class="container px-2">
+
     <header>
-        <nav class="navbar w-100">
-            <div class="row w-100">
-                <div class="col-9">
-                    <ul class="nav nav-tabs mt-3 mt-md-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<?php echo INCLUDE_PATH ?>perfil?redes_sociais&id=<?php echo $value['id'] ?>">Redes Sociais</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo INCLUDE_PATH ?>perfil?formacao&id=<?php echo $value['id'] ?>">Formação</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo INCLUDE_PATH ?>perfil?interesses&id=<?php echo $value['id'] ?>">Interesses Pessoais</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-3">
-                    <div class="d-flex aling-items-end justify-content-end">
-                        <?php
-                        if ($_GET['usuario_edit'] === 'criar') {
-                        ?>
-                            <a class="btn btn-outline-secondary mx-2" href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=<?php echo $_SESSION['id'] ?>">Voltar</a>
-                        <?php
-                        } else if ($_GET['usuario_edit'] === 'editar') {
-                        ?>
-                            <a class="btn btn-outline-secondary mx-2" href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=<?php echo $_SESSION['id'] ?>">Voltar</a>
-                        <?php
-
-                        } else {
-
-                        ?>
-
-                            <a class="btn btn-outline-secondary mx-2" href="<?php echo INCLUDE_PATH ?>perfil_usuario?usuario=<?php echo $id ?>">Perfil</a>
-
-                        <?php
-                        }
-
-                        ?>
-                    </div>
-                </div>
-            </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $id ?>">Perfil</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=<?php echo $id ?>">Editando</a></li>
+            </ol>
         </nav>
     </header>
-    <!--nav-tabs-->
 
     <main class="px-2">
         <!--Redes Sociais-->
-        <div class="page my-4 py-2">
-            <div class="card-body">
-                <?php
-
-                switch ($_GET['usuario_edit']) {
-                    case ($_GET['usuario_edit'] === 'editar'):
-                        include('components/edit_redes_sociais.php');
-                        break;
-                    case ($_GET['usuario_edit'] === 'criar'):
-                        include('components/criar_redes_sociais.php');
-                        break;
-                    default:
-                        include('components/redes_sociais.php');
-                }
-
-                ?>
-            </div><!--card-body-->
+        <div class="card my-4 py-2">
+            <nav class="navbar navbar-expand-lg">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=redes_sociais&id=<?php echo $_SESSION['id'] ?>" class="nav-link">Redes Sociais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=formacao&id=<?php echo $_SESSION['id'] ?>" class="nav-link">Formações</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=interesses" class="nav-link">Interesses</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <!--Redes Sociais-->
+        <div class="card-body">
 
+            <?php
 
-        <!--Formação-->
-        <div class="page mb-4">
-            <div class="card-body">
-                <?php
-
-                if ($_GET['usuario_edit'] === 'editar') {
+            switch ($_GET['usuario_edit']) {
+                case ($_GET['usuario_edit'] === 'redes_sociais'):
+                    include('components/redes_sociais.php');
+                    break;
+                case ($_GET['usuario_edit'] === 'editar_redes_sociais'):
+                    include('components/edit_redes_sociais.php');
+                    break;
+                case ($_GET['usuario_edit'] === 'criar_redes_sociais'):
+                    include('components/criar_redes_sociais.php');
+                    break;
+                case ($_GET['usuario_edit'] === 'formacao'):
                     include('components/edit_formacao.php');
-                } else {
-                    include('components/formacao.php');
-                }
-
-                ?>
-            </div><!--card-body-->
-        </div>
-        <!--Formação-->
-
-        <!--Interesses Pessoais-->
-        <div class="page mb-4">
-            <div class="card-body">
-                <?php
-
-                if ($_GET['usuario_edit'] === 'editar') {
+                    break;
+                case ($_GET['usuario_edit'] === 'editar_formacao'):
+                    include('components/atualizar_formacao.php');
+                    break;
+                case ($_GET['usuario_edit'] === 'criar_formacao'):
+                    include('components/criar_formacao.php');
+                    break;
+                case ($_GET['usuario_edit'] === 'interesses'):
+                    include('components/interesses.php');
+                    break;
+                case ($_GET['usuario_edit'] === 'editar_interesses'):
                     include('components/edit_interesses.php');
-                } else {
-                    include('components/interesses_pessoais.php');
-                }
+                    break;
+                case ($_GET['usuario_edit'] === 'criar_interesses'):
+                    include('components/criar_interesses.php');
+                    break;
+                default:
+                    include('components/redes_sociais.php');
+            }
 
-                ?>
-            </div><!--card-body-->
-        </div>
-        <!--Interesses Pessoais-->
-    </main><!--main-->
-</div><!--container-->
+            ?>
+        </div><!--card-body-->
+</div><!--page-->
+<!--Redes Sociais-->
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const tabs = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page');
+<?php
+//         <!--Formação-->
+//         <div class="card mb-4">
+//             <div class="card-body">
+//                 <?php
 
-        tabs.forEach((tab, index) => {
-            tab.addEventListener('click', function(event) {
-                event.preventDefault();
+//                 include('components/edit_formacao.php');
 
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
+//                 
+//             </div><!--card-body-->
+//         </div>
+//         <!--Formação-->
 
-                pages.forEach(page => page.style.display = 'none');
-                pages[index].style.display = 'block';
-            });
-        });
+//         <!--Interesses Pessoais-->
+//         <div class="card mb-4">
+//             <div class="card-body">
+//                 <?php
 
-        // Initialize the first tab and page as active
-        tabs[0].classList.add('active');
-        pages[0].style.display = 'block';
-    });
-</script>
+//                 if ($_GET['usuario_edit'] === 'editar') {
+//                     include('components/edit_interesses.php');
+//                 } else {
+//                     include('components/interesses_pessoais.php');
+//                 }
+
+//                 
+//             </div><!--card-body-->
+//         </div>
+//         <!--Interesses Pessoais-->
+//     </main><!--main-->
+// </div><!--container-->
+
+?>

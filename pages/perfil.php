@@ -13,8 +13,6 @@ if ($avatar == null || $avatar == '' || $capa == null || $capa == '' || $redes =
 //var_dump($_SESSION);
 $id = isset($_GET['usuario']);
 
-
-
 ?>
 
 <div class="container my-5">
@@ -30,18 +28,34 @@ $id = isset($_GET['usuario']);
 
             ?>
         </div><!--col-md-4-->
-        <div class="col-md-8">
+        <div class="col-md-8 m-0">
             <?php
 
             $usuario = $_GET;
             if (isset($_GET['usuario'])) {
-                include('components/info_adicionais.php');
+                include('components/sobre.php');
             } else if (isset($_GET['usuario_edit'])) {
                 include('components/edit_info_adicionais.php');
             }
-
-
             ?>
         </div><!--col-md-8-->
+    </div><!--row-->
+    <?php
+    if (isset($_GET['usuario'])) {
+    ?>
+    <div class="formacao my-3 my-md-5">
+        <?php
+        include('components/perfil_formacao.php');
+        ?>
     </div>
-</div>
+
+    <div class="interesses-pessoais">
+        <?php
+        include('components/perfil_interesses_pessoais.php');
+        ?>
+    </div>
+
+    <?php
+    }
+    ?>
+</div><!--container-->

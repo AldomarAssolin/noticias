@@ -7,7 +7,6 @@ $mensagem = '';
 //info usuario
 $perfil = Perfil::viewUsuarioPerfil($id);
 $redes = Perfil::getAllRedesSociais($id);
-$formacao = Perfil::getFormacao($id);
 $interesses = Perfil::getInteresses($id);
 
 //Padrao de imagem
@@ -79,7 +78,7 @@ if ($perfil == false) {
             <!--sidebar-->
         </div><!--col-md-4-->
 
-        
+
         <!--nav-tabs-->
         <div class="col-md-8">
             <ul class="nav nav-tabs">
@@ -99,54 +98,25 @@ if ($perfil == false) {
             <!--nav-tabs-->
 
             <!--card sobre mim -->
-            <div class="card page mb-3">
-                <div class="card-body">
-                    <div class="card-body">
-                        <h5 class="card-title">Sobre Mim</h5>
-                        <p class="card-text">
-                            <?php echo $perfil['sobre'] ?? $mensagem; ?>
-                        </p>
-                    </div><!--sobre-mim-->
-                </div><!--card-body-->
-            </div><!--card-->
+            <div class="page px-4 border-bottom">
+                <h1 class="display-6 fw-bold text-body-emphasis">Sobre mim</h1>
+                <div class="mx-auto">
+                    <p class="lead mb-4 text-justify"><?php echo $perfil['sobre'] ?></p>
+                </div>
+                <div class="overflow-hidden" style="max-height: 30vh;">
+                    <div class="container px-5">
+                        <img src="<?php echo $perfil['capa'] ?>" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+                    </div>
+                </div>
+            </div>
             <!--card sobre mim -->
 
             <!--card formacao-->
             <div class="card page mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Formação</h5>
-
                     <?php
-                    echo $mensagem;
-                    foreach ($formacao as $key => $value) {
-                    ?>
-                        <div class="card mb-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="card-header fs-6 fst-italic">
-                                        <?php echo $value['nivel'] ?>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>
-                                            <?php echo $value['nome'] ?> -
-                                            <span class="text-info"><?php echo $value['instituicao'] ?></span>
-                                        </p>
-                                        <p>
-                                            <?php echo $value['cidade'] ?> - <?php echo $value['uf'] ?>
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted fst-italic"><?php echo date('d/m/y', strtotime($value['data_inicio'])) ?> - <?php echo date('d/m/y', strtotime($value['conclusao'])) ?></small>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <img src="<?php echo $value['logo'] ?>" class="card-img-top" alt="logo">
-                                </div>
-                            </div><!--row-->
-                        </div><!--card-->
-
-                    <?php
-                    }
+                    include('components/formacao.php');
                     ?>
                 </div><!--formacao-->
             </div><!--card-->

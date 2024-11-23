@@ -11,8 +11,7 @@ $id = $_GET['id'];
 
 $artigos = Artigos::listarArtigosAutor($id);
 $perfil = Perfil::listarPerfilNomeAvatar($id);
-
-
+$redes = Perfil::getAllRedesSociais($id);
 
 ?>
 
@@ -22,9 +21,19 @@ $perfil = Perfil::listarPerfilNomeAvatar($id);
             <h1 class="display-4 fw-bold lh-1 text-body-emphasis"><?php echo $perfil['nome'] ?></h1>
             <p class="lead"><?php echo $perfil['bio'] ?></p>
             <a href="<?php echo INCLUDE_PATH ?>perfil?usuario=<?php echo $perfil['usuario_id']; ?>" class="btn btn-primary">Ver Perfil</a>
-        </div>
+            <?php
+                foreach ($redes as $key => $value) {
+                ?>
+                    <a href="<?php echo  $value['link'] ?>" class="btn btn-outline-<?php echo  $value['cor'] ?> btn-sm my-1" target="_blank">
+                        <?php echo  $value['nome'] ?>
+                    </a>
+
+                <?php
+                }
+                ?>
+        </div><!-- /.col-lg-7 -->
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-            <img class="rounded-lg-3" src="<?php echo $perfil['avatar'] ?? $avatar ?>" alt="" width="450" height="320">
+            <img class="rounded-lg-3" src="<?php echo $perfil['capa'] ?? $capa ?>" alt="" width="450" height="320">
         </div>
     </div>
 </div>

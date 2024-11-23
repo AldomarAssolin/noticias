@@ -31,6 +31,7 @@ Site::contador();
 
   <link href="<?php echo URL_STATIC ?>css/blog.css" rel="stylesheet">
   <link href="<?php echo URL_STATIC ?>css/css.css" rel="stylesheet">
+  <link href="<?php echo URL_STATIC ?>css/heroes.css" rel="stylesheet">
 
 </head>
 

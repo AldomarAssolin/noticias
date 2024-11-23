@@ -151,10 +151,10 @@ class Perfil extends Usuario
         }
     }
 
-    public static function atualizarPerfil($nome, $sobrenome, $data_nasc, $bio, $avatar, $capa, $cidade, $uf, $id)
+    public static function atualizarPerfil($nome, $sobrenome, $data_nasc, $bio, $sobre, $avatar, $capa, $cidade, $uf, $id)
     {
-        $sql = MySql::connect()->prepare("UPDATE `tb_admin.perfil` SET nome = ?, sobrenome = ?, data_nasc = ?, bio = ?, avatar = ?, capa = ?, cidade = ?, uf = ?, usuario_id = ? WHERE usuario_id = ?");
-        $sql = $sql->execute(array($nome, $sobrenome, $data_nasc, $bio, $avatar, $capa, $cidade, $uf, $id, $id));
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.perfil` SET nome = ?, sobrenome = ?, data_nasc = ?, bio = ?, sobre = ?, avatar = ?, capa = ?, cidade = ?, uf = ?, usuario_id = ? WHERE usuario_id = ?");
+        $sql = $sql->execute(array($nome, $sobrenome, $data_nasc, $bio, $sobre, $avatar, $capa, $cidade, $uf, $id, $id));
         if ($sql) {
             echo Painel::alert('sucesso', 'Perfil atualizado com sucesso!');
             return true;
@@ -184,6 +184,8 @@ class Perfil extends Usuario
         }
     }
 
+    //PERFIL
+    //Busca todos os perfis
     public static function listarPerfis()
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.perfil`");
@@ -191,6 +193,7 @@ class Perfil extends Usuario
         return $sql->fetchAll();
     }
 
+    //Busca um perfil pelo id
     public static function listarPerfilUsuario($id)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.perfil` WHERE usuario_id = ?");
@@ -198,13 +201,15 @@ class Perfil extends Usuario
         return $sql->fetch();
     }
 
+    //Busca um perfil pelo id (nome, avatar, bio,capa)
     public static function listarPerfilNomeAvatar($id)
     {
-        $sql = MySql::connect()->prepare("SELECT concat(nome, ' ', sobrenome) AS nome, bio, avatar, usuario_id FROM `tb_admin.perfil` WHERE usuario_id = ?");
+        $sql = MySql::connect()->prepare("SELECT concat(nome, ' ', sobrenome) AS nome, bio, avatar, capa, usuario_id FROM `tb_admin.perfil` WHERE usuario_id = ?");
         $sql->execute(array($id));
         return $sql->fetch();
     }
 
+    //Busca Perfil do usuario pela id
     public static function viewUsuarioPerfil($id)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `vw_usuarios_perfil` WHERE id = ?");
@@ -212,6 +217,8 @@ class Perfil extends Usuario
         return $sql->fetch();
     }
 
+    //REDES SOCIAIS
+    //Busca todas as redes sociais do usuário
     public static function getAllRedesSociais($id)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.redes_sociais` WHERE usuario_id = ?");
@@ -219,6 +226,55 @@ class Perfil extends Usuario
         return $sql->fetchAll();
     }
 
+    //Cadastra uma nova rede social
+    public function createRedeSocial($nome, $link, $imagem, $cor, $usuario_id)
+    {
+        $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.redes_sociais` VALUES (null, ?, ?, ?, ?, ?)");
+        if ($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))) {
+            echo Painel::alert('sucesso', 'Rede social cadastrada com sucesso!');
+            return true;
+        } else {
+            echo Painel::alert('erro', 'Erro ao cadastrar rede social!');
+            return false;
+        }
+    }
+
+    //Busca uma rede social pelo id
+    public static function getRedesById($id)
+    {
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.redes_sociais` WHERE id = ?");
+        $sql->execute(array($id));
+        return $sql->fetch();
+    }
+
+    //Atualiza uma rede social
+    public function updateRedeSocial($nome, $link, $imagem, $cor, $usuario_id)
+    {
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.redes_sociais` SET nome = ?, link = ?, imagem = ?, cor = ? WHERE id = ?");
+        if ($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))) {
+            echo Painel::alert('sucesso', 'Rede social atualizada com sucesso!');
+            return true;
+        } else {
+            echo Painel::alert('erro', 'Erro ao atualizar rede social!');
+            return false;
+        }
+    }
+
+    //Exclui uma rede social
+    public function deleteRedeSocial($id)
+    {
+        $sql = MySql::connect()->prepare("DELETE FROM `tb_admin.redes_sociais` WHERE id = ?");
+        if ($sql->execute(array($id))) {
+            echo Painel::alert('sucesso', 'Rede social excluída com sucesso!');
+            return true;
+        } else {
+            echo Painel::alert('erro', 'Erro ao excluir rede social!');
+            return false;
+        }
+    }
+
+    //FORMACAO
+    //Busca uma formacao pelo id
     public static function getFormacao($id)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.formacao` WHERE usuario_id = ?");
@@ -226,6 +282,19 @@ class Perfil extends Usuario
         return $sql->fetchAll();
     }
 
+    //deleta uma formacao
+    public function deleteFormacao($id)
+    {
+        $sql = MySql::connect()->prepare("DELETE FROM `tb_admin.formacao` WHERE id = ?");
+        if ($sql->execute(array($id))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //INTERESSES
+    //Busca uma intersse pelo id
     public static function getInteresses($id)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.interesses` WHERE usuario_id = ?");
@@ -233,41 +302,11 @@ class Perfil extends Usuario
         return $sql->fetchAll();
     }
 
+    //Busca um interesse por area
     public static function getInteressePorArea($id, $area)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.interesses` WHERE usuario_id = ? AND area = ?");
         $sql->execute(array($id, $area));
         return $sql->fetchAll();
-    }
-
-    //Busca uma rede social pelo id
-    public static function getRedesById($id){
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.redes_sociais` WHERE id = ?");
-        $sql->execute(array($id));
-        return $sql->fetch();
-    }
-
-    //Cadastra uma nova rede social
-    public function createRedeSocial($nome, $link, $imagem, $cor, $usuario_id){
-        $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.redes_sociais` VALUES (null, ?, ?, ?, ?, ?)");
-        if($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))){
-            echo Painel::alert('sucesso', 'Rede social cadastrada com sucesso!');
-            return true;
-        }else{
-            echo Painel::alert('erro', 'Erro ao cadastrar rede social!');
-            return false;
-        }
-    }
-
-    //Atualiza uma rede social
-    public function updateRedeSocial($nome, $link, $imagem, $cor, $usuario_id){
-        $sql = MySql::connect()->prepare("UPDATE `tb_admin.redes_sociais` SET nome = ?, link = ?, imagem = ?, cor = ? WHERE usuario_id = ?");
-        if($sql->execute(array($nome, $link, $imagem, $cor, $usuario_id))){
-            echo Painel::alert('sucesso', 'Rede social atualizada com sucesso!');
-            return true;
-        }else{
-            echo Painel::alert('erro', 'Erro ao atualizar rede social!');
-            return false;
-        }
     }
 }
