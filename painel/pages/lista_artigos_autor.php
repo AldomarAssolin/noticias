@@ -50,37 +50,11 @@ $url = INCLUDE_PATH_PAINEL . 'lista_artigos_autor?id=' . $id;
 
 
 <?php
-
-
-try {
-    // Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
-    $artigos = Artigos::listarArtigosAutor($id);
-
-    if ($artigos) {
-        $autor = $artigos[0]['autor']; // Pega o nome do autor
-        $avatar = $artigos[0]['avatar']; // Pega o avatar do autor
-        
-        // Se o autor não for encontrado, pega o email do autor
-        if ($autor == NULL) {
-            $autor = $artigos[0]['email'];
-        } else {
-            $autor = $autor;
-        }
-        
-        if ($avatar == NULL) {
-            $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
-        } else {
-            $avatar = $avatar;
-        }
-    }
-
-
-} catch (Exception $e) {
-    echo Painel::alert('erro', $e->getMessage());
-}
+// Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
+$artigos = Artigos::listarArtigosAutor($id);
 
 // Título da página
-$titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $autor . '</b>';
+$titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $artigos[0]['nome_completo'] . '</b>';
 
 ?>
 
@@ -116,8 +90,8 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
 
                     <tr>
                         <td>
-                            <img src="<?php echo htmlspecialchars($avatar); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
-                            <span class="fs-6"><?php echo htmlspecialchars($autor); ?></span>
+                            <img src="<?php echo htmlspecialchars($value['avatar']) ?? INCLUDE_PATH.'static/uploads/avatar.jpg' ; ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
+                            <span class="fs-6"><?php echo htmlspecialchars($value['nome_completo']); ?></span>
                         </td> <!-- Nome do autor do artigo -->
                         <td><?php echo $value['titulo']; ?></td> <!-- Título do artigo -->
                         <td><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></td> <!-- Data de criação formatada -->

@@ -12,18 +12,12 @@
 
     <?php
 
-    $value = Artigos::pegarArtigo($_GET['id']);
+    $id = $_GET['id'];
+    $value = Artigos::pegarArtigo($id);
 
-
-    $categoria = $value['categoria']; // Pega a categoria do artigo
-    $tipo = $value['tipo']; // Pega a tipo do artigo
-
-    $newIMG = explode('/', $value['img']);
-    $nomeIMG = end($newIMG);
-    
     if ($value) { // Verifica se um resultado foi encontrado
 
-        if (isset($_POST['acao'])) {
+        if (isset($_POST['atualizar_artigo']) && $_POST['atualizar_artigo'] == 'Atualizar') {
             $titulo = $_POST['titulo'];
             $subtitulo = $_POST['subtitulo'];
             $descricao = $_POST['descricao'];
@@ -34,33 +28,24 @@
             $usuario_id = $value['usuario_id'];
             $data_atualizacao = date('Y-m-d H:i:s');
 
-
-            $artigo = new Artigos();
-            if ($imagem) {
-                //Existe o upload de imagem.
-                
+            if ($imagem['name'] != '') {
                 if (Painel::imagemValida($imagem)) {
                     Painel::deleteFile($imagem_atual);
                     $imagem = Painel::uploadFile($imagem);
-                    
-                    //$img = $imagem_atual;
-                    $img = $imagem;
-
-                    if ($artigo->editarArtigo($titulo, $subtitulo, $descricao,  $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $_GET['id'])) {
-                        Painel::alert('sucesso', 'Atualizado com sucesso junto com a imagem!');
-                    }else{
-                        Painel::alert('sucesso', 'Atualizado com sucesso!');
-                    }
+                    Artigos::editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $imagem, $usuario_id, $data_atualizacao, $id);
+                    Painel::alert('sucesso', 'Artigo atualizado com sucesso!');
+                    $value = Artigos::pegarArtigo($id);
                 } else {
-                    Painel::alert('erro', 'O formato da imagem não é válido');
+                    Painel::alert('erro', 'O formato da imagem não é válido!');
                 }
             } else {
-                Painel::alert('erro', 'Erro ao atualizar...');
+                $imagem = $imagem_atual;
+                Artigos::editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $imagem, $usuario_id, $data_atualizacao, $id);
+                Painel::alert('sucesso', 'Artigo atualizado com sucesso!');
+                $value = Artigos::pegarArtigo($id);
             }
         }
     }
-
-
 
     ?>
     <form method="post" enctype="multipart/form-data" class="row g-3 border rounded-1 m-0 p-2">
@@ -79,7 +64,7 @@
         <div class="col-12">
             <label for="inputSelect" class="form-label">Categoria</label>
             <select class="form-select" name="categoria" aria-label="Default select example" id="inputSelect">
-                
+
 
                 <?php
                 echo '<option selected value="' . $categoria . '">' . $categoria . '</option>';
@@ -95,15 +80,11 @@
                 <?php echo $value['conteudo'] ?>
             </textarea>
         </div>
-        <div class="col-12">
-            <label for="inputAddress" class="form-label">Thumbnail</label>
-            <input type="file" class="form-control" name="imagem">
-        </div>
         <div class="form-group mb-2">
             <div class="form-group mb-3">
                 <label class="form-label w-25 file btn btn-outline-success" for="imagem">Imagem</label><br>
                 <input type="file" class="btn btn-primary btn-sm" id="imagem" name="imagem" accept="image/*">
-                <input type="hidden" id="imagem_atual" name="imagem_atual" value="<?php echo $slide['imagem'] ?>">
+                <input type="hidden" id="imagem_atual" name="imagem_atual" value="<?php echo $value['img'] ?>">
             </div>
             <?php if (!empty($value['img'])): ?>
                 <div class="mb-3">
@@ -112,7 +93,7 @@
             <?php endif; ?>
         </div>
         <div class="col-12">
-            <input type="submit" name="acao" class="btn btn-success" value="Atualizar">
+            <input type="submit" name="atualizar_artigo" class="btn btn-success" value="Atualizar">
         </div>
     </form>
     </div>

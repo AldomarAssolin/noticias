@@ -142,34 +142,34 @@ $API_KEY = Env::getEnv('TINY_KEY');
       xhr.send(formData);
     });
 
-    tinymce.init({
-      selector: '#editor',
-      height: 600,
-      formats: {
-        image: {
-          block: 'img',
-          classes: 'img-conteudo'
-        }
-      },
-      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-      tinycomments_mode: 'embedded',
-      tinycomments_author: 'Author name',
-      editimage_cors_hosts: ["http://localhost/", "http://localhost:3306"],
-      images_upload_url: 'postAcceptor.php',
-      mergetags_list: [{
-          value: 'First.Name',
-          title: 'First Name'
-        },
-        {
-          value: 'Email',
-          title: 'Email'
-        },
-      ],
-      ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
-      images_upload_handler: example_image_upload_handler
+    // tinymce.init({
+    //   selector: '#editor',
+    //   height: 600,
+    //   formats: {
+    //     image: {
+    //       block: 'img',
+    //       classes: 'img-conteudo'
+    //     }
+    //   },
+    //   plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+    //   toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    //   tinycomments_mode: 'embedded',
+    //   tinycomments_author: 'Author name',
+    //   editimage_cors_hosts: ["http://localhost/", "http://localhost:3306"],
+    //   images_upload_url: 'postAcceptor.php',
+    //   mergetags_list: [{
+    //       value: 'First.Name',
+    //       title: 'First Name'
+    //     },
+    //     {
+    //       value: 'Email',
+    //       title: 'Email'
+    //     },
+    //   ],
+    //   ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+    //   images_upload_handler: example_image_upload_handler
 
-    });
+    // });
   </script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 

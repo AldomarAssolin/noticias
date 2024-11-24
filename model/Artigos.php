@@ -9,9 +9,7 @@ class Artigos
     //buscar artigo individual
     public static function pegarArtigo($id)
     {
-        $sql = MySql::prepare("SELECT id, titulo, subtitulo, descricao, categoria, conteudo, img, usuario_id, data_criacao, data_atualizacao, status
-                                 FROM `tb_site.artigos` 
-                                 where id = ?");
+        $sql = MySql::prepare("SELECT * FROM `tb_site.artigos` WHERE id = ?");
         $sql->execute(array($id));
         return $sql->fetch();
     }
@@ -56,9 +54,8 @@ class Artigos
     public static function listarArtigosAutor($id)
     {
         try {
-            $sql = MySql::prepare("SELECT id, titulo, subtitulo, descricao, data_criacao, img AS capa, status
-                                    FROM `tb_site.artigos`
-                                    WHERE usuario_id = ?
+            $sql = MySql::prepare("SELECT * FROM `vw_usuarios_artigos_cards`
+                                    WHERE id = ?
                                     ORDER BY data_criacao DESC");
             $sql->execute(array($id));
 
@@ -74,15 +71,23 @@ class Artigos
         $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_criacao,null, 1));
     }
 
-    public static function deletarArtigo($id, $usuario_id)
+    //Desativar artigo
+    public static function deletarArtigo($id)
     {
-        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET status = 0 WHERE id = ? AND usuario_id = ?");
-        $sql->execute(array($id, $usuario_id));
+        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET status = 0 WHERE id = ?");
+        $sql->execute(array($id));
+    }
+
+    //Ativar artigo
+    public static function ativarArtigo($id)
+    {
+        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET status = 1 WHERE id = ?");
+        $sql->execute(array($id));
     }
 
     public static function editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $id)
     {
-        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET titulo = ?, subtitulo = ?, descricao = ?, categoria = ?, tipo = ?, conteudo = ?, img = ?, usuario_id = ?, data_atualizacao = ? WHERE id = ?");
+        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET titulo = ?, subtitulo = ?, descricao = ?, categoria = ?, conteudo = ?, img = ?, usuario_id = ?, data_atualizacao = ? WHERE id = ?");
         $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $id));
     }
 

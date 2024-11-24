@@ -6,14 +6,11 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 $perfil = new Perfil();
 $perfilData = $perfil->listarPerfilNomeAvatar($id);
 
-if($_SESSION){
-if ($perfilData != false) {
-    $imagem = $perfilData['avatar'] ?? $imagem;
-    $usuario = $perfilData['nome'];
-} else {
-    $imagem = $imagem;
-    $usuario = $_SESSION['user'];
-}
+if ($_SESSION) {
+    if ($perfilData != false) {
+        $imagem = $perfilData['avatar'] ?? $imagem;
+        $usuario = $perfilData['nome'];
+    }
 }
 
 ?>
@@ -39,12 +36,10 @@ if ($perfilData != false) {
                     Nenhum artigo encontrado!
                 </div>';
         }
-
-        
     } else {
         $artigos = Artigos::listarArtigos();
     }
-    
+
     ?>
 
 
@@ -79,7 +74,7 @@ if ($perfilData != false) {
                         echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
                     }
                     echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH . '?logout">Sair</a>';
-                    echo '<a href="' . INCLUDE_PATH . 'perfil_usuario?usuario='.$_SESSION['id'].'"><img class="rounded-circle" width="32" height="32" src="'. $imagem . '" alt="Imagem do perfil" title="' . $usuario . '"></a>';
+                    echo '<a href="' . INCLUDE_PATH . 'perfil_usuario?usuario=' . $_SESSION['id'] . '"><img class="rounded-circle" width="32" height="32" src="' . $imagem . '" alt="Imagem do perfil" title="' . $usuario . '"></a>';
                 }
                 ?>
             </div>

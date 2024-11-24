@@ -6,11 +6,10 @@ if (isset($_POST['ativar_usuario'])) {
     if ($usuario->ativarUsuario($usuario_id)) {
         echo Painel::alert('sucesso', 'Usuário excluído com sucesso!');
         // Atualiza a lista de usuários online
-        $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados();
-    } else {
-        echo Painel::alert('erro', 'Erro ao excluir o usuário. Tente novamente.');
     }
 }
+
+$totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(0);
 ?>
 
 <section class="online-users my-3 bg-body-tertiary shadow">
@@ -32,7 +31,7 @@ if (isset($_POST['ativar_usuario'])) {
             <tbody>
                 <?php
 
-                foreach ($usuariosDesativados as $key => $value) {
+                foreach ($totalUsuariosCadastrados as $key => $value) {
 
                 ?>
                     <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
@@ -54,7 +53,7 @@ if (isset($_POST['ativar_usuario'])) {
                                 </svg>
                             </a>
                             <!-- Botão para ativar usuario -->
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmActiveModal" data-id="<?php echo htmlspecialchars($value['id']); ?>">
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#confirmActiveModal" data-id="<?php echo htmlspecialchars($value['id']); ?>">
                                 <i class="bi bi-person-check-fill"></i>
                             </button>
                         </td><!--acoes-->

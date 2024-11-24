@@ -27,7 +27,7 @@ class Usuario
 			$sql->bindParam(':senha', $senha);
 			return $sql->execute();
 		} catch (PDOException $e) {
-			echo Painel::alert('erro', 'Erro ao cadastrar usuário: ' .$e->getMessage());
+			echo Painel::alert('erro', 'Erro ao cadastrar usuário: ' . $e->getMessage());
 			return false;
 		}
 	}
@@ -42,18 +42,36 @@ class Usuario
 		return $sql->fetch(PDO::FETCH_ASSOC);
 	}
 
-	public static function listarUsuariosCadastrados()
-    {
-        //self::limparUsuariosOnline();
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE status = 1");
-        $sql->execute();
-        return $sql->fetchAll();
-    }
+	//buscar usuario por id
+	public static function buscarUsuarioId($id)
+	{
+		$sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE id = :id");
+		$sql->bindParam(':id', $id);
+		$sql->execute();
 
+		return $sql->fetch(PDO::FETCH_ASSOC);
+	}
+
+	// Buscar usuarios cadastrados e ativos
+	public static function listarUsuariosCadastrados($status)
+	{
+		//self::limparUsuariosOnline();
+		$sql = MySql::connect()->prepare("SELECT u.id, u.email, u.cargo, u.logado, u.status, CONCAT(p.nome, ' ', p.sobrenome) as nome_completo, p.avatar 
+										FROM `tb_admin.usuarios` u
+										INNER JOIN `tb_admin.perfil` p ON u.id = p.usuario_id
+										WHERE u.status = ?");
+		$sql->execute(array($status));
+		return $sql->fetchAll();
+	}
+
+	// Buscar usuarios cadastrados e inativos
 	public static function listarUsuariosDesativados()
 	{
 		//self::limparUsuariosOnline();
-		$sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.usuarios` WHERE status = 0");
+		$sql = MySql::connect()->prepare("SELECT u.id, u.email, u.cargo, u.logado, u.status, CONCAT(p.nome, ' ', p.sobrenome) as nome_completo, p.avatar 
+										FROM `tb_admin.usuarios` u
+										INNER JOIN `tb_admin.perfil` p ON u.id = p.usuario_id
+										WHERE u.status = 0");
 		$sql->execute();
 		return $sql->fetchAll();
 	}

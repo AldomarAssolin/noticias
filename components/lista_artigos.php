@@ -60,9 +60,9 @@ if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
 
         foreach($artigo as $key => $value){
         
-            if($value['artigo_id'] == NULL){
-                return false;
-            }
+        if($value['status'] == 1){
+
+        
 
         ?>
             <li class="p-2 border-top">
@@ -101,6 +101,7 @@ if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
                 </a>
             </li>
         <?php
+        }
         }
         ?>
     </ul>

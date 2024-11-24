@@ -73,12 +73,14 @@ class Painel
         }
     }
 
+    // Função para redirecionar página
     public static function redirect($url)
     {
         echo '<script>location.href="' . $url . '"</script>';
         die();
     }
 
+    // Função para atualizar usuario online
     public static function listarUsuariosOnline()
     {
         self::limparUsuariosOnline();
@@ -87,14 +89,23 @@ class Painel
         return $sql->fetchAll();
     }
 
+    // Função para limpar usuario online
     public static function limparUsuariosOnline()
     {
         $date = date('Y-m-d H:i:s');
-        $sql = MySql::connect()->exec("DELETE FROM `tb_admin.online` WHERE ultima_acao < '$date' - INTERVAL 1 MINUTE");
+        $sql = MySql::connect()->exec("DELETE FROM `tb_admin.online` WHERE ultima_acao < '$date' - INTERVAL 15 MINUTE");
     }
 
+    // Função para verificar usuario online no painel administrativo
+    public static function usuariosOnlinePainel()
+    {
+        $date = date('Y-m-d H:i:s');
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.online` WHERE local = 'painel'");
+        $sql->execute();
+        return $sql->rowCount();
+    }
 
-
+    // Função para verificar total de visitas
     public static function totalDeVisitas()
     {
         $vistasTotais = MySql::connect()->prepare("SELECT * FROM `tb_admin.visitas`");
@@ -102,6 +113,7 @@ class Painel
         return $vistasTotais->rowCount();
     }
 
+    // Função para verificar total de visitas do dia
     public static function VisitasDoDia()
     {
         $vistasHoje = MySql::connect()->prepare("SELECT * FROM `tb_admin.visitas` WHERE dia = ?");
@@ -109,6 +121,7 @@ class Painel
         return $vistasHoje->rowCount();
     }
 
+    // Função de alerta de erro ou sucesso
     public static function alert($tipo, $mensagem)
     {
         if ($tipo == 'sucesso') {
@@ -120,6 +133,7 @@ class Painel
         }
     }
 
+    // Função para verificar se a imagem é válida
     public static function imagemValida($imagem)
     {
         $tiposValidos = ['image/jpeg', 'image/jpg', 'image/png', 'image/PNG', 'image/JPG', 'image/JPEG'];
@@ -138,6 +152,7 @@ class Painel
         }
     }
 
+    // Função para fazer upload de imagem
     public static function uploadFile($imagem)
     {
         // Verifica se o diretório de uploads existe
@@ -159,27 +174,29 @@ class Painel
         }
     }
 
+    // Função para atualizar imagem do usuário
     public static function updateImage($email, $img)
     {
         $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET img = ? WHERE email = ?");
 
-        if($sql->execute(array($img, $email))){
+        if ($sql->execute(array($img, $email))) {
             return true;
-        }else{
+        } else {
             echo Painel::alert('Erro', 'erro ao atualizar imagem!');
             return false;
         }
     }
 
+    // Função para deletar arquivo
     public static function deleteFile($file)
     {
         // Define o caminho do arquivo
         $filePath = BASE_DIR . 'uploads/' . $file;
         // Verifica se o arquivo existe
         if (file_exists($filePath)) {
-            if(unlink($filePath)){
+            if (unlink($filePath)) {
                 return true;
-            }else{
+            } else {
                 echo Painel::alert('erro', 'Erro ao excluir arquivo!');
                 return false;
             }
@@ -189,6 +206,7 @@ class Painel
         }
     }
 
+    // Função para verificar permissão de página
     public static function permissaoPagina($permissao)
     {
         if ($_SESSION['cargo'] >= $permissao) {
@@ -198,6 +216,7 @@ class Painel
         }
     }
 
+    // Função para listar usuario online
     public static function listarUsuarioOnline()
     {
 

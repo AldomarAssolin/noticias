@@ -51,7 +51,7 @@ $redes = Perfil::getAllRedesSociais($id);
             ?>
                     <div class="col">
                         <div class="card shadow-sm">
-                            <img src="<?php echo $value['capa'] ? $value['capa'] : $capa ?>" class="bd-placeholder-img card-img-top" width="100%" height="225">
+                            <img src="<?php echo $value['imagem_artigo'] ?? $capa ?>" class="bd-placeholder-img card-img-top" width="100%" height="225">
                             <div class="card-header">
                                 <h4 class="my-0 fw-normal"><?php echo $value['titulo'] ?></h4>
                             </div>
@@ -59,7 +59,7 @@ $redes = Perfil::getAllRedesSociais($id);
                                 <p class="card-text"><?php echo $value['descricao'] ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['id']) ?>" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                        <a href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['artigo_id']) ?>" class="btn btn-sm btn-outline-secondary">Ver</a>
                                     </div><!-- /.btn-group -->
                                     <small class="text-body-secondary"><?php echo date('d M y', strtotime($value['data_criacao'])) ?></small>
                                 </div><!-- /.d-flex -->

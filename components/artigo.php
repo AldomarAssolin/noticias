@@ -2,7 +2,7 @@
 //Padrao de imagem
 $avatar = '';
 $capa = '';
-if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
+if ($avatar == null || $avatar == '' || $capa == null || $capa == '') {
     $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
     $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
 };
@@ -66,6 +66,18 @@ if (isset($_GET['id'])) {
             <div class="comentario-item-header">
                 <?php
 
+                //Criar comentario 
+                if (isset($_POST['acao']) && $_POST['acao'] == 'comentar') {
+                    $comentario = $_POST['comentar'];
+                    $status = 1;
+                    $data_criacao = date('Y-m-d H:i:s');
+                    $usuario_id = $_SESSION['id'];
+                    $artigo_id = $id;
+                    Comentarios::enviarComentario($comentario, $status, $data_criacao, $usuario_id, $artigo_id);
+                    Painel::alert('sucesso', 'Comentário enviado com sucesso!');
+                }
+                Comentarios::listarComentarios($id);
+
                 $comentarios = Comentarios::listarComentarios($id);
 
                 if ($comentarios == false) {
@@ -73,6 +85,7 @@ if (isset($_GET['id'])) {
                 } else {
 
                     foreach ($comentarios as $key => $value) {
+
 
                 ?>
                         <div class="comentario-item-info border p-2 rounded-2 mb-2">
@@ -87,36 +100,44 @@ if (isset($_GET['id'])) {
                                     <span><?php echo date('d M y', strtotime($value['data_criacao'])) ?></span>
                                 </div>
                             </div>
-                            <div class="comentario-item-conteudo">
-                                <?php echo $value['comentario'] ?>
-                            </div>
+                            <div class="row">
+                                <div class="col-10">
+                                    <p><?php echo $value['comentario'] ?></p>
+                                </div>
+                                <?php
+                                if ($_SESSION) {
+                                ?>
+                                    <div class="col-2">
+                                        <form action="" method="post">
+                                            <div class="row">
+                                                <div class="col-12 text-end">
+                                                    <input type="submit" name="acao" value="editar" class="btn btn-sm btn-outline-warning mt-2">
+                                                    <input type="submit" name="acao" value="excluir" class="btn btn-sm btn-outline-danger mt-2">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div><!-- rowo -->
                         </div><!-- Comentário-item-info -->
 
                     <?php
                     } //fim foreach comentarios
                 } //fim else comentarios
                 if ($_SESSION) {
-                    try {
-                        if (isset($_POST['acao']) && $_POST['acao'] == 'comentar') {
-                            $comentario = $_POST['comentar'];
-                            $status = 1;
-                            $data_criacao = date('Y-m-d H:i:s');
-                            $usuario_id = $_SESSION['id'];
-                            $artigo_id = $id;
-                            Comentarios::enviarComentario($comentario, $status, $data_criacao, $usuario_id, $artigo_id);
-                            Painel::alert('sucesso', 'Comentário enviado com sucesso!');
-                        }
-                    } catch (Exception $e) {
-                        Painel::alert('erro', $e->getMessage());
-                    }
+
                     ?>
                     <div class="comentar">
                         <form method="post" class="d-flex border rounded-2 p-2 mb-2">
                             <div class="col">
                                 <div class="mb-3">
-                                    <label for="comentar" class="form-label">Faça um comentário sobre este artigo</label>
-                                    <input type="text" name="comentar" id="comentar" class="form-control" placeholder="Digite seu comentário" />
-                                    <input type="submit" name="acao" value="comentar" class="mt-2">
+                                    <div class="text-start">
+                                        <label for="comentar" class="form-label">Faça um comentário sobre este artigo</label>
+                                        <input type="text" name="comentar" id="comentar" class="form-control" placeholder="Digite seu comentário" />
+                                        <input type="submit" name="acao" value="comentar" class="btn btn-outline-success mt-2">
+                                    </div>
                                 </div>
                             </div>
                         </form>

@@ -8,11 +8,12 @@ if (isset($_POST['excluir_usuario'])) {
     if ($usuario->deletarUsuario($usuario_id)) {
         echo Painel::alert('sucesso', 'Usuário excluído com sucesso!');
         // Atualiza a lista de usuários online
-        $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados();
     } else {
         echo Painel::alert('erro', 'Erro ao excluir o usuário. Tente novamente.');
     }
 }
+
+$totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
 
 ?>
 
@@ -22,7 +23,7 @@ if (isset($_POST['excluir_usuario'])) {
             <svg class="bi">
                 <use xlink:href="#people" />
             </svg>
-            <span class="mx-2 lead">Usuários do Painel</span>
+            <span class="mx-2 lead">Usuários do Cadastrados no site</span>
         </h6>
         <table class="table my-3">
             <thead>
@@ -34,17 +35,16 @@ if (isset($_POST['excluir_usuario'])) {
             </thead>
             <tbody>
                 <?php
-
                 // Exibe os usuários cadastrados
                 foreach ($totalUsuariosCadastrados as $value) {
-                    // Verifica se o usuário possui artigos cadastrados
-                    $btnDisable = Artigos::listarArtigosAutor($value['id']);
                     // Adiciona a classe disabled caso o usuário não possua artigos
-                    $disable = $btnDisable ? '' : 'disabled';
+                    $disable = $value['logado'] == 1 ? '' : 'disabled';
+
                 ?>
                     <tr>
                         <th scope="row">
-                            <?php echo htmlspecialchars($value['email']); ?>
+                            <img src="<?php echo htmlspecialchars($value['avatar'] ?? INCLUDE_PATH . 'static/uploads/avatar.jpg'); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2 <?php echo $value['logado'] == 1 ? 'border border-2 border-success' : '' ?>">
+                            <?php echo htmlspecialchars($value['nome_completo'] ?? $value['email']); ?>
                         </th>
                         <td class="text-end"><?php echo htmlspecialchars(Painel::$cargos[$value['cargo']]); ?></td>
                         <td class='text-end'>
