@@ -1,9 +1,10 @@
 <?php
-
-
-
+//Págima Do Layout Principal
+if (isset($_SESSION['login'])) {
+  Site::contador();
+  Site::updateUsusarioOnline('site');
+}
 ?>
-
 <!doctype html>
 <html lang="pt-br" data-bs-theme="auto">
 
@@ -20,14 +21,9 @@
   <link rel="canonical" href="">
 
   <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
-
-
-
-
   <link href="<?php echo INCLUDE_PATH ?>assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
-
 
   <link href="<?php echo URL_STATIC ?>css/blog.css" rel="stylesheet">
   <link href="<?php echo URL_STATIC ?>css/css.css" rel="stylesheet">
@@ -39,7 +35,6 @@
 
   <div class="container">
     <?php
-
     include('./components/themes.php');
     include('./components/svg.php');
     include('./commons/header.php');
@@ -49,9 +44,7 @@
 
   <main class="container" style="min-height:73vh">
     <?php
-
     Site::carregarPagina();
-
     ?>
   </main>
 

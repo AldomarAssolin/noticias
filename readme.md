@@ -21,6 +21,11 @@ Este projeto é um blog desenvolvido para fornecer as últimas atualizações e 
 
 ## Como Executar o Projeto
 
+### Como Baixar do GitHub
+1. Acesse o repositório no GitHub.
+2. Clique no botão "Code" e depois em "Download ZIP".
+3. Extraia o arquivo baixado na pasta `htdocs` do seu XAMPP.
+
 1. Clone o repositório:
     ```bash
     git clone https://github.com/seu-usuario/noticias.git
@@ -37,6 +42,30 @@ Este projeto é um blog desenvolvido para fornecer as últimas atualizações e 
     ```
     http://localhost:8000
     ```
+
+## Instalação do XAMPP
+1. Baixe o XAMPP do site oficial: [https://www.apachefriends.org/index.html](https://www.apachefriends.org/index.html).
+2. Siga as instruções de instalação para o seu sistema operacional.
+3. Após a instalação, inicie o Apache e o MySQL através do painel de controle do XAMPP.
+
+## Configuração do PHP
+1. Certifique-se de que o PHP está instalado e configurado corretamente no XAMPP.
+2. Verifique a versão do PHP executando `php -v` no terminal.
+
+## Configuração do Banco de Dados
+1. Crie um banco de dados no MySQL através do phpMyAdmin ou linha de comando.
+2. Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+    ```plaintext
+    DB_HOST=localhost
+    DB_DATABASE=nome_do_banco
+    DB_USERNAME=usuario
+    DB_PASSWORD=senha
+    TINYMCE_API_KEY=sua_chave_tinymce
+    ```
+
+## Executando a Aplicação
+1. Abra o navegador e acesse `http://localhost/nome_do_projeto`.
+2. Siga as instruções na tela para configurar a aplicação.
 
 ## Contribuição
 

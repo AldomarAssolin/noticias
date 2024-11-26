@@ -1,3 +1,53 @@
+<?php
+// Atualizar artigos
+
+$id = $_GET['id'];
+
+$value = Artigos::pegarArtigo($id);
+$mensagem = '';
+
+if ($value) { // Verifica se um resultado foi encontrado
+
+    if (isset($_POST['atualizar_artigo']) && $_POST['atualizar_artigo'] == 'Atualizar') {
+        $titulo = $_POST['titulo'];
+        $subtitulo = $_POST['subtitulo'];
+        $descricao = $_POST['descricao'];
+        $categoria = $_POST['categoria'];
+        $conteudo = $_POST['conteudo'];
+        $imagem = $_FILES['imagem'];
+        $imagem_atual = $_POST['imagem_atual'];
+        $usuario_id = $value['usuario_id'];
+        $data_atualizacao = date('Y-m-d H:i:s');
+
+        if ($imagem['name'] != '') {
+            if (Painel::imagemValida($imagem)) {
+                Painel::deleteFile($imagem_atual);
+                $imagem = Painel::uploadFile($imagem);
+                if ($titulo == '' || $subtitulo == '' || $descricao == '' || $categoria == '' || $conteudo == '') {
+                    $mensagem .= Painel::alert('erro', 'Campos vazios não são permitidos!');
+                } else {
+                    Artigos::editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $imagem, $usuario_id, $data_atualizacao, $id);
+                    Painel::alert('sucesso', 'Artigo atualizado com sucesso!');
+                    $value = Artigos::findByAutorId($id);
+                }
+            } else {
+                $mensagem .= Painel::alert('erro', 'O formato da imagem não é válido!');
+            }
+        } else {
+            if ($titulo == '' || $subtitulo == '' || $descricao == '' || $categoria == '' || $conteudo == '') {
+                $mensagem .= Painel::alert('erro', 'Campos vazios não são permitidos!');
+            } else {
+                $imagem = $imagem_atual;
+                Artigos::editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $imagem, $usuario_id, $data_atualizacao, $id);
+                Painel::alert('sucesso', 'Artigo atualizado com sucesso!');
+                $value = Artigos::findByAutorId($id);
+            }
+        }
+    }
+}
+echo $mensagem;
+?>
+
 <section class="cadastrar-artigo ">
     <div class="">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -10,44 +60,20 @@
         </div>
     </div>
 
-    <?php
-
-    $id = $_GET['id'];
-    $value = Artigos::pegarArtigo($id);
-
-    if ($value) { // Verifica se um resultado foi encontrado
-
-        if (isset($_POST['atualizar_artigo']) && $_POST['atualizar_artigo'] == 'Atualizar') {
-            $titulo = $_POST['titulo'];
-            $subtitulo = $_POST['subtitulo'];
-            $descricao = $_POST['descricao'];
-            $categoria = $_POST['categoria'];
-            $conteudo = $_POST['conteudo'];
-            $imagem = $_FILES['imagem'];
-            $imagem_atual = $_POST['imagem_atual'];
-            $usuario_id = $value['usuario_id'];
-            $data_atualizacao = date('Y-m-d H:i:s');
-
-            if ($imagem['name'] != '') {
-                if (Painel::imagemValida($imagem)) {
-                    Painel::deleteFile($imagem_atual);
-                    $imagem = Painel::uploadFile($imagem);
-                    Artigos::editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $imagem, $usuario_id, $data_atualizacao, $id);
-                    Painel::alert('sucesso', 'Artigo atualizado com sucesso!');
-                    $value = Artigos::pegarArtigo($id);
-                } else {
-                    Painel::alert('erro', 'O formato da imagem não é válido!');
+    <nav class="navbar navbar-expand">
+        <ul class="w-100 navbar-nav justify-content-end px-2">
+            <li class="nav-item">
+                <?php 
+                if($_SESSION['cargo'] == 2){
+                    echo '<a class="btn btn-sm btn-secondary mx-2" aria-current="page" href="lista_artigos">Todos artigos</a>';
+                    echo '<a class="btn btn-sm btn-secondary" aria-current="page" href="lista_artigos_autor?id='.$_SESSION['id'].'">Meus artigos</a>';
+                }elseif($_SESSION['id'] == $value['usuario_id']){
+                    echo '<a class="btn btn-sm btn-secondary" aria-current="page" href="lista_artigos_autor?id='.$_SESSION['id'].'">Meus artigos</a>';
                 }
-            } else {
-                $imagem = $imagem_atual;
-                Artigos::editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $imagem, $usuario_id, $data_atualizacao, $id);
-                Painel::alert('sucesso', 'Artigo atualizado com sucesso!');
-                $value = Artigos::pegarArtigo($id);
-            }
-        }
-    }
-
-    ?>
+                ?>
+            </li>
+        </ul>
+    </nav>
     <form method="post" enctype="multipart/form-data" class="row g-3 border rounded-1 m-0 p-2">
         <div class="col-md-12">
             <label for="inputEmail4" class="form-label">Título</label>

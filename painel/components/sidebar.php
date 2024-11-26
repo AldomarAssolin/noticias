@@ -1,8 +1,7 @@
 <?php
 //Objetivo: Sidebar para o painel de controle
 
-$perfil = Perfil::viewUsuarioPerfil($_SESSION['id']);
-
+$perfil = Usuario::buscarUsuarioPorId($_SESSION['id']);
 
 $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 
@@ -11,7 +10,7 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 <div class="sidebar border border-right p-0">
   <div class="offcanvas-md offcanvas-end   overflow-y-auto" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="sidebarMenuLabel"><?php echo $_SESSION['nome'] ?></h5>
+      <h5 class="offcanvas-title" id="sidebarMenuLabel"><?php echo $_SESSION['nome'].'adfafafafa' ?></h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
     </div>
 
@@ -35,7 +34,8 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
         </a>
       </div><!-- nav-item -->
 
-      <div class="accordion accordion-flush my-2" id="accordionFlushExample">
+      <!-- Sidebar Heading ADM -->
+      <div <?php permissaoPagina(2) ?> class="accordion accordion-flush my-2" id="accordionFlushExample">
         <!-- Cadastros -->
         <div class="accordion-item">
           <h2 class="accordion-header">
@@ -95,7 +95,7 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
         </div>
 
         <!-- Administração -->
-        <div <?php permissaoPagina(2) ?> class="accordion-item">
+        <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
               <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
@@ -176,12 +176,19 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
           </div>
         </div>
       </div><!-- accordion -->
+      <!-- Sidebar Heading ADM -->
+
+      <!-- Sidebar Heading Autor -->
+
+      <!-- Sidebar Heading Autor -->
+
+
 
       <hr class="my-3">
 
       <ul class="nav flex-column mb-auto">
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>?loggout">
+          <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>settings">
             <svg class="bi">
               <use xlink:href="#gear-wide-connected" />
             </svg>

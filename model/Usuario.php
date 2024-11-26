@@ -52,6 +52,18 @@ class Usuario
 		return $sql->fetch(PDO::FETCH_ASSOC);
 	}
 
+	public static function buscarUsuarioPorId($id)
+	{
+		$sql = MySql::connect()->prepare("SELECT u.id, u.email, u.cargo, u.logado, u.status, CONCAT(p.nome, ' ', p.sobrenome) as nome, p.avatar
+										FROM `tb_admin.usuarios` u 
+										INNER JOIN `tb_admin.perfil` p ON u.id = p.usuario_id
+										WHERE u.id = :id");
+		$sql->bindParam(':id', $id);
+		$sql->execute();
+
+		return $sql->fetch(PDO::FETCH_ASSOC);
+	}
+
 	// Buscar usuarios cadastrados e ativos
 	public static function listarUsuariosCadastrados($status)
 	{

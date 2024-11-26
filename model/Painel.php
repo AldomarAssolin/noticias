@@ -114,11 +114,12 @@ class Painel
     }
 
     // Função para verificar total de visitas do dia
-    public static function VisitasDoDia()
+    public static function visitasDoDia()
     {
-        $vistasHoje = MySql::connect()->prepare("SELECT * FROM `tb_admin.visitas` WHERE dia = ?");
-        $vistasHoje->execute(array(date('Y-m-d')));
-        return $vistasHoje->rowCount();
+        $dia = date('Y-m-d');
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.visitas` WHERE dia = ?");
+        $sql->execute(array($dia));
+        return $sql->rowCount();
     }
 
     // Função de alerta de erro ou sucesso
@@ -210,6 +211,7 @@ class Painel
     public static function permissaoPagina($permissao)
     {
         if ($_SESSION['cargo'] >= $permissao) {
+            Painel::redirect(INCLUDE_PATH_PAINEL);
             return true;
         } else {
             return false;

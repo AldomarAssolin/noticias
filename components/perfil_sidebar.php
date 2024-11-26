@@ -1,20 +1,20 @@
 <?php
 $id = $_GET['usuario'];
 //Busca View do perfil do usuário
-$perfil = Perfil::viewUsuarioPerfil($id);
+$perfil = Perfil::listarPerfilUsuario($id);
 $redes = Perfil::getAllRedesSociais($id);
-
+//var_dump($perfil);
 ?>
 
 <div class="card p-2">
     <img src="<?php echo $perfil['avatar'] ?? $avatar ?>" class="card-img-top" alt="User Image">
     <div class="card-body">
-        <h5 class="card-title"><?php echo $perfil['nome'] ?? 'Nome' ?></h5>
+        <h5 class="card-title"><?php echo $perfil['nome'] . ' ' . $perfil['sobrenome'] ?? 'Nome' ?></h5>
         <p class="card-text"><?php echo $perfil['email'] ?? 'Email' ?></p>
         <p class="card-text"><?php echo $perfil['bio'] ?? 'BIO' ?></p>
         <div class="mb-3">
             <h5 class="card-title">Endereço</h5>
-            <p class="card-text"><?php echo $perfil['cidade'] . ' - ' . $perfil['uf'] ?></p>
+            <p class="card-text"><?php echo strtoupper($perfil['cidade']) ?> - <?php echo strtoupper( $perfil['uf']) ?></p>
         </div><!--endereco-->
         <div >
             <h5 class="card-title">Redes Sociais</h5>
@@ -34,7 +34,7 @@ $redes = Perfil::getAllRedesSociais($id);
     </div><!--card-body-->
     <?php
     if ($_SESSION) {
-        if ($_SESSION['user'] == $perfil['email'] && $_GET['usuario'] == $perfil['id']) {
+        if ($_GET['usuario'] == $perfil['id']) {
     ?>
             <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=<?php echo $_SESSION['id'] ?>" class="btn btn-primary">Editar Perfil</a>
     <?php

@@ -3,17 +3,15 @@
 // Ativar artigo
 if (isset($_POST['acao'])) {
 
-    if ($_POST['acao'] == 'ativar') {
-        if ($_POST['id'] == 0) {
-            echo Painel::alert('erro', 'Erro ao ativar o artigo. Tente novamente.');
-        }
-        $id = $_POST['id'];
-        $artigo = new Artigos();
-        if ($artigo->ativarArtigo($id)) {
-            echo Painel::alert('sucesso', 'Artigo ativado com sucesso!');
-        } else {
-            echo Painel::alert('sucesso', 'Sucesso ao ativar o artigo. Tente novamente.');
-        }
+    if ($_POST['id'] == 0) {
+        echo Painel::alert('erro', 'Erro ao ativar o artigo. Tente novamente.');
+    }
+    $id = $_POST['id'];
+    $artigo = new Artigos();
+    if ($artigo->ativarArtigo($id)) {
+        echo Painel::alert('sucesso', 'Artigo ativado com sucesso!');
+    } else {
+        echo Painel::alert('sucesso', 'Sucesso ao ativar o artigo.');
     }
 }
 
@@ -35,7 +33,7 @@ $artigos = Artigos::listarArtigosComAutores();  // Chama a função para pegar o
 
 ?>
 
-<section class="list-user mx-md-3">
+<section <?php permissaoPagina(2) ?> class="list-user mx-md-3">
     <div class="">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h3 mb-0"><span class="lead fs-3 h2 ls-5">Lista de Artigos</h1>
@@ -65,6 +63,7 @@ $artigos = Artigos::listarArtigosComAutores();  // Chama a função para pegar o
                 if ($artigos) {  // Verifica se há artigos
 
                     foreach ($artigos as $artigo) {
+
                         if ($artigo['artigo_id']) {
                 ?>
                             <tr>
@@ -92,7 +91,7 @@ $artigos = Artigos::listarArtigosComAutores();  // Chama a função para pegar o
                                     } else {
 
                                     ?>
-                                    <!-- Botão para ativar artigo -->
+                                        <!-- Botão para ativar artigo -->
                                         <form method="post">
                                             <input type="hidden" name="id" value="<?php echo $artigo['artigo_id']; ?>">
                                             <button title="Ativar artigo" type="submit" name="acao" value="ativar" class="btn btn-sm btn-success">

@@ -14,6 +14,17 @@ class Artigos
         return $sql->fetch();
     }
 
+    public static function findByAutorId($id)
+    {
+        $sql = MySql::prepare("SELECT * FROM `tb_site.artigos` WHERE usuario_id = ?");
+        $sql->execute(array($id));
+        if($sql->rowCount() == 0){
+            return $sql;
+        }else{
+            return $sql->fetch();
+        }
+    }
+
     //retorna todos os artigos
     public static function listarArtigos()
     {

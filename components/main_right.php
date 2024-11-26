@@ -27,6 +27,7 @@
   <!-- Artigos mensalmente -->
   
 
+  <!--Redes - Sociais-->
   <div class="p-4">
     <h4 class="fst-italic">Elsewhere</h4>
     <ol class="list-unstyled">
@@ -35,4 +36,5 @@
       <li><a href="#">Facebook</a></li>
     </ol>
   </div>
+  <!--Redes - Sociais-->
 </div>

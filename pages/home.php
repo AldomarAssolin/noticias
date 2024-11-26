@@ -1,11 +1,5 @@
-
-
 <?php
 
-if (isset($_SESSION['login'])) {
-    Site::contador();
-    Site::updateUsusarioOnline('site');
-}
 
 $imagem = './static/uploads/imagem-notfound.jpg';
 

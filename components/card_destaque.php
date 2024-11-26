@@ -1,15 +1,9 @@
 <?php
 //Objetivo: listar os slides cadastrados no banco de dados
-
 $slides = Slides::listarSlides();
-
-//var_dump($slides);
-
 ?>
-
-
 <!--Slides-->
-<div class="p-4 p-md-0 mb-4 rounded text-body-emphasis bg-tertiary shadow">
+<div class="p-md-0 mb-4 rounded text-body-emphasis bg-tertiary border-bottom">
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <?php

@@ -28,7 +28,6 @@ if(isset($_POST['acao'])){
     $categoria = Categorias::selectCategoria($id);
 }
 
-
 ?>
 
 <div class="container mt-5 px-3 py-5 shadow">
@@ -38,5 +37,7 @@ if(isset($_POST['acao'])){
             <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $categoria['nome'] ?>" required>
         </div>
         <input type="submit" name="acao" class="btn btn-success" value="Editar">
+        <a href="<?php echo INCLUDE_PATH_PAINEL ?>gerenciar_categorias" class="btn btn-primary">Voltar</a>
+        <a href="<?php echo INCLUDE_PATH_PAINEL ?>cadastrar_categoria" class="btn btn-success">Cadastrar</a>
     </form>
 </div>

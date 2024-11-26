@@ -22,10 +22,10 @@ $formacao = Perfil::getFormacao($id);
                     <div class="card-body">
                         <p>
                             <?php echo $value['nome'] ?> -
-                            <span class="text-info"><?php echo $value['instituicao'] ?></span>
+                            <span class="text-info"><?php echo ucfirst($value['instituicao']) ?></span>
                         </p>
                         <p>
-                            <?php echo $value['cidade'] ?> - <?php echo $value['uf'] ?>
+                            <?php echo strtoupper($value['cidade']) ?> - <?php echo strtoupper( $value['uf']) ?>
                         </p>
                     </div>
                     <div class="card-footer">

@@ -197,6 +197,13 @@ class Perfil extends Usuario
         }
     }
 
+    public static function getFindById($id)
+    {
+        $sql = MySql::connect()->prepare("SELECT concat(nome, ' ', sobrenome) AS nome FROM `tb_admin.perfil` WHERE usuario_id = ?");
+        $sql->execute(array($id));
+        return $sql->fetch()['nome'];
+    }
+
     //Busca todos os perfis
     public static function listarPerfis()
     {
@@ -286,7 +293,7 @@ class Perfil extends Usuario
     }
 
     //FORMACAO
-    //Busca uma formacao pelo id
+    //Busca uma formacao pelo id do usuario
     public static function getFormacao($id)
     {
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.formacao` WHERE usuario_id = ?");
@@ -294,15 +301,36 @@ class Perfil extends Usuario
         return $sql->fetchAll();
     }
 
-    //Cadastra uma nova formacao
-    public function createFormacao($instituicao, $curso, $data_inicio, $data_fim, $usuario_id)
+    //Busca uma formacao pelo id
+    public static function getFormacaoById($id)
     {
-        $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.formacao` VALUES (null, ?, ?, ?, ?, ?)");
-        if ($sql->execute(array($instituicao, $curso, $data_inicio, $data_fim, $usuario_id))) {
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.formacao` WHERE id = ?");
+        $sql->execute(array($id));
+        return $sql->fetch();
+    }
+
+    //Cadastra uma nova formacao
+    public function createFormacao($nome, $instituicao, $nivel, $data_inicio, $conclusao, $logo, $cidade, $uf, $id)
+    {
+        $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.formacao` VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if ($sql->execute(array($nome, $instituicao, $nivel, $data_inicio, $conclusao, $logo, $cidade, $uf, $id))) {
             echo Painel::alert('sucesso', 'Formação cadastrada com sucesso!');
             return true;
         } else {
             echo Painel::alert('erro', 'Erro ao cadastrar formação!');
+            return false;
+        }
+    }
+
+    //Atualiza uma formacao
+    public function updateFormacao($nome, $instituicao, $nivel, $data_inicio, $conclusao, $logo, $cidade, $uf, $id)
+    {
+        $sql = MySql::connect()->prepare("UPDATE `tb_admin.formacao` SET nome = ?, instituicao = ?, nivel = ?, data_inicio = ?, conclusao = ?, logo = ?, cidade = ?, uf = ? WHERE id = ?");
+        if ($sql->execute(array($nome, $instituicao, $nivel, $data_inicio, $conclusao, $logo, $cidade, $uf, $id))) {
+            echo Painel::alert('sucesso', 'Formação atualizada com sucesso!');
+            return true;
+        } else {
+            echo Painel::alert('erro', 'Erro ao atualizar formação!');
             return false;
         }
     }

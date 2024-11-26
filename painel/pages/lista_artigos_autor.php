@@ -2,56 +2,43 @@
 
 
 // Pega o ID do autor através de $_GET
-$id = $_GET['id'];
+$id = $_GET['id'] ?? $_SESSION['id'];
+// Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
+$artigos = Artigos::listarArtigosAutor($id);
 
 $url = INCLUDE_PATH_PAINEL . 'lista_artigos_autor?id=' . $id;
 
-?>
+// Ativar artigo
+if (isset($_POST['acao'])) {
 
-<!-- Modal de confirmação -->
-<div class="modal fade" id="excluirArtigo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-    <?php
-    //Exibe alerta de sucesso ou erro ao excluir artigo 
-    try {
-
-        if (isset($_GET['excluir']) && isset($_GET['idArtigo']) && $_GET['excluir'] == 'ok') {
-            $idArtigo = intval($_GET['idArtigo']);
-            $id = intval($_GET['id']);
-
-            if (http_response_code() >= 200 && http_response_code() < 300) {
-                Artigos::deletarArtigo($idArtigo, $id);
-                Painel::redirect(INCLUDE_PATH_PAINEL . $_GET['url'] . '?id=' . $id);
-            }
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
+    if ($_POST['id'] == 0) {
+        echo Painel::alert('erro', 'Erro ao ativar o artigo. Tente novamente.');
     }
-    ?>
+    $id = $_POST['id'];
+    $artigo = new Artigos();
+    if ($artigo->ativarArtigo($id)) {
+        echo Painel::alert('sucesso', 'Artigo ativado com sucesso!');
+    } else {
+        echo Painel::alert('sucesso', 'Sucesso ao ativar o artigo.');
+    }
+}
 
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Tem certeza que deseja excluir?</h1>
-                <a href="<?php echo INCLUDE_PATH_PAINEL . $_GET['url'] . '?id=' . $_GET['id'] ?>" class="btn-close"></a>
-            </div>
-            <div class="modal-body">
-                <p>Essa ação não poderá ser desfeita!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <!-- Link para exclusão que será atualizado com o ID via JS -->
-                <a id="confirmExcluir" class="btn btn-danger">Excluir</a>
-            </div>
-        </div><!--modal-content-->
-    </div><!--modal-dialog-->
-</div><!-- Modal de confirmação -->
-<!-- Modal de confirmação -->
+//Excluir artigo
+//A exclusão consiste em atualizar o extatus do artigo.
+if (isset($_POST['delete_artigo'])) {
+    if ($_POST['delete_artigo'] == 0) {
+        echo Painel::alert('sucesso', 'Sucesso ao excluir o artigo. Tente novamente.');
+    }
+    $id_artigo = $_POST['delete_artigo'];
+    $artigo = new Artigos();
+    if ($artigo->deletarArtigo($id_artigo)) {
+        echo Painel::alert('sucesso', 'Artigo excluído com sucesso!');
+        $artigo = Artigos::pegarArtigo($id_artigo);
+    }
+}
 
+$artigos = Artigos::listarArtigosAutor($_SESSION['id']);  // Chama a função para pegar os artigos
 
-<?php
-// Chama a função listarArtigosAutor para pegar os artigos do autor selecionado
-$artigos = Artigos::listarArtigosAutor($id);
 
 // Título da página
 $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs-3 h2 ls-5">Lista de Artigos de</span> <b>' . $artigos[0]['nome_completo'] . '</b>';
@@ -70,6 +57,13 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
             </div>
         </div>
     </div>
+    <nav class="navbar navbar-expand">
+        <ul class="w-100 navbar-nav justify-content-end px-2">
+            <li class="nav-item">
+                <a class="btn btn-sm btn-success" aria-current="page" href="cadastrar_artigo">Cadastrar</a>
+            </li>
+        </ul>
+    </nav>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -90,14 +84,14 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
 
                     <tr>
                         <td>
-                            <img src="<?php echo htmlspecialchars($value['avatar']) ?? INCLUDE_PATH.'static/uploads/avatar.jpg' ; ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
+                            <img src="<?php echo htmlspecialchars($value['avatar']) ?? INCLUDE_PATH . 'static/uploads/avatar.jpg'; ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
                             <span class="fs-6"><?php echo htmlspecialchars($value['nome_completo']); ?></span>
                         </td> <!-- Nome do autor do artigo -->
                         <td><?php echo $value['titulo']; ?></td> <!-- Título do artigo -->
                         <td><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></td> <!-- Data de criação formatada -->
-                        <td class='text-end'>
+                        <td class='d-flex justify-content-end'>
                             <!-- Botão para editar artigo -->
-                            <a title="Atualizar artigo" href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $value['id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
+                            <a title="Atualizar artigo" href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $value['artigo_id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
                                 <svg class='bi'>
                                     <use xlink:href='#pencil' />
                                 </svg>
@@ -107,20 +101,20 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
                             if ($value['status'] == 1) {
                             ?>
                                 <!-- Botão para excluir artigo -->
-                                <button title="Excluir artigo" type="button" class="btn btn-danger btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigo" data-idArtigo="<?php echo $value['id']; ?>" data-id="<?php echo $_GET['id']; ?>">
-                                    <svg class='bi'>
-                                        <use xlink:href='#trash' />
-                                    </svg>
+                                <button title="Desativar artigo" type='button' class='btn btn-sm btn-danger' data-bs-toggle='modal' data-bs-target='#confirmDeleteModal' data-artigo-id=<?php echo $value['artigo_id']; ?>>
+                                    <i class="bi-file-earmark-excel"></i>
                                 </button>
                             <?php
                             } else {
                             ?>
                                 <!-- Botão para ativar artigo -->
-                                <button title="Ativar artigo" type="button" class="btn btn-success btn-sm my-1 my-md-0" data-bs-toggle="modal" data-bs-target="#excluirArtigo" data-idArtigo="<?php echo $value['id']; ?>" data-id="<?php echo $_GET['id']; ?>">
-                                    <svg class='bi'>
-                                        <use xlink:href='#file-earmark' />
-                                    </svg>
-                                </button>
+                                <!-- Botão para ativar artigo -->
+                                <form method="post">
+                                    <input type="hidden" name="id" value="<?php echo $value['artigo_id']; ?>">
+                                    <button title="Ativar artigo" type="submit" name="acao" value="ativar" class="btn btn-sm btn-success">
+                                        <i class="bi bi-file-earmark-check"></i>
+                                    </button>
+                                </form>
 
                             <?php
                             }
@@ -137,17 +131,38 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
     </div>
 </section>
 
+<!-- Modal -->
+<div class='modal fade' id='confirmDeleteModal' tabindex='-1' aria-labelledby='confirmDeleteModalLabel' aria-hidden='true'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='confirmDeleteModalLabel'>Confirmar Exclusão</h5>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                Tem certeza que deseja excluir esta formação?
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancelar</button>
+                <form method='post'>
+                    <input type="hidden" name="delete_artigo" id="artigoIdToDelete">
+                    <button type='submit' class='btn btn-danger'>Excluir</button>
+                </form>
+            </div>
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- Modal -->
+<!-- Modal -->
+</div><!--container-->
+
 <script>
-    // Quando o modal é acionado, atualiza o link de confirmação com o ID correto
-    const modalExcluirLinks = document.querySelectorAll('.btn-danger[data-bs-target="#excluirArtigo"');
-    modalExcluirLinks.forEach(link => {
-        link.addEventListener('click', (event) => {
-            const artigoId = link.getAttribute('data-idArtigo');
-            const usuarioID = link.getAttribute('data-id');
-            const confirmLink = document.getElementById('confirmExcluir');
-            confirmLink.setAttribute('href', '<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?excluir=ok&idArtigo=' + artigoId + '&id=' + usuarioID);
-            console.log(confirmLink);
-            console.log(categoriaId);
+    document.addEventListener('DOMContentLoaded', function() {
+        var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+        confirmDeleteModal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget;
+            var redeId = button.getAttribute('data-artigo-id');
+            var modalRedeIdInput = document.getElementById('artigoIdToDelete');
+            modalRedeIdInput.value = redeId;
         });
     });
 </script>

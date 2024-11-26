@@ -1,15 +1,16 @@
 <?php
-//Exibe alerta de sucesso ou erro ao excluir categoria 
+//Exibe alerta de sucesso ou erro ao excluir usuario 
 if (isset($_POST['ativar_usuario'])) {
     $usuario_id = intval($_POST['ativar_usuario']); // Converte para inteiro para evitar injeção SQL
     $usuario = new Usuario();
     if ($usuario->ativarUsuario($usuario_id)) {
-        echo Painel::alert('sucesso', 'Usuário excluído com sucesso!');
-        // Atualiza a lista de usuários online
+        echo Painel::alert('sucesso', 'Usuário reativado com sucesso!');
+    }else{
+        echo Painel::alert('sucesso', 'Sucesso ao reativar usuário!');
     }
 }
-
 $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(0);
+
 ?>
 
 <section class="online-users my-3 bg-body-tertiary shadow">
@@ -33,6 +34,25 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(0);
 
                 foreach ($totalUsuariosCadastrados as $key => $value) {
 
+                    // Verifica se o usuário possui artigos
+                    $artigos = Artigos::listarArtigos();
+                    foreach ($artigos as $artigo) {
+                        if ($artigo['usuario_id'] == $value['id']) {
+                            $artigos = $value['id'];
+                            break;
+                        } else {
+                            $artigos = 0;
+                        }
+                    }
+                    
+                    
+                    // Desativa botao de ver artigos caso o usuário não possua artigos
+                    if($artigos == 0){
+                        $disabled = 'disabled';
+                    } else {
+                        $disabled = '';
+                    }
+
                 ?>
                     <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
 
@@ -42,7 +62,7 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(0);
                         </th>
                         <td class="text-end"><?php echo Painel::$cargos[$value['cargo']] ?></td>
                         <td class='text-end'>
-                            <a title="Ver artigos do usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo $value['id'] ?>" class='btn btn-primary btn-sm my-1 my-md-0  <?php echo $disable ?>'>
+                            <a title="Ver artigos do usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo $value['id'] ?>" class='btn btn-primary btn-sm my-1 my-md-0  <?php echo $disabled ?>'>
                                 <svg class='bi'>
                                     <use xlink:href='#folder-symlink-fill' />
                                 </svg>

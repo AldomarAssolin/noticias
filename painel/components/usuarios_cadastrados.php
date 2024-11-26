@@ -1,6 +1,5 @@
 <?php
 //Objetivo: Exibir os usuários cadastrados no painel
-
 // Lógica para exclusão
 if (isset($_POST['excluir_usuario'])) {
     $usuario_id = intval($_POST['excluir_usuario']); // Converte para inteiro para evitar injeção SQL
@@ -9,11 +8,13 @@ if (isset($_POST['excluir_usuario'])) {
         echo Painel::alert('sucesso', 'Usuário excluído com sucesso!');
         // Atualiza a lista de usuários online
     } else {
-        echo Painel::alert('erro', 'Erro ao excluir o usuário. Tente novamente.');
+        echo Painel::alert('sucesso', 'Sucesso ao excluir o usuário.');
     }
 }
-
+// Retorna lista usuários cadastrados após a exclusão
 $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
+
+
 
 ?>
 
@@ -37,8 +38,24 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
                 <?php
                 // Exibe os usuários cadastrados
                 foreach ($totalUsuariosCadastrados as $value) {
-                    // Adiciona a classe disabled caso o usuário não possua artigos
-                    $disable = $value['logado'] == 1 ? '' : 'disabled';
+                    // Verifica se o usuário possui artigos
+                    $artigos = Artigos::listarArtigos();
+                    foreach ($artigos as $artigo) {
+                        if ($artigo['usuario_id'] == $value['id']) {
+                            $artigos = $value['id'];
+                            break;
+                        } else {
+                            $artigos = 0;
+                        }
+                    }
+                    
+                    
+                    // Desativa botao de ver artigos caso o usuário não possua artigos
+                    if($artigos == 0){
+                        $disabled = 'disabled';
+                    } else {
+                        $disabled = '';
+                    }
 
                 ?>
                     <tr>
@@ -49,7 +66,7 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
                         <td class="text-end"><?php echo htmlspecialchars(Painel::$cargos[$value['cargo']]); ?></td>
                         <td class='text-end'>
                             <!-- Botão para ver artigos do usuário -->
-                            <a title="Ver artigos do usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo urlencode($value['id']); ?>" class='btn btn-primary btn-sm my-1 my-md-0 <?php echo $disable ?>'>
+                            <a title="Ver artigos do usuário" href="<?php echo INCLUDE_PATH_PAINEL ?>lista_artigos_autor?id=<?php echo urlencode($value['id']); ?>" class='btn btn-primary btn-sm my-1 my-md-0 <?php echo $disabled ?>'>
                                 <svg class='bi'>
                                     <use xlink:href='#folder-symlink-fill' />
                                 </svg>
