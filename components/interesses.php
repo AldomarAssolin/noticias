@@ -20,16 +20,19 @@ if (isset($_POST['salvar_alteracoes'])) {
         }
     }
 
-    if (Interesses::update($id, $nome, $descricao, $imagem, $area)) {
+    if (Interesses::update($nome, $descricao, $imagem, $area, $id)) {
         $mensagem = Painel::alert('sucesso', 'Interesse atualizado com sucesso!');
     } else {
         $mensagem = Painel::alert('erro', 'Erro ao atualizar o interesse.');
     }
 }
-var_dump($_POST);
+
+
 // Excluir Interesse
 if (isset($_POST['excluir_interesse'])) {
     $id = $_POST['id'];
+    $imagem_atual = $_POST['imagem_atual'];
+
     if (Interesses::delete($id)) {
         Painel::deleteFile($_POST['imagem_atual']);
         $mensagem = Painel::alert('sucesso', 'Interesse excluído com sucesso!');
@@ -37,11 +40,20 @@ if (isset($_POST['excluir_interesse'])) {
         $mensagem = Painel::alert('erro', 'Erro ao excluir o interesse.');
     }
 }
+
+$interesses = Interesses::getAll();
 ?>
 
 <section class="interesses my-5">
     <div class="container">
         <h2 class="mb-4">Meus Interesses</h2>
+
+        <!-- Botão para adicionar novo interesse -->
+        <div class="text-end">
+            <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=criar_interesses&id=<?php echo $_SESSION['id'] ?>" class="btn btn-success mb-3">
+                Adicionar Novo Interesse
+            </a>
+        </div>
 
         <div class="list-group">
             <?php foreach ($interesses as $interesse): ?>
@@ -87,7 +99,7 @@ if (isset($_POST['excluir_interesse'])) {
                                     </div>
                                     <?php if (!empty($interesse['imagem'])): ?>
                                         <div class="mb-3">
-                                            <img src="<?php echo $interesse['imagem'] ?>" alt="Imagem atual" class="img-thumbnail" style="max-width: 200px;">
+                                            <img src="<?php echo $interesse['imagem'] ?>" alt="Imagem atual" class="img-thumbnail" style="max-width: 200px;" accept="image/*">
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -110,12 +122,12 @@ if (isset($_POST['excluir_interesse'])) {
                             </div>
                             <div class="modal-body">
                                 Tem certeza que deseja excluir o interesse "<?php echo htmlspecialchars($interesse['nome']); ?>"?
-                                <?php echo $interesse['id']; ?>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <form action="" method="post">
                                     <input type="hidden" name="id" value="<?php echo $interesse['id']; ?>">
+                                    <input type="hidden" name="imagem_atual" value="<?php echo $interesse['imagem']; ?>">
                                     <button type="submit" name="excluir_interesse" class="btn btn-danger">Confirmar Exclusão</button>
                                 </form>
                             </div>
@@ -123,35 +135,6 @@ if (isset($_POST['excluir_interesse'])) {
                     </div>
                 </div>
             <?php endforeach; ?>
-        </div>
-
-        <!-- Botão para adicionar novo interesse -->
-        <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=criar_interesses&id=<?php echo $_SESSION['id'] ?>" class="btn btn-success mt-3">
-            Adicionar Novo Interesse
-        </a>
-
-        <!-- Modal para adicionar novo interesse -->
-        <div class="modal fade" id="adicionarInteresse" tabindex="-1" aria-labelledby="adicionarInteresseLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="adicionarInteresseLabel">Adicionar Novo Interesse</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                    </div>
-                    <form action="adicionar_interesse.php" method="post">
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="novoInteresse" class="form-label">Nome do Interesse</label>
-                                <input type="text" class="form-control" id="novoInteresse" name="nome" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Adicionar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </section>

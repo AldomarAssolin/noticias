@@ -37,11 +37,11 @@ class Interesses
         }
     }
 
-    public static function update($id, $nome)
+    public static function update($nome, $descricao, $imagem, $area, $id)
     {
         try {
-            $sql = MySql::connect()->prepare("UPDATE `tb_admin.interesses` SET nome = ? WHERE id = ?");
-            return $sql->execute([$nome, $id]);
+            $sql = MySql::connect()->prepare("UPDATE `tb_admin.interesses` SET nome = ?, descricao = ?, imagem = ?, area = ? WHERE id = ?");
+            return $sql->execute([$nome, $descricao, $imagem, $area, $id]);
         } catch (Exception $e) {
             error_log("Erro ao atualizar interesse: " . $e->getMessage());
             return false;
@@ -51,7 +51,7 @@ class Interesses
     public static function delete($id)
     {
         try {
-            $sql = MySql::connect()->prepare("DELETE FROM `tb_site.interesses` WHERE id = ?");
+            $sql = MySql::connect()->prepare("DELETE FROM `tb_admin.interesses` WHERE id = ?");
             return $sql->execute([$id]);
         } catch (Exception $e) {
             error_log("Erro ao excluir interesse: " . $e->getMessage());

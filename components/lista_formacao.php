@@ -1,5 +1,20 @@
 <?php
 $formacao = Perfil::getFormacao($id);
+$mensagem = '';
+// Lógica para exclusão
+if (isset($_POST['excluir_formacao'])) {
+    $id_formacao = $_POST['excluir_formacao'];
+    $perfil = new Perfil();
+    if ($perfil->deleteFormacao($id_formacao)) {
+        $mensagem .= Painel::alert('sucesso', 'Formação excluída com sucesso.');
+    } else {
+        $mensagem .= Painel::alert('erro', 'Erro ao excluir formação.');
+    }
+}
+
+$formacao = Perfil::getFormacao($id);
+
+echo $mensagem;
 
 foreach ($formacao as $key => $value) {
 ?>
@@ -41,16 +56,6 @@ foreach ($formacao as $key => $value) {
     <?php
 }
 
-// Lógica para exclusão
-if (isset($_POST['excluir_formacao'])) {
-    $id_formacao = $_POST['excluir_formacao'];
-    $perfil = new Perfil();
-    if ($perfil->deleteFormacao($id_formacao)) {
-        echo "<script>alert('Formação excluída com sucesso!'); window.location.reload();</script>";
-    } else {
-        echo "<script>alert('Erro ao excluir formação. Tente novamente.');</script>";
-    }
-}
     ?>
 
 

@@ -14,7 +14,7 @@ if (isset($_POST['atualizar'])) {
     $imagem_atual = $_POST['imagem_atual'];
     $cidade = $_POST['cidade'];
     $uf = $_POST['uf'];
-var_dump($_POST);
+
     // Processamento de upload de imagens
     $imagem = $imagem_atual;
     if (!empty($_FILES['nova_imagem']['name'])) {

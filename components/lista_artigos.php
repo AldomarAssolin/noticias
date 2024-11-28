@@ -34,8 +34,8 @@ $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 ?>
 
 <!-- Navbar de categorias -->
-<div id="nabar-category" class="nav-scroller p-3 shadow mt-3">
-    <nav class="nav nav-underline">
+<div id="nabar-category" class="nav-scroller py-3 shadow mt-3">
+    <nav class="nav nav-underline px-2">
         <a class="nav-item nav-link link-body-emphasis active" href="<?php echo INCLUDE_PATH ?>">Todos</a>
         <?php
         $categorias_artigo = Categorias::listarCategorias();
@@ -47,12 +47,12 @@ $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 </div>
 <!-- Navbar de categorias -->
 
-<div><!-- p-4 -->
+
     <!-- Lista de artigos -->
-    <ul class="list-unstyled px-2">
+    <ul class="list-unstyled">
         <?php foreach ($artigo as $value): ?>
             <?php if ($value['status'] == 1): ?>
-                <li class="p-2 border-bottom">
+                <li class="border-bottom">
                     <a class="py-3 mb-2 link-body-emphasis text-decoration-none" href="<?php echo INCLUDE_PATH ?>artigos?id=<?php echo urlencode($value['artigo_id'] ?? $value['id']) ?>">
                         <div class="card mb-2 border-0 d-flex flex-column flex-lg-row align-items-center">
                             <div class="col-lg-3 px-2 mb-2 mb-md-0">
@@ -61,10 +61,10 @@ $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
                             <div class="col-lg-9">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-12 col-md-6">
                                             <h6 class="mb-0"><?php echo htmlspecialchars($value['titulo']) ?></h6>
                                         </div>
-                                        <div class="col-6 text-end">
+                                        <div class="col-12 col-md-6 text-end">
                                             <span class="badge rounded-pill mb-2 text-bg-primary"><?php echo htmlspecialchars($value['categoria'] ?? 'mundo') ?></span>
                                         </div>
                                     </div>
@@ -91,4 +91,3 @@ $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
         <?php endforeach; ?>
     </ul>
     <!-- Lista de artigos -->
-</div><!-- p-4 -->

@@ -1,4 +1,4 @@
-<div class="position" style="top: 2rem;">
+<div class="position mx-0" style="top: 2rem;">
   <div class="p-4 mb-3 bg-body-tertiary shadow rounded">
     <a href="<?php echo INCLUDE_PATH ?>about" class="text-decoration-none text-body-secondary">
       <h4 class="fst-italic">Sobre este BLOG</h4>

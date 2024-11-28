@@ -1,4 +1,4 @@
-<div>
+<div class="mx-2">
     <h4 class="fst-italic">Notícias recentes</h4>
     <ul class="list-unstyled">
         <?php

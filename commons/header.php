@@ -1,3 +1,3 @@
-<header class="mb-5">
+<header class="mb-5 container">
     <?php include('./components/navbartop.php') ?>
 </header>

@@ -16,7 +16,7 @@ if ($_SESSION) {
 ?>
 
 <!-- Navbar -->
-<nav class="row navbar-top border-bottom lh-1 py-2">
+<nav class="row navbar-top border-bottom lh-1 p-2 mx-0">
     <div class="col-12 col-md-3 mb-2 pb-2 mb-md-0 pb-md-0">
         <div class="row">
             <div class="col-md-12 d-none d-md-flex justify-content-center align-items-end">
@@ -44,16 +44,17 @@ if ($_SESSION) {
                     </form>
                 </a>
             </div>
-            <div class="col-12 col-md-6 d-flex align-items-center justify-content-between">
-                <a class="blog-header text-body-emphasis  text-decoration-none mx-2" href="<?php echo INCLUDE_PATH ?>about">Sobre</a>
+            <div class="col-12 col-md-6 d-flex align-items-center justify-content-end">
+                <a class="icon-link icon-link-hover text-body-emphasis text-decoration-none" href="<?php echo INCLUDE_PATH ?>"><i class="bi bi-house-fill"></i></a>
+                <a class="icon-link icon-link-hover text-body-emphasis text-decoration-none mx-2" href="<?php echo INCLUDE_PATH ?>about"><i class="bi bi-person-lines-fill"></i></a>
                 <?php
                 if (isset($_SESSION['login']) == false) {
-                    echo '<a class="link-secondary" href="' . INCLUDE_PATH_PAINEL . '">Entrar</a>';
+                    echo '<a class="icon-link icon-link-hover link-light" href="' . INCLUDE_PATH_PAINEL . '"><i class="bi bi-box-arrow-in-right"></i></a>';
                 } else {
                     if ($_SESSION['cargo'] >= 1) {
-                        echo '<a class="link-secondary mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '">Dashboard</a>';
+                        echo '<a class="icon-link icon-link-hover mx-2  text-decoration-none" href="' . INCLUDE_PATH_PAINEL . '"><i class="bi bi-speedometer2"></i></a>';
                     }
-                    echo '<a class="link-secondary  mx-2 text-decoration-none" href="' . INCLUDE_PATH . '?logout">Sair</a>';
+                    echo '<a class="icon-link icon-link-hover mx-2 text-decoration-none" href="' . INCLUDE_PATH . '?logout"><i class="bi bi-box-arrow-in-left"></i></a>';
                     echo '<a href="' . INCLUDE_PATH . 'perfil_usuario?usuario=' . $_SESSION['id'] . '"><img class="rounded-circle" width="32" height="32" src="' . $imagem . '" alt="Imagem do perfil" title="' . $usuario . '"></a>';
                 }
                 ?>

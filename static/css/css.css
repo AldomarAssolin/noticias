@@ -22,3 +22,16 @@ input[type="file"] {
     display: inline-block;
     cursor: pointer;
 }
+
+.icon-link{
+    font-size: 1.5em;
+    transform: translate3d(0, -.125rem, 0);
+}
+
+
+@media screen and (max-width: 768px) {
+    html{
+        font-size: .75em;
+    }
+    
+}

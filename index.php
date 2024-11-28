@@ -20,10 +20,11 @@ if (isset($_GET['logout'])) {
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="description" content="Blog, notícias, informação">
+  <meta name="author" content="Aldomar Assolin">
   <meta name="generator" content="Hugo 0.115.4">
   <title><?php echo NOME_EMPRESA ?></title>
+  <link rel="shortcut icon" href="<?php echo URL_STATIC ?>/images/blogIcon.png" type="image/x-icon">
 
   <link rel="canonical" href="">
 
@@ -40,7 +41,6 @@ if (isset($_GET['logout'])) {
 
 <body>
 
-  <div class="container">
     <?php
     include('./components/themes.php');
     include('./components/svg.php');
