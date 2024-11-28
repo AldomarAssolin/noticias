@@ -4,11 +4,9 @@
 if (isset($_POST['acao'])) {
     $nome = $_POST['nome'];
     $slug = Painel::generateSlug($nome);
-    $arr = ['nome' => $nome, 'slug' => $slug, 'order_id' => '0', 'nome_tabela' => 'tb_site.categorias'];
-    Categorias::insert($arr);
+    Categorias::insert($nome, $slug, 0);
     Painel::alert('sucesso', 'Categoria cadastrada com sucesso!');
 }
-
 
 ?>
 

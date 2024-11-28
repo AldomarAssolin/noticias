@@ -3,8 +3,6 @@
 <?php
 class Artigos
 {
-    //retorna artigos com autores
-
 
     //buscar artigo individual
     public static function pegarArtigo($id)
@@ -29,7 +27,7 @@ class Artigos
     public static function listarArtigos()
     {
         try {
-            $sql = MySql::prepare("SELECT * FROM `tb_site.artigos` ORDER BY data_criacao DESC LIMIT 10");
+            $sql = MySql::prepare("SELECT * FROM `tb_site.artigos` ORDER BY data_criacao DESC");
             $sql->execute();
             return $sql->fetchAll();  // Retorna todos os resultados
         } catch (Exception $e) {
@@ -38,13 +36,13 @@ class Artigos
     }
 
     //retorna todos os artigos por categoria
-    public static function listarArtigosCategoria($categoria)
+    public static function listarArtigosPorCategoria($categoria)
     {
         try {
             $sql = MySql::prepare("SELECT * FROM `vw_usuarios_artigos_cards`
                                     WHERE categoria = ? 
                                     ORDER BY data_criacao DESC 
-                                    LIMIT 10");
+                                    LIMIT 5");
             $sql->execute(array($categoria));
             return $sql->fetchAll();  // Retorna todos os resultados
         } catch (Exception $e) {
@@ -55,7 +53,13 @@ class Artigos
     //retorna todos os artigos com o nome do autor
     public static function listarArtigosComAutores()
     {
-        $sql = MySql::connect()->prepare("SELECT * FROM `vw_usuarios_artigos_cards` ORDER BY data_criacao DESC");
+        $sql = MySql::connect()->prepare("SELECT u.id, u.email, u.cargo, u.logado, u.status, 
+        CONCAT(p.nome, ' ', p.sobrenome) AS nome_completo, p.avatar, 
+        a.id AS artigo_id, a.titulo, a.descricao, a.categoria, a.status, a.img AS imagem_artigo, a.data_criacao 
+        FROM `tb_admin.usuarios` u
+        INNER JOIN `tb_admin.perfil` p ON p.usuario_id = u.id
+        INNER JOIN `tb_site.artigos` a ON a.usuario_id = u.id
+        ORDER BY data_criacao DESC");
         $sql->execute();
         return $sql->fetchAll();  // Retorna todos os resultados
     }
@@ -76,6 +80,7 @@ class Artigos
         }
     }
 
+    //Cria um artigo
     public static function adicionarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_criacao, $data_atualização, $status)
     {
         $sql = MySql::connect()->prepare("INSERT INTO `tb_site.artigos` VALUES (null,?,?,?,?,?,?,?,?,?,?)");
@@ -96,12 +101,44 @@ class Artigos
         $sql->execute(array($id));
     }
 
-    public static function editarArtigo($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $id)
-    {
-        $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET titulo = ?, subtitulo = ?, descricao = ?, categoria = ?, conteudo = ?, img = ?, usuario_id = ?, data_atualizacao = ? WHERE id = ?");
-        $sql->execute(array($titulo, $subtitulo, $descricao, $categoria, $conteudo, $img, $usuario_id, $data_atualizacao, $id));
-    }
+    //Editar artigo
+    public static function editarArtigo($dados, $id)
+{
+    try {
+        $sql = "UPDATE `tb_site.artigos` 
+            SET 
+                titulo = :titulo,
+                subtitulo = :subtitulo,
+                descricao = :descricao,
+                categoria = :categoria,
+                conteudo = :conteudo,
+                img = :img,
+                usuario_id = :usuario_id,
+                data_atualizacao = :data_atualizacao
+            WHERE id = :id
+        ";
 
+        $conexao = MySql::connect();
+        $stmt = $conexao->prepare($sql);
+
+        $stmt->bindParam(':titulo', $dados['titulo'], PDO::PARAM_STR);
+        $stmt->bindParam(':subtitulo', $dados['subtitulo'], PDO::PARAM_STR);
+        $stmt->bindParam(':descricao', $dados['descricao'], PDO::PARAM_STR);
+        $stmt->bindParam(':categoria', $dados['categoria'], PDO::PARAM_STR);
+        $stmt->bindParam(':conteudo', $dados['conteudo'], PDO::PARAM_STR);
+        $stmt->bindParam(':img', $dados['imagem'], PDO::PARAM_STR);
+        $stmt->bindParam(':usuario_id', $dados['usuario_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':data_atualizacao', $dados['data_atualizacao'], PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Erro ao editar artigo: " . $e->getMessage());
+        return false;
+    }
+}
+
+    //retorna lista de artigos por mes
     public static function listarArtigosMes()
     {
         $sql = MySql::connect()->prepare("SELECT data_criacao FROM `tb_site.artigos`");
@@ -109,16 +146,41 @@ class Artigos
         return $sql->fetchAll();
     }
 
+    //retorna lista de artigos por mes
     public static function listarArtigosPorMes($mes){
         $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.artigos` WHERE MONTH(data_criacao) = ?");
         $sql->execute(array($mes));
         return $sql->fetchAll();
     }
 
+    //retorna busca de artigos
     public static function buscarArtigos($buscar)
-    {
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.artigos` WHERE titulo LIKE ? OR descricao LIKE ?");
-        $sql->execute(array('%' . $buscar . '%', '%' . $buscar . '%'));
+{
+    $sql = "SELECT a.id AS artigo_id, a.titulo, a.descricao, a.categoria, a.img AS capa, a.status, a.data_criacao, a.usuario_id,
+            CONCAT(p.nome, ' ', p.sobrenome) AS nome_completo, p.avatar, c.nome AS categoria_nome
+        FROM `tb_site.artigos` a
+        LEFT JOIN `tb_admin.perfil` p ON p.usuario_id = a.usuario_id
+        LEFT JOIN `tb_site.categorias` c ON c.id = a.categoria
+        WHERE a.titulo LIKE :busca OR a.descricao LIKE :busca";
+
+    $conexao = MySql::connect();
+    $stmt = $conexao->prepare($sql);
+    $termoBusca = '%' . $buscar . '%';
+    $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+    //retorna lista de artigos por autor
+    public static function listCardArtigos(){
+        $sql = MySql::connect()->prepare("SELECT a.id as artigo_id, a.titulo, a.descricao, a.categoria, a.img as capa, a.status,
+                                        CONCAT(p.nome, ' ', p.sobrenome) as nome_completo, p.avatar, p.usuario_id, a.status,a.data_criacao, a.usuario_id,
+                                        c.id as categoria_id, c.nome as categoria
+                                        FROM `tb_site.artigos` a
+                                        LEFT JOIN `tb_admin.perfil` p ON p.usuario_id = a.usuario_id
+                                        LEFT JOIN `tb_site.categorias` c ON c.nome = a.categoria");
+        $sql->execute();
         return $sql->fetchAll();
     }
 }

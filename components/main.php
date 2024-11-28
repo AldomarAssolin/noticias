@@ -1,7 +1,6 @@
 <div class="row g-5">
   <div class="col-md-8 px-0">
     <?php
-    include('./components/navbarCategory.php');
     include('./components/lista_artigos.php');
     ?>
   </div>

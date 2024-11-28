@@ -9,14 +9,19 @@ define('URL_STATIC', 'http://localhost:80/noticias/static/');
 
 //Constantes para o painel de controle
 define('INCLUDE_PATH_PAINEL', INCLUDE_PATH . 'painel/');
-define('BASE_DIR_PAINEL', __DIR__ . '/painel');
+define('BASE_DIR_PAINEL', __DIR__ . '/painel/');
 define('BASE_DIR', __DIR__ . '/');
 
 $autoload = function ($class) {
-    if (file_exists('./model/' . $class . '.php')) {
-        include('./model/' . $class . '.php');
+    $modelPath = BASE_DIR . 'model/' . $class . '.php';
+    $painelPath = BASE_DIR_PAINEL . 'model/' . $class . '.php';
+    
+    if (file_exists($modelPath)) {
+        include($modelPath);
+    } elseif (file_exists($painelPath)) {
+        include($painelPath);
     } else {
-        include('../model/' . $class . '.php');
+        error_log("Classe não encontrada: " . $class);
     }
 };
 
@@ -34,7 +39,6 @@ define('HOST', $host);
 define('USER', $user);
 define('PASSWORD', $pass);
 define('DATABASE', $db);
-
 
 define('NOME_EMPRESA', 'BLOG News');
 

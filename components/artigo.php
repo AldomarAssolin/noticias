@@ -1,26 +1,66 @@
 <?php
-//Padrao de imagem
-$avatar = '';
-$capa = '';
-if ($avatar == null || $avatar == '' || $capa == null || $capa == '') {
-    $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
-    $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
-};
+// Configurações padrão de imagem
+$avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
+$capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    // Chama a função pegarArtigo para pegar o artigo selecionado
-    $artigo = Artigos::pegarArtigo($id);
-
-    // Chama a função listarPerfilUsuario para pegar o perfil do usuário
-    $perfil = Perfil::listarPerfilNomeAvatar($artigo['usuario_id']);
-} else {
+// Verificar e obter o ID do artigo
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (!$id) {
     header('Location: ' . INCLUDE_PATH);
-    die();
+    exit;
 }
 
+// Obter dados do artigo e perfil do autor
+$artigo = Artigos::pegarArtigo($id);
+if (!$artigo) {
+    header('Location: ' . INCLUDE_PATH);
+    exit;
+}
+$perfil = Perfil::listarPerfilNomeAvatar($artigo['usuario_id']);
 
+// Processar ações de comentários
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $acao = filter_input(INPUT_POST, 'acao', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $comentario_id = filter_input(INPUT_POST, 'comentario_id', FILTER_SANITIZE_NUMBER_INT);
+
+    switch ($acao) {
+        case 'comentar':
+            $comentario = filter_input(INPUT_POST, 'comentar', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if ($comentario) {
+                $resultado = Comentarios::create($comentario, 1, date('Y-m-d H:i:s'), $_SESSION['id'], $id);
+                if ($resultado) {
+                    Painel::alert('sucesso', 'Comentário enviado com sucesso!');
+                } else {
+                    Painel::alert('erro', 'Erro ao enviar comentário.');
+                }
+            }
+            break;
+        case 'editar':
+            $novo_comentario = filter_input(INPUT_POST, 'editar_comentario', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            if ($novo_comentario && $comentario_id) {
+                $resultado = Comentarios::update($comentario_id, $novo_comentario);
+                if ($resultado) {
+                    Painel::alert('sucesso', 'Comentário atualizado com sucesso!');
+                } else {
+                    Painel::alert('erro', 'Erro ao atualizar comentário.');
+                }
+            }
+            break;
+        case 'excluir':
+            if ($comentario_id) {
+                $resultado = Comentarios::delete($comentario_id);
+                if ($resultado) {
+                    Painel::alert('sucesso', 'Comentário excluído com sucesso!');
+                } else {
+                    Painel::alert('erro', 'Erro ao excluir comentário.');
+                }
+            }
+            break;
+    }
+}
+
+// Obter comentários
+$comentarios = Comentarios::getAll($id);
 ?>
 
 <section class="px-4 pt-2 my-5 border-bottom  bg-body-secondary">
@@ -62,91 +102,71 @@ if (isset($_GET['id'])) {
 
     <div class="comentario">
         <h3>Comentários</h3>
-        <div class="comentario-item">
-            <div class="comentario-item-header">
-                <?php
-
-                //Criar comentario 
-                if (isset($_POST['acao']) && $_POST['acao'] == 'comentar') {
-                    $comentario = $_POST['comentar'];
-                    $status = 1;
-                    $data_criacao = date('Y-m-d H:i:s');
-                    $usuario_id = $_SESSION['id'];
-                    $artigo_id = $id;
-                    Comentarios::enviarComentario($comentario, $status, $data_criacao, $usuario_id, $artigo_id);
-                    Painel::alert('sucesso', 'Comentário enviado com sucesso!');
-                }
-                Comentarios::listarComentarios($id);
-
-                $comentarios = Comentarios::listarComentarios($id);
-
-                if ($comentarios == false) {
-                    echo '<h3 class="text-center">Nenhum comentário encontrado patra este artigo!</h3>';
-                } else {
-
-                    foreach ($comentarios as $key => $value) {
-
-
-                ?>
-                        <div class="comentario-item-info border p-2 rounded-2 mb-2">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h4>
-                                        <img src="<?php echo $value['avatar'] ?? $avatar ?>" alt="<?php echo $value['nome'] ?>" class="rounded-circle" width="28" height="28">
-                                        <?php echo $value['nome'] ? $value['nome'] : $value['email'] ?>
-                                    </h4>
-                                </div>
-                                <div class="col-5 text-end">
-                                    <span><?php echo date('d M y', strtotime($value['data_criacao'])) ?></span>
-                                </div>
+        <?php if ($comentarios): ?>
+            <?php foreach ($comentarios as $comentario): ?>
+                <div class="comentario-item-info border p-2 rounded-2 mb-2">
+                    <div class="row">
+                        <div class="col-7">
+                            <h4>
+                                <img src="<?php echo $comentario['avatar'] ?? $avatar ?>" alt="<?php echo htmlspecialchars($comentario['nome']) ?>" class="rounded-circle" width="28" height="28">
+                                <?php echo htmlspecialchars($comentario['nome'] ?: $comentario['email']) ?>
+                            </h4>
+                        </div>
+                        <div class="col-5 text-end">
+                            <span><?php echo date('d M y', strtotime($comentario['data_criacao'])) ?></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <p id="comentario-<?php echo $comentario['id'] ?>"><?php echo $comentario['comentario'] ?></p>
+                        </div>
+                        <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $comentario['usuario_id']): ?>
+                            <div class="col-2">
+                                <button onclick="editarComentario(<?php echo $comentario['id'] ?>)" class="btn btn-sm btn-outline-warning mt-2">Editar</button>
+                                <form method="post" style="display: inline;">
+                                    <input type="hidden" name="comentario_id" value="<?php echo $comentario['id'] ?>">
+                                    <input type="submit" name="acao" value="excluir" class="btn btn-sm btn-outline-danger mt-2">
+                                </form>
                             </div>
-                            <div class="row">
-                                <div class="col-10">
-                                    <p><?php echo $value['comentario'] ?></p>
-                                </div>
-                                <?php
-                                if ($_SESSION) {
-                                ?>
-                                    <div class="col-2">
-                                        <form action="" method="post">
-                                            <div class="row">
-                                                <div class="col-12 text-end">
-                                                    <input type="submit" name="acao" value="editar" class="btn btn-sm btn-outline-warning mt-2">
-                                                    <input type="submit" name="acao" value="excluir" class="btn btn-sm btn-outline-danger mt-2">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                <?php
-                                }
-                                ?>
-                            </div><!-- rowo -->
-                        </div><!-- Comentário-item-info -->
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <h3 class="text-center">Nenhum comentário encontrado para este artigo!</h3>
+        <?php endif; ?>
 
-                    <?php
-                    } //fim foreach comentarios
-                } //fim else comentarios
-                if ($_SESSION) {
-
-                    ?>
-                    <div class="comentar">
-                        <form method="post" class="d-flex border rounded-2 p-2 mb-2">
-                            <div class="col">
-                                <div class="mb-3">
-                                    <div class="text-start">
-                                        <label for="comentar" class="form-label">Faça um comentário sobre este artigo</label>
-                                        <input type="text" name="comentar" id="comentar" class="form-control" placeholder="Digite seu comentário" />
-                                        <input type="submit" name="acao" value="comentar" class="btn btn-outline-success mt-2">
-                                    </div>
-                                </div>
+        <?php if (isset($_SESSION['id'])): ?>
+            <div class="comentar">
+                <form method="post" class="d-flex border rounded-2 p-2 mb-2">
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="text-start">
+                                <label for="comentar" class="form-label">Faça um comentário sobre este artigo</label>
+                                <input type="text" name="comentar" id="comentar" class="form-control" placeholder="Digite seu comentário" required />
+                                <input type="submit" name="acao" value="comentar" class="btn btn-outline-success mt-2">
                             </div>
-                        </form>
-                    </div><!-- Comentar -->
-                <?php
-                }
-                ?>
-
-            </div><!-- Comentário-item-header -->
-        </div><!-- Comentário item -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
+
+<script>
+function editarComentario(id) {
+    var comentarioElement = document.getElementById('comentario-' + id);
+    var comentarioTexto = comentarioElement.innerText;
+    
+    var form = document.createElement('form');
+    form.method = 'post';
+    form.innerHTML = `
+        <input type="hidden" name="comentario_id" value="${id}">
+        <input type="text" name="editar_comentario" value="${comentarioTexto}" class="form-control">
+        <input type="submit" name="acao" value="editar" class="btn btn-sm btn-outline-primary mt-2">
+    `;
+    
+    comentarioElement.parentNode.replaceChild(form, comentarioElement);
+}
+</script>

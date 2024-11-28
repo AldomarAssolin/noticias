@@ -15,6 +15,7 @@ if ($_SESSION) {
 
 ?>
 
+<!-- Navbar -->
 <nav class="row navbar-top border-bottom lh-1 py-2">
     <div class="col-12 col-md-3 mb-2 pb-2 mb-md-0 pb-md-0">
         <div class="row">
@@ -22,28 +23,7 @@ if ($_SESSION) {
                 <a class="blog-header-logo text-body-emphasis  text-decoration-none" href="<?php echo INCLUDE_PATH ?>"><?php echo NOME_EMPRESA ?></a>
             </div>
         </div>
-    </div>
-
-    <?php
-    //Buscar artigos
-
-    if (isset($_POST['buscar'])) {
-        $buscar = $_POST['buscar'];
-        $artigos = Artigos::buscarArtigos($buscar);
-
-        if ($artigos == false) {
-            echo '<div class="alert alert-danger" role="alert">
-                    Nenhum artigo encontrado!
-                </div>';
-        }
-    } else {
-        $artigos = Artigos::listarArtigos();
-    }
-
-    ?>
-
-
-
+    </div><!--col-12 col-md-3-->
     <div class="col-12 col-md-9">
         <div class="row d-flex align-items-center">
             <div class="col-12 col-md-6 mb-2">
@@ -82,3 +62,4 @@ if ($_SESSION) {
     </div><!--col-12 col-md-9-->
 
 </nav>
+<!-- Navbar -->

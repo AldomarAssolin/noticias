@@ -3,8 +3,8 @@
 $slides = Slides::listarSlides();
 ?>
 <!--Slides-->
-<div class="p-md-0 mb-4 rounded text-body-emphasis bg-tertiary border-bottom">
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+<div class="p-md-0 mb-4 text-body-emphasis bg-tertiary">
+    <div id="carouselExample" class="carousel slide mb-3 rounded" data-bs-ride="carousel">
         <div class="carousel-inner">
             <?php
             $first = true;

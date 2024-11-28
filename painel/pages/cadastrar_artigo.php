@@ -70,8 +70,9 @@
                 <label for="inputSelect" class="form-label">Categoria</label>
                 <select class="form-select" name="categoria" aria-label="Default select example" id="inputSelect">
                     <?php
-                    foreach (Painel::$categorias as $key => $val) {
-                        echo '<option selected value="' . $key . '">' . $val . '</option>';
+                    $categorias = Categorias::listarCategorias();
+                    foreach ($categorias as $key => $value) {
+                        echo '<option selected value="' . $value['nome'] . '">' . $value['nome'] . '</option>';
                     }
                     ?>
                 </select>

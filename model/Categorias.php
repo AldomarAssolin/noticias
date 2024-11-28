@@ -3,10 +3,9 @@
 class Categorias{
 
 
-    public static function insert($arr)
-    {
-        $sql = MySql::connect()->prepare("INSERT INTO `" . $arr['nome_tabela'] . "` VALUES (null, ?, ?, ?)");
-        $sql->execute(array($arr['nome'], $arr['slug'], $arr['order_id']));
+    public static function insert($nome, $slug, $order_id){
+        $sql = MySql::connect()->prepare("INSERT INTO `tb_site.categorias` VALUES (null,?,?,?)");
+        $sql->execute(array($nome, $slug, $order_id));
     }
 
     public static function listarCategorias()

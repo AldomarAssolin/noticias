@@ -191,7 +191,7 @@ if ($perfil == false) {
                                         <div class="card-body">
                                             <h5 class="card-title"><?php echo $value['nome'] ?></h5>
                                             <p class="card-text">
-                                                Conteúdo
+                                                <?php echo $value['descricao'] ?>
                                             </p>
                                             <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                                         </div>
