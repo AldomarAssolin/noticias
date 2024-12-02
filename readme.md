@@ -3,6 +3,8 @@
 
 Bem-vindo ao repositório do BLOG!
 
+![screenshot](static/images/blog.png)
+
 ## Descrição
 
 Este projeto é um blog desenvolvido para fornecer as últimas atualizações e artigos sobre diversos tópicos. O objetivo é criar uma plataforma informativa e fácil de usar para os leitores.
@@ -19,9 +21,16 @@ Este projeto é um blog desenvolvido para fornecer as últimas atualizações e 
 - **Backend**: PHP
 - **Banco de Dados**: MySQL
 
+## Contexto Acadêmico
+
+Este projeto faz parte da criação de um PAPER para o quinto semestre da matéria Seminário Interdisciplinar: Implementação de uma Aplicação Web Completa, do curso de Análise e Desenvolvimento de Sistemas. O objetivo é aplicar os conhecimentos adquiridos ao longo do curso no desenvolvimento de uma aplicação web funcional e completa.
+
+
 # 
 ### Veja no link: [https://www.aldomar.online/blog](https://www.aldomar.online/blog).
 # 
+
+![screenshot](static/images/image.png)
 
 ## Como Executar o Projeto
 
@@ -79,7 +88,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
 
-## Contexto Acadêmico
-
-Este projeto faz parte da criação de um PAPER para o quinto semestre da matéria Seminário Interdisciplinar: Implementação de uma Aplicação Web Completa, do curso de Análise e Desenvolvimento de Sistemas. O objetivo é aplicar os conhecimentos adquiridos ao longo do curso no desenvolvimento de uma aplicação web funcional e completa.
 
