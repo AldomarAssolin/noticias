@@ -19,6 +19,10 @@ Este projeto é um blog desenvolvido para fornecer as últimas atualizações e 
 - **Backend**: PHP
 - **Banco de Dados**: MySQL
 
+# 
+### Veja no link: [https://www.aldomar.online/blog](https://www.aldomar.online/blog).
+# 
+
 ## Como Executar o Projeto
 
 ### Como Baixar do GitHub
