@@ -3,7 +3,7 @@ $id = $_GET['usuario'];
 //Busca View do perfil do usuário
 $perfil = Perfil::listarPerfilUsuario($id);
 $redes = Perfil::getAllRedesSociais($id);
-//var_dump($perfil);
+
 ?>
 
 <div class="card p-2">

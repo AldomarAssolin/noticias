@@ -4,7 +4,7 @@
 if (isset($_POST['excluir_usuario'])) {
     $usuario_id = intval($_POST['excluir_usuario']); // Converte para inteiro para evitar injeção SQL
     $usuario = new Usuario();
-    if ($usuario->deletarUsuario($usuario_id)) {
+    if ($usuario->desativarUsuario($usuario_id)) {
         echo Painel::alert('sucesso', 'Usuário excluído com sucesso!');
         // Atualiza a lista de usuários online
     } else {

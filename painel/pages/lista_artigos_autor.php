@@ -37,7 +37,7 @@ if (isset($_POST['delete_artigo'])) {
     }
 }
 
-$artigos = Artigos::listarArtigosAutor($_SESSION['id']);  // Chama a função para pegar os artigos
+$artigos = Artigos::listarArtigosAutor($_GET['id']);  // Chama a função para pegar os artigos
 
 
 // Título da página
@@ -79,50 +79,52 @@ $titulo = $artigos == false ? 'Nenhum artigo encontrado' : '<span class="lead fs
 
                 // Itera sobre os artigos do autor
                 foreach ($artigos as $key => $value) {
-
+                    
+                    if ($value['id'] == $_GET['id']) {
                 ?>
 
-                    <tr>
-                        <td>
-                            <img src="<?php echo htmlspecialchars($value['avatar']) ?? INCLUDE_PATH . 'static/uploads/avatar.jpg'; ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
-                            <span class="fs-6"><?php echo htmlspecialchars($value['nome_completo']); ?></span>
-                        </td> <!-- Nome do autor do artigo -->
-                        <td><?php echo $value['titulo']; ?></td> <!-- Título do artigo -->
-                        <td><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></td> <!-- Data de criação formatada -->
-                        <td class='d-flex justify-content-end'>
-                            <!-- Botão para editar artigo -->
-                            <a title="Atualizar artigo" href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $value['artigo_id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
-                                <svg class='bi'>
-                                    <use xlink:href='#pencil' />
-                                </svg>
-                            </a>
+                        <tr>
+                            <td class='align-bottom'>
+                                <img src="<?php echo htmlspecialchars($value['avatar']) ?? INCLUDE_PATH . 'static/uploads/avatar.jpg'; ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2">
+                                <span class="fs-6"><?php echo htmlspecialchars($value['nome_completo']); ?></span>
+                            </td> <!-- Nome do autor do artigo -->
+                            <td class='align-bottom'><?php echo $value['titulo']; ?></td> <!-- Título do artigo -->
+                            <td class='align-bottom'><?php echo date('d/m/Y', strtotime($value['data_criacao'])); ?></td> <!-- Data de criação formatada -->
+                            <td class='align-bottom'>
+                                <!-- Botão para editar artigo -->
+                                <a title="Atualizar artigo" href='<?php echo INCLUDE_PATH_PAINEL ?>atualizar_artigos?id=<?php echo $value['artigo_id']; ?>' class="btn btn-warning btn-sm my-1 my-md-0 mx-lg-2">
+                                    <svg class='bi'>
+                                        <use xlink:href='#pencil' />
+                                    </svg>
+                                </a>
 
-                            <?php
-                            if ($value['status'] == 1) {
-                            ?>
-                                <!-- Botão para excluir artigo -->
-                                <button title="Desativar artigo" type='button' class='btn btn-sm btn-danger' data-bs-toggle='modal' data-bs-target='#confirmDeleteModal' data-artigo-id=<?php echo $value['artigo_id']; ?>>
-                                    <i class="bi-file-earmark-excel"></i>
-                                </button>
-                            <?php
-                            } else {
-                            ?>
-                                <!-- Botão para ativar artigo -->
-                                <!-- Botão para ativar artigo -->
-                                <form method="post">
-                                    <input type="hidden" name="id" value="<?php echo $value['artigo_id']; ?>">
-                                    <button title="Ativar artigo" type="submit" name="acao" value="ativar" class="btn btn-sm btn-success">
-                                        <i class="bi bi-file-earmark-check"></i>
+                                <?php
+                                if ($value['status'] == 1) {
+                                ?>
+                                    <!-- Botão para excluir artigo -->
+                                    <button title="Desativar artigo" type='button' class='btn btn-sm btn-danger' data-bs-toggle='modal' data-bs-target='#confirmDeleteModal' data-artigo-id=<?php echo $value['artigo_id']; ?>>
+                                        <i class="bi-file-earmark-excel"></i>
                                     </button>
-                                </form>
+                                <?php
+                                } else {
+                                ?>
+                                    <!-- Botão para ativar artigo -->
+                                    <!-- Botão para ativar artigo -->
+                                    <form method="post">
+                                        <input type="hidden" name="id" value="<?php echo $value['artigo_id']; ?>">
+                                        <button title="Ativar artigo" type="submit" name="acao" value="ativar" class="btn btn-sm btn-success">
+                                            <i class="bi bi-file-earmark-check"></i>
+                                        </button>
+                                    </form>
 
-                            <?php
-                            }
-                            ?>
-                        </td>
-                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                        </tr>
 
                 <?php
+                    }
                 }
                 ?>
 

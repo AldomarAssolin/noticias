@@ -31,22 +31,24 @@
                 }
 
                 foreach ($areaInteresse as $area => $interesses) {
-                        
+
                 ?>
                         <h2 class="py-2 border-bottom"><?php echo htmlspecialchars($area) ?></h2>
-                        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+                        <ul class="">
                                 <?php foreach ($interesses as $interesse) { ?>
-                                <div class="col h-25">
-                                                <!--cards-->
-                                                <div class="card mb-2 card-cover overflow-hidden text-bg-dark rounded-4 shadow-lg" style="height: 260px;background-image: url('<?php echo htmlspecialchars($interesse['imagem']) ?? $imagem ?>');">
-                                                        <div class="d-flex flex-column align-items-start justify-content-center h-100 p-3 text-white text-shadow-1">
-                                                                <h3 class="mb-4 display-6 lh-1 fw-bold"><?php echo htmlspecialchars($interesse['nome']) ?></h3>
-                                                                <p><?php echo htmlspecialchars($interesse['descricao']) ?></p>
-                                                        </div><!--card-body-->
-                                                </div><!--card-->
-                                        </div><!--col-->
-                                        <?php } ?>
-                        </div><!--row-->
+                                        <li class="d-flex text-body-secondary pt-3 border-bottom">
+                                                <div class="row w-100">
+                                                        <div class="col-12 d-flex alisn-items-end pb-2">
+                                                                <img src="<?php echo htmlspecialchars($interesse['imagem']) ?? $imagem ?>" alt="<?php echo htmlspecialchars($interesse['nome']) ?>" width="48" height="48">
+                                                                <p class="mb-0 small lh-sm px-3 d-flex flex-column align-items-start justify-content-end ">
+                                                                        <strong class="d-block text-gray-dark text-start"><?php echo htmlspecialchars($interesse['nome']) ?></strong>
+                                                                        <?php echo htmlspecialchars($interesse['descricao']) ?>
+                                                                </p>
+                                                        </div><!--col-8-->
+                                                </div><!--row-->
+                                </li><!--d-flex-->
+                                <?php } ?>
+                                </ul><!--row-->
                         <!--cards-->
                 <?php
 

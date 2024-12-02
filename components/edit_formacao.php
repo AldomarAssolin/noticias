@@ -21,8 +21,8 @@
 </div>
 <!-- Modal de Confirmação de Exclusão -->
 
-<div class="card mb-3 p-2">
-<div class="text-end py-2">
+<div class="mb-3 p-2">
+<div class="text-end py-2 border-bottom">
     <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=criar_formacao" class="btn btn-success btn-sm">Criar Nova</a>
 </div><!--acao criar nova formacao-->
 

@@ -1,5 +1,3 @@
-
-
 <div class="text-end py-2">
     <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=criar_redes_sociais" class="btn btn-success btn-sm">Criar Nova</a>
 </div>
@@ -11,31 +9,28 @@ $redes = Perfil::getAllRedesSociais($id);
 foreach ($redes as $key => $value) {
 ?>
     <!--Redes Sociais-->
-    <div class="card mb-3" style="height:150px">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <div class="card-body p-0">
-                    <img src="<?php echo $value['imagem'] ?? $redesImg ?>" alt="Imagem de <?php echo htmlspecialchars($value['nome']) ?>" class="img-fluid rounded-start image" alt="<?php echo htmlspecialchars(ucfirst($value['nome'])) ?>">
-                </div>
-            </div><!--col-md-4-->
-            <div class="col-md-8">
-                <div class="card-body pb-0">
-                    <h5 class="card-title"><?php echo htmlspecialchars(ucfirst($value['nome'])) ?></h5>
-                    <p class="card-text"><?php echo htmlspecialchars($value['link']) ?></p>
-                    <p class="card-text">
-                        <small class="text-body-secondary">
-                            <div class="card-footer w-100 pb-2 text-end d-flex align-items-center justify-content-end">
-                                <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=editar_redes_sociais&id=<?php echo $value['id'] ?>" class="btn btn-outline-warning btn-sm me-2">Editar</a>
-                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-rede-id="<?php echo $value['id'] ?>">
-                                    Excluir
-                                </button>
-                            </div>
-                        </small>
+        <div class="d-flex text-body-secondary pt-3 border-bottom">
+        <div class="row w-100">
+            <div class="col-3 col-lg-2 d-flex align-items-end pb-2">
+                <img src="<?php echo htmlspecialchars($value['imagem']) ?>" class="card-img-top" alt="logo" width="80" height="60">
+            </div><!--col-8-->
+            <div class="col-9 col-lg-8 text-truncate d-flex flex-column align-items-start justify-content-end pb-2">
+                <div class="col-12">
+                    <p class="mb-0 small lh-sm">
+                        <strong class="d-block text-gray-dark text-start mb-2"><?php echo htmlspecialchars(ucfirst($value['nome'])) ?></strong>
+                        <span class="text-info fst-italic"><?php echo htmlspecialchars(ucfirst($value['link'])) ?></span>
                     </p>
-                </div><!--card-body-->
-            </div><!--col-md-8-->
+                </div>
+        
+                <div class="col-12 d-flex mt-2 justify-content-around">
+                    <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=editar_redes_sociais&id=<?php echo $value['id'] ?>" class="btn btn-outline-warning btn-sm me-2">Editar</a>
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-rede-id="<?php echo $value['id'] ?>">
+                        Excluir
+                    </button>
+                </div>
+            </div>
         </div><!--row-->
-    </div><!--card-->
+    </div><!--d-flex-->
     <!--Redes Sociais-->
 <?php
 }
@@ -63,7 +58,7 @@ if (isset($_POST['excluir_rede'])) {
             </div>
             <div class="modal-body">
                 Tem certeza que deseja excluir esta rede social?
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -78,13 +73,13 @@ if (isset($_POST['excluir_rede'])) {
 <!-- Modal de Confirmação de Exclusão -->
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var confirmDeleteModal = document.getElementById('confirmDeleteModal');
-    confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var redeId = button.getAttribute('data-rede-id');
-        var modalRedeIdInput = document.getElementById('redeIdToDelete');
-        modalRedeIdInput.value = redeId;
+    document.addEventListener('DOMContentLoaded', function() {
+        var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+        confirmDeleteModal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget;
+            var redeId = button.getAttribute('data-rede-id');
+            var modalRedeIdInput = document.getElementById('redeIdToDelete');
+            modalRedeIdInput.value = redeId;
+        });
     });
-});
 </script>

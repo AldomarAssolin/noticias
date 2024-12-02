@@ -18,7 +18,7 @@ class Auth
         $UserData = $this->usuario->buscarUsuario($email);
 
         //verificar se o usuario existe
-        if ($UserData && password_verify($senha, $UserData['senha'])) {
+        if ($UserData['status'] != 0 && $UserData['email'] == $email && password_verify($senha, $UserData['senha'])) {
             $_SESSION['login'] = true;
             $_SESSION['id'] = $UserData['id'];
             $_SESSION['user'] = $UserData['email'];
@@ -34,6 +34,7 @@ class Auth
         } else {
             echo Painel::alert('erro', 'Erro na session');
         }
+
         return false;
     }
 

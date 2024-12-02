@@ -10,7 +10,7 @@ class Categorias{
 
     public static function listarCategorias()
     {
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.categorias`");
+        $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.categorias` ORDER BY nome ASC");
         $sql->execute();
         return $sql->fetchAll();
     }
@@ -32,27 +32,6 @@ class Categorias{
     {
         $sql = MySql::connect()->prepare("UPDATE `tb_site.categorias` SET nome = ?, slug = ? WHERE id = ?");
         $sql->execute(array($arr['nome'], $arr['slug'], $arr['id']));
-    }
-
-    public static function orderItem($tabela, $order, $id)
-    {
-        if ($order == 'up') {
-            $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.categorias` WHERE order_id < (SELECT order_id FROM `tb_site.categorias` WHERE id = ?) ORDER BY order_id DESC LIMIT 1");
-        } else {
-            $sql = MySql::connect()->prepare("SELECT * FROM `tb_site.categorias` WHERE order_id > (SELECT order_id FROM `tb_site.categorias` WHERE id = ?) ORDER BY order_id ASC LIMIT 1");
-        }
-        $sql->execute(array($id));
-        if ($sql->rowCount() == 0) {
-            return;
-        }
-        $item = $sql->fetch();
-        Categorias::updateOrder('tb_site.categorias', $id, $item['id'], $item['order_id']);
-    }
-
-    public static function updateOrder($tabela, $id, $order_id)
-    {
-        $sql = MySql::connect()->prepare("UPDATE `tb_site.categorias` SET order_id = ? WHERE id = ?");
-        $sql->execute(array($order_id, $id));
     }
 
 }

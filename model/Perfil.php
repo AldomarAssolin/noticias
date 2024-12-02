@@ -215,7 +215,9 @@ class Perfil extends Usuario
     //Busca um perfil pelo id
     public static function listarPerfilUsuario($id)
     {
-        $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.perfil` WHERE usuario_id = ?");
+        $sql = MySql::connect()->prepare("SELECT u.email, a.* FROM `tb_admin.usuarios` u 
+                                        INNER JOIN `tb_admin.perfil` a 
+                                        WHERE usuario_id = ? AND u.id = a.usuario_id");
         $sql->execute(array($id));
         return $sql->fetch();
     }

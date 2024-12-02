@@ -135,30 +135,24 @@ if ($perfil == false) {
                     echo $mensagem;
                     foreach ($formacao as $key => $value) {
                     ?>
-                        <div class="card mb-3">
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="card-header fs-6 fst-italic">
-                                        <?php echo $value['nivel'] ?>
-                                    </div>
-                                    <div class="card-body">
-                                        <p>
-                                            <?php echo $value['nome'] ?> -
-                                            <span class="text-info"><?php echo $value['instituicao'] ?></span>
-                                        </p>
-                                        <p>
-                                            <?php echo $value['cidade'] ?> - <?php echo $value['uf'] ?>
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted fst-italic"><?php echo date('d/m/y', strtotime($value['data_inicio'])) ?> - <?php echo date('d/m/y', strtotime($value['conclusao'])) ?></small>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <img src="<?php echo $value['logo'] ?>" class="card-img-top" alt="logo">
+                        <div class="d-flex text-body-secondary pt-3 border-bottom">
+                            <div class="row w-100">
+                                <div class="col-3 d-flex align-items-end pb-2">
+                                    <img src="<?php echo htmlspecialchars($value['logo']) ?>" class="card-img-top" alt="logo" width="80" height="80">
+                                </div><!--col-8-->
+                                <div class="col-9 d-flex flex-column align-items-start justify-content-end pb-2">
+                                    <p class="mb-0 small lh-sm">
+                                        <strong class="d-block text-gray-dark text-start mb-2"><?php echo htmlspecialchars(ucfirst($value['nivel'])) ?></strong>
+                                        <?php echo htmlspecialchars(ucfirst($value['nome'])) ?>
+                                        <span class="text-info fst-italic pt-2"><?php echo htmlspecialchars(ucfirst($value['instituicao'])) ?></span>
+                                    </p>
+                                    <small class="text-muted fst-italic">
+                                        <?php echo htmlspecialchars(strtoupper($value['cidade'])) ?> - <?php echo htmlspecialchars(strtoupper($value['uf'])) ?>
+                                        <?php echo date('d/m/Y', strtotime($value['data_inicio'])) ?> - <?php echo date('d/m/Y', strtotime($value['conclusao'])) ?>
+                                    </small>
                                 </div>
                             </div><!--row-->
-                        </div><!--card-->
+                        </div><!--d-flex-->
 
                     <?php
                     }
@@ -168,44 +162,68 @@ if ($perfil == false) {
             <!--card formacao-->
 
             <!--Interesses Pessoais-->
-            <div class="card page my-3">
-                <div class="card-header">
-                    Interesses Pessoais
-                </div><!--card-header-->
-                <div class="card-body">
+            <div class="page mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title py-2">Interesses Pessoais</h2>
+                    </div>
+                </div>
+                <div class="container px-4 py-5" id="custom-cards">
                     <?php
-                    echo $mensagem;
-                    foreach ($interesses as $key => $value) {
+
+                    $imagem = INCLUDE_PATH . 'static/uploads/astronomia.jpeg';
+
+                    $interesses = Perfil::getInteresses($id);
+                    $areaInteresse = [];
+
+                    foreach ($interesses as $interesse) {
+                        $area = $interesse['area'];
+                        $nome = $interesse['nome'];
+                        $descricao = $interesse['descricao'];
+                        $imagem = $interesse['imagem'];
+
+                        if (!isset($areaInteresse[$area])) {
+                            $areaInteresse[$area] = [];
+                        }
+
+                        $areaInteresse[$area][] = [
+                            'nome' => $nome,
+                            'descricao' => $descricao,
+                            'imagem' => $imagem
+                        ];
+                    }
+
+                    foreach ($areaInteresse as $area => $interesses) {
 
                     ?>
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <h4 class="area"><?php echo $value['area'] ?></h4>
-                            </div>
-                            <div class="card-body mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img src="<?php echo $value['imagem'] ?>" class="img-fluid rounded-start" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><?php echo $value['nome'] ?></h5>
-                                            <p class="card-text">
-                                                <?php echo $value['descricao'] ?>
+                        <h2 class="py-2 border-bottom"><?php echo htmlspecialchars($area) ?></h2>
+                        <ul class="">
+                            <?php foreach ($interesses as $interesse) { ?>
+                                <li class="d-flex text-body-secondary pt-3 border-bottom">
+                                    <div class="row w-100">
+                                        <div class="col-2 d-flex align-items-end pb-2">
+                                            <img src="<?php echo htmlspecialchars($interesse['imagem']) ?>" class="card-img-top" alt="logo" width="80" height="80">
+                                        </div><!--col-8-->
+                                        <div class="col-8 d-flex flex-column align-items-start justify-content-end pb-2">
+                                            <p class="mb-0 small lh-sm">
+                                                <strong class="d-block text-gray-dark text-start mb-2"><?php echo htmlspecialchars(ucfirst($interesse['nome'])) ?></strong>
+                                                <span class="text-info fst-italic"><?php echo htmlspecialchars(ucfirst($interesse['descricao'])) ?></span>
                                             </p>
-                                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                                    </div><!--row-->
+                            </li><!--li-->
+                            <?php } ?>
+                            </ul><!--ul-->
+                        <!--cards-->
                     <?php
+
                     }
                     ?>
-                </div><!--card-body-->
-            </div><!--card-->
+                </div><!--container-->
+            </div><!--page-->
             <!--Interesses Pessoais-->
+
+
         </div><!--col-md-8-->
     </div><!--row-->
 </div><!--container-->

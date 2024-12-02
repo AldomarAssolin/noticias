@@ -82,7 +82,7 @@ $formacao = Perfil::getFormacaoById($_GET['id']);
 
         <div class='mb-3'>
             <label for='data_inicio' class='form-label'>Data de início:</label>
-            <input type='date' id='data_inicio' name='data_inicio' class='form-control' value="data_inicio" required>
+            <input type='date' id='data_inicio' name='data_inicio' class='form-control' value="<?php echo $formacao['data_inicio'] ?>" required>
         </div>
 
         <div class='mb-3'>

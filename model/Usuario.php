@@ -64,6 +64,17 @@ class Usuario
 		return $sql->fetch(PDO::FETCH_ASSOC);
 	}
 
+	// Buscar todos os usuários
+	public static function buscarTodosUsuarios()
+	{
+		$sql = MySql::connect()->prepare("SELECT u.id, u.email, u.cargo, u.logado, u.status, CONCAT(p.nome, ' ', p.sobrenome) as nome_completo, p.avatar 
+										FROM `tb_admin.usuarios` u
+										INNER JOIN `tb_admin.perfil` p ON u.id = p.usuario_id");
+		$sql->execute();
+
+		return $sql->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	// Buscar usuarios cadastrados e ativos
 	public static function listarUsuariosCadastrados($status)
 	{
@@ -140,7 +151,7 @@ class Usuario
 	}
 
 	//deletar usuario
-	public static function deletarUsuario($id)
+	public static function desativarUsuario($id)
 	{
 		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET status = 0 WHERE id = ?");
 		$sql->execute(array($id));
@@ -150,5 +161,12 @@ class Usuario
 	{
 		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET status = 1 WHERE id = ?");
 		$sql->execute(array($id));
+	}
+
+	//atualizar cargo do usuario
+	public static function atualizarCargo($cargo, $id)
+	{
+		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET cargo = ? WHERE id = ?");
+		$sql->execute(array($cargo, $id));
 	}
 }

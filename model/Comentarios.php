@@ -2,6 +2,7 @@
 
 class Comentarios
 {
+    // Cria um novo comentário
     public static function create($comentario, $status, $data_criacao, $usuario_id, $artigo_id)
     {
         try {
@@ -14,6 +15,7 @@ class Comentarios
         }
     }
 
+    // Lista todos os comentários
     public static function getAll($artigo_id)
     {
         try {
@@ -30,6 +32,7 @@ class Comentarios
         }
     }
 
+    //
     public static function update($id, $comentario)
     {
         try {
@@ -41,6 +44,7 @@ class Comentarios
         }
     }
 
+    // Exclui um comentário pelo ID
     public static function delete($id)
     {
         try {
@@ -52,16 +56,25 @@ class Comentarios
         }
     }
 
+    // Busca um comentário pelo ID
     public static function getById($id)
     {
         try {
-            $sql = MySql::prepare("SELECT * FROM `tb_site.comentarios` WHERE id = ?");
+            $sql = MySql::prepare("SELECT * FROM `tb_site.comentarios` WHERE artigo_id = ?");
             $sql->execute([$id]);
             return $sql->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             error_log("Erro ao buscar comentário: " . $e->getMessage());
             return null;
         }
+    }
+
+    // Quantidade de comentarios por artigo
+    public static function countComentarios($artigo_id)
+    {
+        $sql = MySql::prepare("SELECT COUNT(*) AS total FROM `tb_site.comentarios` WHERE artigo_id = ?");
+        $sql->execute(array($artigo_id));
+        return $sql->fetch();
     }
 }
 

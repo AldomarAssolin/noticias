@@ -8,7 +8,6 @@ if($avatar == null || $avatar == '' || $capa == null || $capa == ''){
 }
   
 $id = $_GET['id'];
-
 $artigos = Artigos::listarArtigosAutor($id);
 $perfil = Perfil::listarPerfilNomeAvatar($id);
 $redes = Perfil::getAllRedesSociais($id);

@@ -6,7 +6,7 @@
         $categorias_artigo = Categorias::listarCategorias();
         foreach($categorias_artigo as $key => $value){
         ?>
-        <a class="nav-item nav-link link-body-emphasis text-capitalize" href="?url=<?php echo $value?>"><?php echo $value['nome']?></a>
+        <a class="nav-item nav-link link-body-emphasis text-capitalize" href="?categoria=<?php echo $value?>"><?php echo $value['nome']?></a>
         <?php
         }
         ?>

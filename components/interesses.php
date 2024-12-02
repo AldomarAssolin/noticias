@@ -46,10 +46,10 @@ $interesses = Interesses::getAll();
 
 <section class="interesses my-5">
     <div class="container">
-        <h2 class="mb-4">Meus Interesses</h2>
-
+        
         <!-- Botão para adicionar novo interesse -->
-        <div class="text-end">
+        <div class="d-flex align-items-end justify-content-between">
+            <h2 class="mb-4">Meus Interesses</h2>
             <a href="<?php echo INCLUDE_PATH ?>perfil?usuario_edit=criar_interesses&id=<?php echo $_SESSION['id'] ?>" class="btn btn-success mb-3">
                 Adicionar Novo Interesse
             </a>
@@ -57,17 +57,25 @@ $interesses = Interesses::getAll();
 
         <div class="list-group">
             <?php foreach ($interesses as $interesse): ?>
-                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <span><?php echo htmlspecialchars($interesse['nome']); ?></span>
-                    <div>
-                        <button type="button" class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editarInteresse<?php echo $interesse['id']; ?>">
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirInteresse<?php echo $interesse['id']; ?>">
-                            Excluir
-                        </button>
-                    </div>
-                </div>
+                <div class="d-flex text-body-secondary pt-3 border-bottom">
+                    <div class="row w-100">
+                        <div class="col-8 d-flex alisn-items-end pb-2">
+                            <img src="<?php echo htmlspecialchars($interesse['imagem']) ?? $imagem ?>" alt="<?php echo htmlspecialchars($interesse['nome']) ?>" width="48" height="48">
+                            <p class="mb-0 small lh-sm px-3 d-flex flex-column align-items-start justify-content-end ">
+                                <strong class="d-block text-gray-dark text-start"><?php echo htmlspecialchars($interesse['nome']) ?></strong>
+                                <?php echo htmlspecialchars($interesse['descricao']) ?>
+                            </p>
+                        </div><!--col-8-->
+                        <div class="col-4 d-flex align-items-end justify-content-end pb-2">
+                            <button type="button" class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editarInteresse<?php echo $interesse['id']; ?>">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#excluirInteresse<?php echo $interesse['id']; ?>">
+                                Excluir
+                            </button>
+                        </div><!--col-4-->
+                    </div><!--row-->
+                </div><!--d-flex-->
 
                 <!-- Modal de Edição -->
                 <div class="modal fade" id="editarInteresse<?php echo $interesse['id']; ?>" tabindex="-1" aria-labelledby="editarInteresseLabel<?php echo $interesse['id']; ?>" aria-hidden="true">

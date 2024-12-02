@@ -8,6 +8,7 @@ if (isset($_SESSION['login'])) {
 
 if (isset($_GET['logout'])) {
   Auth::logout();
+  Painel::redirect(INCLUDE_PATH);
 }
 
 

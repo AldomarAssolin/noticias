@@ -126,11 +126,9 @@ class Painel
     public static function alert($tipo, $mensagem)
     {
         if ($tipo == 'sucesso') {
-            echo '<div id="alert" class="alert alert-success alert-dismissible fade show row"><div class="col-10">' . $mensagem .  '</div><div class="col-2 text-end"><button type="button" id="btn-alert-close" class="btn close" data-dismiss="alert"><i class="bi bi-x-sm"></i></button></div></div>
-';
+            echo '<div id="alert" class="alert alert-success alert-dismissible fade show row"><div class="col-10">' . $mensagem .  '</div><div class="col-2 text-end"><button type="button" id="btn-alert-close" class="btn close" data-dismiss="alert"><i class="bi bi-x-sm"></i></button></div></div>';
         } else if ($tipo == 'erro') {
-            echo '<div id="alert" class="alert alert-danger alert-dismissible fade show row"><div class="col-10">' . $mensagem .  '</div><div class="col-2 text-end"><button type="button" id="btn-alert-close" class="btn close" data-dismiss="alert"><i class="bi bi-x-sm"></i></button></div></div>
-';
+            echo '<div id="alert" class="alert alert-danger alert-dismissible fade show row"><div class="col-10">' . $mensagem .  '</div><div class="col-2 text-end"><button type="button" id="btn-alert-close" class="btn close" data-dismiss="alert"><i class="bi bi-x-sm"></i></button></div></div>';
         }
     }
 
