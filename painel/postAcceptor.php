@@ -15,7 +15,7 @@ $accepted_origins = array("http://localhost", "http://localhost:3306");
 /*********************************************
  * Pasta de upload *
  *********************************************/
-$imageFolder = "static/uploads/";
+$imageFolder = "uploads/";
 
 // Verifique se a pasta de upload existe, caso contrário, crie-a
 if (!file_exists($imageFolder)) {

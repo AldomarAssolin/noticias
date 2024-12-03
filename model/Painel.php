@@ -160,7 +160,9 @@ class Painel
             mkdir($uploadDir, 0777, true); // Cria o diretório, se não existir
         }
 
+        // Define o nome do arquivo
         $formatoArquivo = explode('.', $imagem['name']);
+        // Gera um nome único para o arquivo
         $imagemNome = uniqid() . '.' . $formatoArquivo[count($formatoArquivo) - 1];
 
         // Verifica se o arquivo foi movido para o diretório de uploads

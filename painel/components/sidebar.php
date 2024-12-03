@@ -89,6 +89,12 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
                     Listar Slides
                   </a>
                 </li>
+                <li class="nav-item shadow">
+                  <a class="nav-link d-flex align-items-center gap-2" href="<?php echo INCLUDE_PATH_PAINEL ?>listar_imagens">
+                    <i class="bi bi-images"></i>
+                    Listar Imagens
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
