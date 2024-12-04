@@ -20,6 +20,8 @@ Este projeto é um blog desenvolvido para fornecer as últimas atualizações e 
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: PHP
 - **Banco de Dados**: MySQL
+- **Framework**: Bootstrap
+- **Bibliotecas**: TinyMCE
 
 ## Contexto Acadêmico
 
