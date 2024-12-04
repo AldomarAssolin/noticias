@@ -1,48 +1,4 @@
-<?php
 
-$message = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $senha = $_POST['senha'];
-    $confirme_senha = $_POST['confirme_senha'];
-
-
-    $usuario = new Usuario();
-    $usuario_existente = $usuario->buscarUsuario($email);
-
-    if (empty($email)) {
-        $message = Painel::alert('erro', 'Preencha o campo email!');
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $message = Painel::alert('erro', 'Email inválido!');
-    } elseif (empty($senha)) {
-        $message = Painel::alert('erro', 'Preencha o campo senha!');
-    } elseif ($usuario_existente) {
-        $message = Painel::alert('erro', 'Usuário já cadastrado!');
-    } elseif ($senha !== $confirme_senha) {
-        $message = Painel::alert('erro', 'As senhas não conferem!');
-    } elseif (strlen($senha) < 8) {
-        $message = Painel::alert('erro', 'A senha deve ter no mínimo 8 caracteres!');
-    } elseif (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/', $senha)) {
-        $message = Painel::alert('erro', 'A senha deve ter pelo menos 8 caracteres, incluindo uma letra, um número e um caractere especial!');
-    } else {
-        if (empty($message)) {
-            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-            $usuario_id = $usuario->create($email, $senha_hash);
-
-            if ($usuario_id) {
-                $perfil = new Perfil();
-                $perfil->createPerfil($usuario_id);
-                $message = Painel::alert('sucesso', 'Usuário cadastrado com sucesso!');
-                $_SESSION['mensagem'] = $message;
-                //header('Location: login.php');
-            } else {
-                $message = Painel::alert('erro', 'Erro ao cadastrar usuário!');
-            }
-        }
-    }
-}
-?>
 
 <!doctype html>
 <html lang="pt-br" data-bs-theme="auto">
@@ -59,12 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="<?php echo URL_STATIC ?>css/css.css" rel="stylesheet">
 </head>
 
+<?php
+require_once 'processar_registro.php';
+?>
 <body>
-    <?php
-    if (!empty($message)) {
-        echo $_SESSION['mensagem'];
-    }
-    ?>
     <div class="container login">
         <div class="row justify-content-center">
             <div class="col-md-6 shadow pb-3">
@@ -75,22 +29,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="bi bi-box-arrow-in-down-right"></i>
                     </a>
                 </div>
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <?php
+                if (!empty($message)) {
+                    echo $message;
+                }
+                ?>
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" id="registroForm">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="form-group p-2 mb-2">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
+                        <?php if (isset($errors['email'])): ?>
+                            <div class="invalid-feedback"><?php echo $errors['email']; ?></div>
+                        <?php endif; ?>
                     </div>
                     <div class="form-group p-2 mb-2">
                         <label for="senha">Senha</label>
-                        <input type="password" class="form-control" id="senha" name="senha" required>
+                        <input type="password" class="form-control <?php echo isset($errors['senha']) ? 'is-invalid' : ''; ?>" id="senha" name="senha" required>
+                        <?php if (isset($errors['senha'])): ?>
+                            <div class="invalid-feedback"><?php echo $errors['senha']; ?></div>
+                        <?php endif; ?>
                     </div>
                     <div class="form-group p-2 mb-2">
                         <label for="confirme_senha">Confirme sua senha</label>
-                        <input type="password" class="form-control" id="confirme_senha" name="confirme_senha" required>
+                        <input type="password" class="form-control <?php echo isset($errors['confirme_senha']) ? 'is-invalid' : ''; ?>" id="confirme_senha" name="confirme_senha" required>
+                        <?php if (isset($errors['confirme_senha'])): ?>
+                            <div class="invalid-feedback"><?php echo $errors['confirme_senha']; ?></div>
+                        <?php endif; ?>
                     </div>
                     <div class="row">
                         <div class="col-2">
-                            <input type="submit" name="registrar" class="btn btn-primary btn-block">
+                            <input type="submit" name="registrar" class="btn btn-primary btn-block" value="Registrar">
                         </div>
                         <div class="col-10 text-end">
                             <a class="btn btn-outline-primary" href="<?php echo INCLUDE_PATH_PAINEL ?>">
@@ -105,8 +74,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="<?php echo INCLUDE_PATH ?>assets/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Validação do lado do cliente
+        document.getElementById('registroForm').addEventListener('submit', function(e) {
+            var senha = document.getElementById('senha').value;
+            var confirme_senha = document.getElementById('confirme_senha').value;
+            
+            if (senha !== confirme_senha) {
+                e.preventDefault();
+                alert('As senhas não conferem!');
+            }
+            
+            if (senha.length < 8) {
+                e.preventDefault();
+                alert('A senha deve ter no mínimo 8 caracteres!');
+            }
+            
+            if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(senha)) {
+                e.preventDefault();
+                alert('A senha deve ter pelo menos 8 caracteres, incluindo uma letra, um número e um caractere especial!');
+            }
+        });
+
+        // Remover alertas após 5 segundos
         setTimeout(function() {
-            document.getElementById('alert').style.display = 'none';
+            var alerts = document.getElementsByClassName('alert');
+            for (var i = 0; i < alerts.length; i++) {
+                alerts[i].style.display = 'none';
+            }
         }, 5000);
     </script>
 </body>

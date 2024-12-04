@@ -5,6 +5,7 @@ $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
 
 // Verificar e obter o ID do artigo
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
 if (!$id) {
     header('Location: ' . INCLUDE_PATH);
     exit;
@@ -28,11 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $comentario = filter_input(INPUT_POST, 'comentar', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             if ($comentario) {
                 $resultado = Comentarios::create($comentario, 1, date('Y-m-d H:i:s'), $_SESSION['id'], $id);
-                if ($resultado) {
-                    Painel::alert('sucesso', 'Comentário enviado com sucesso!');
-                } else {
-                    Painel::alert('erro', 'Erro ao enviar comentário.');
-                }
+                Painel::alert($resultado ? 'sucesso' : 'erro', $resultado ? 'Comentário enviado com sucesso!' : 'Erro ao enviar comentário.');
             }
             break;
         case 'editar':

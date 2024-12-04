@@ -21,7 +21,6 @@ class Usuario
 	{
 
 		try {
-			$senha = password_hash($senha, PASSWORD_DEFAULT);
 			$sql = MySql::connect()->prepare("INSERT INTO `tb_admin.usuarios` (email, senha) VALUES (:email, :senha)");
 			$sql->bindParam(':email', $email);
 			$sql->bindParam(':senha', $senha);

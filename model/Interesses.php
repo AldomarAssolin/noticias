@@ -13,6 +13,19 @@ class Interesses
         }
     }
 
+    // Retorna todos os interesses de um usuário
+    public static function getAllByUser($usuario_id)
+    {
+        try {
+            $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.interesses` WHERE usuario_id = ? ORDER BY nome ASC");
+            $sql->execute([$usuario_id]);
+            return $sql->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Erro ao listar interesses: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function getById($id)
     {
         try {

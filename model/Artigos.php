@@ -12,6 +12,14 @@ class Artigos
         return $sql->fetch();
     }
 
+    // Artigo existe
+    public static function artigoExiste($id)
+    {
+        $sql = MySql::prepare("SELECT * FROM `tb_site.artigos` WHERE id = ?");
+        $sql->execute(array($id));
+        return $sql->rowCount() > 0;
+    }
+
     public static function findByAutorId($id)
     {
         $sql = MySql::prepare("SELECT * FROM `tb_site.artigos` WHERE usuario_id = ?");

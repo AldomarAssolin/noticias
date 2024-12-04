@@ -36,12 +36,12 @@ class Site
                 $sql = MySql::connect()->prepare("UPDATE `tb_admin.online` SET ultima_acao = ?, local = ?, usuario_id = ? WHERE token = ?");
                 $sql->execute(array($agora, $local, $usuario_id, $token));
             } else {
+                //caso o token não exista, ele é criado
                 $token = $_SESSION['online'];
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $agora = date('Y-m-d H:i:s');
                 $usuario_id = $_SESSION['id'];
                 $expira = date('Y-m-d H:i:s', strtotime('+5 minutes', strtotime($agora)));
-                //caso o token não exista, ele é criado
 
                 $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.online` VALUES (null,?,?,?,?,?)");
                 $sql->execute(array($ip, $agora, $local, $usuario_id, $token));
@@ -72,9 +72,19 @@ class Site
 
             // Verifica se o IP do usuário já existe na tabela 'tb_admin.visitas' na data atual
             try {
-                $sql = MySql::connect()->prepare("SELECT id, ip, dia, hora FROM `tb_admin.visitas` WHERE ip = ? AND dia = ?");
+                $sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.visitas` WHERE ip = ? AND dia = ?");
                 $sql->execute(array($_SERVER['REMOTE_ADDR'], $dia));
                 $result = $sql->fetch();
+
+                // Se o IP não existir, insira-o na tabela
+                if ($sql->rowCount() == 0) {
+                    $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.visitas` VALUES (null, ?, ?, ?)");
+                    $sql->execute(array($_SERVER['REMOTE_ADDR'], $dia, $hora));
+                } else {
+                    // Se o IP existir, atualize a hora e incremente o contador
+                    $sql = MySql::connect()->prepare("UPDATE `tb_admin.visitas` SET hora = ?, contador = contador + 1 WHERE ip = ? AND dia = ?");
+                    $sql->execute(array($hora, $_SERVER['REMOTE_ADDR'], $dia));
+                }
             } catch (Exception $e) {
                 // Trate o erro aqui, como registrar ou exibir uma mensagem
                 error_log($e->getMessage());

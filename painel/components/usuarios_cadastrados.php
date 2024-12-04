@@ -14,8 +14,6 @@ if (isset($_POST['excluir_usuario'])) {
 // Retorna lista usuários cadastrados após a exclusão
 $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
 
-
-
 ?>
 
 <section class="online-users my-3 bg-body-tertiary shadow">
@@ -57,10 +55,12 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
                         $disabled = '';
                     }
 
+                    var_dump($value['avatar']);
+
                 ?>
                     <tr>
                         <th scope="row">
-                            <img src="<?php echo htmlspecialchars($value['avatar'] ?? INCLUDE_PATH . 'static/uploads/avatar.jpg'); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2 <?php echo $value['logado'] == 1 ? 'border border-2 border-success' : '' ?>">
+                            <img src="<?php echo htmlspecialchars($value['avatar'] ?? BASE_DIR . 'static/uploads/avatar.jpg'); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2 <?php echo $value['logado'] == 1 ? 'border border-2 border-success' : '' ?>">
                             <?php echo htmlspecialchars($value['nome_completo'] ?? $value['email']); ?>
                         </th>
                         <td class="text-end"><?php echo htmlspecialchars(Painel::$cargos[$value['cargo']]); ?></td>

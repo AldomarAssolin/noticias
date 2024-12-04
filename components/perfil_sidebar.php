@@ -14,7 +14,7 @@ $redes = Perfil::getAllRedesSociais($id);
         <p class="card-text"><?php echo $perfil['bio'] ?? 'BIO' ?></p>
         <div class="mb-3">
             <h5 class="card-title">Endereço</h5>
-            <p class="card-text"><?php echo strtoupper($perfil['cidade']) ?> - <?php echo strtoupper( $perfil['uf']) ?></p>
+            <p class="card-text"><?php echo strtoupper($perfil['cidade']) ?? '' ?> - <?php echo strtoupper( $perfil['uf']) ?? '' ?></p>
         </div><!--endereco-->
         <div >
             <h5 class="card-title">Redes Sociais</h5>

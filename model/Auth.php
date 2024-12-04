@@ -10,32 +10,57 @@ class Auth
         $this->usuario = new Usuario();
     }
 
-
-    //login
     public function login($email, $senha)
-    {
-        //buscar usuario pelo email
-        $UserData = $this->usuario->buscarUsuario($email);
+{
 
-        //verificar se o usuario existe
-        if ($UserData['status'] != 0 && $UserData['email'] == $email && password_verify($senha, $UserData['senha'])) {
+    // Buscar usuário pelo email
+    $userData = $this->usuario->buscarUsuario($email);
+
+    // Verificar se o usuário existe e está ativo
+    if ($userData['status'] != 0 && $userData['email'] == $email) {
+        // Verificar a senha
+        if (password_verify($senha, $userData['senha'])) {
+            
+            // Iniciar a sessão
+            session_start();
+
+            // Definir variáveis de sessão
             $_SESSION['login'] = true;
-            $_SESSION['id'] = $UserData['id'];
-            $_SESSION['user'] = $UserData['email'];
-            $_SESSION['nome'] = $UserData['nome'];
-            $_SESSION['cargo'] = $UserData['cargo'];
-            $_SESSION['img'] = $UserData['img'];
-            $_SESSION['status'] = $UserData['status'];
+            $_SESSION['id'] = $userData['id'];
+            $_SESSION['user'] = $userData['email'];
+            $_SESSION['logado'] = $userData['logado'];
+            $_SESSION['cargo'] = $userData['cargo'];
+            $_SESSION['status'] = $userData['status'];
 
-            // Atualizando o status de logado na tabela tb_admin.usuarios
-            $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 1 WHERE id = ?");
-            $sql->execute(array($_SESSION['id']));
+            // Atualizar o status de logado na tabela tb_admin.usuarios
+            $this->atualizarStatusLogado($userData['id']);
+
+            error_log("Login bem-sucedido para o usuário: " . $email);
+            Painel::alert('sucesso', 'Login bem-sucedido para o usuário: ' . $email);
             return true;
         } else {
-            echo Painel::alert('erro', 'Erro na session');
+            Painel::alert('erro', 'Falha na verificação da senha para o usuário: ' . $email);
+            error_log("Falha na verificação da senha para o usuário: " . $email);
         }
+    } else {
+        Painel::alert('erro', 'Usuário inativo ou email não corresponde');
+        error_log("Usuário inativo ou email não corresponde");
+    }
 
-        return false;
+    // Se chegou aqui, o login falhou
+    Painel::alert('erro', 'Falha no login');
+    return false;
+}
+
+    private function atualizarStatusLogado($userId)
+    {
+        try {
+            $sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET logado = 1 WHERE id = ?");
+            $sql->execute([$userId]);
+        } catch (PDOException $e) {
+            // Log do erro
+            error_log("Erro ao atualizar status de logado: " . $e->getMessage());
+        }
     }
 
     // verifica se usuário está logado

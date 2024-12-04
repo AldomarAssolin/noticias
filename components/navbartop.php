@@ -6,10 +6,13 @@ $imagem = INCLUDE_PATH . 'static/uploads/avatar.jpg';
 $perfil = new Perfil();
 $perfilData = $perfil->listarPerfilNomeAvatar($id);
 
-if ($_SESSION) {
+if (isset($_SESSION)) {
     if ($perfilData != false) {
         $imagem = $perfilData['avatar'] ?? $imagem;
-        $usuario = $perfilData['nome'];
+        $usuario = $perfilData['nome'] ?? $_SESSION['user'];
+    }else{
+        $imagem = $imagem;
+        $usuario = $_SESSION['user'] ?? '';
     }
 }
 

@@ -1,6 +1,4 @@
 <?php
-// Suponha que você tenha uma função para buscar os interesses do banco de dados
-$interesses = Interesses::getAll();
 
 // Salvar Alterações
 if (isset($_POST['salvar_alteracoes'])) {
@@ -41,7 +39,13 @@ if (isset($_POST['excluir_interesse'])) {
     }
 }
 
-$interesses = Interesses::getAll();
+$interesses = Interesses::getAllByUser($_SESSION['id']);
+
+$mensagem = '';
+if(!$interesses){
+    $mensagem .= '<h2>Você ainda não possui interesses cadastrados.</h2>';
+}
+
 ?>
 
 <section class="interesses my-5">
@@ -56,7 +60,12 @@ $interesses = Interesses::getAll();
         </div>
 
         <div class="list-group">
-            <?php foreach ($interesses as $interesse): ?>
+            <?php 
+            echo $mensagem; 
+            if($interesses):
+            foreach ($interesses as $interesse): 
+                
+            ?>
                 <div class="d-flex text-body-secondary pt-3 border-bottom">
                     <div class="row w-100">
                         <div class="col-8 d-flex alisn-items-end pb-2">
@@ -142,7 +151,10 @@ $interesses = Interesses::getAll();
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php 
+            endforeach;
+            endif; 
+            ?>
         </div>
     </div>
 </section>

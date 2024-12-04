@@ -146,8 +146,8 @@ class Perfil extends Usuario
         }
 
         //Cria um perfil padrão
-        $avatar = INCLUDE_PATH . 'static/uploads/avatar.jpg';
-        $capa = INCLUDE_PATH . 'static/uploads/capa.jpeg';
+        $avatar = INCLUDE_PATH . 'static/images/avatar.png';
+        $capa = INCLUDE_PATH . 'static/images/no-image.png';
         $nome = $checkSql->fetch()['email'];
 
         $sql = MySql::connect()->prepare("INSERT INTO `tb_admin.perfil` (id, nome, avatar, capa, usuario_id) VALUES (null,?,?,?,?)");
