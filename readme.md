@@ -3,7 +3,7 @@
 
 Bem-vindo ao repositório do BLOG!
 
-![screenshot](static/images/blog.png)
+![screenshot](static/images/Blog.png)
 
 ## Descrição
 
