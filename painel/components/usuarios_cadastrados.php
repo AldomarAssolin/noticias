@@ -22,7 +22,7 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
             <svg class="bi">
                 <use xlink:href="#people" />
             </svg>
-            <span class="mx-2 lead">Usuários do Cadastrados no site</span>
+            <span class="mx-2 lead">Usuários Cadastrados no site</span>
         </h6>
         <table class="table my-3">
             <thead>
@@ -34,8 +34,15 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
             </thead>
             <tbody>
                 <?php
+                // Obtém a lista de IDs dos usuários online
+                $usuariosOnline = Usuario::listarUsuariosOnline();
+                $idsUsuariosOnline = array_column($usuariosOnline, 'usuario_id'); // Extrai apenas os IDs dos usuários online
+
                 // Exibe os usuários cadastrados
                 foreach ($totalUsuariosCadastrados as $value) {
+                    // Verifica se o usuário está online
+                    $classeAvatar = in_array($value['id'], $idsUsuariosOnline) ? 'border border-2 border-success' : '';
+
                     // Verifica se o usuário possui artigos
                     $artigos = Artigos::listarArtigos();
                     foreach ($artigos as $artigo) {
@@ -47,20 +54,17 @@ $totalUsuariosCadastrados = Usuario::listarUsuariosCadastrados(1);
                         }
                     }
                     
-                    
-                    // Desativa botao de ver artigos caso o usuário não possua artigos
-                    if($artigos == 0){
-                        $disabled = 'disabled';
-                    } else {
-                        $disabled = '';
-                    }
 
-                    var_dump($value['avatar']);
-
+                    // Desativa botão de ver artigos caso o usuário não possua artigos
+                    $disabled = ($artigos == 0) ? 'disabled' : '';
                 ?>
                     <tr>
                         <th scope="row">
-                            <img src="<?php echo htmlspecialchars($value['avatar'] ?? BASE_DIR . 'static/uploads/avatar.jpg'); ?>" alt="Imagem do perfil" width="24" height="24" class="rounded-circle mx-2 <?php echo $value['logado'] == 1 ? 'border border-2 border-success' : '' ?>">
+                            <img src="<?php echo htmlspecialchars($value['avatar'] ?? BASE_DIR . 'static/uploads/avatar.jpg'); ?>"
+                                alt="Imagem do perfil"
+                                width="24"
+                                height="24"
+                                class="rounded-circle mx-2 <?php echo $classeAvatar; ?>">
                             <?php echo htmlspecialchars($value['nome_completo'] ?? $value['email']); ?>
                         </th>
                         <td class="text-end"><?php echo htmlspecialchars(Painel::$cargos[$value['cargo']]); ?></td>

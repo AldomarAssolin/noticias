@@ -100,7 +100,7 @@ class Usuario
 
 	/* ************************************************** */
 
-	//atualizar usuario pela $_SESSION. (logado)
+	// Atualiza cargo do usuário
 	public static function atualizarUsuario($cargo, $id)
 	{
 		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET cargo = ? WHERE id = ?");
@@ -156,6 +156,7 @@ class Usuario
 		$sql->execute(array($id));
 	}
 
+	//ativar usuario
 	public static function ativarUsuario($id)
 	{
 		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET status = 1 WHERE id = ?");
@@ -167,5 +168,15 @@ class Usuario
 	{
 		$sql = MySql::connect()->prepare("UPDATE `tb_admin.usuarios` SET cargo = ? WHERE id = ?");
 		$sql->execute(array($cargo, $id));
+	}
+
+	//listar usuario online
+	public static function listarUsuariosOnline()
+	{
+		$agora = date('Y-m-d H:i:s');
+		$limite = date('Y-m-d H:i:s', strtotime('-15 minutes', strtotime($agora)));
+		$sql = MySql::connect()->prepare("SELECT * FROM `tb_admin.online` WHERE ultima_acao > ?");
+		$sql->execute(array($limite));
+		return $sql->fetchAll();
 	}
 }

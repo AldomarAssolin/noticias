@@ -57,7 +57,18 @@ $totalUsuariosCadastrados = Usuario::buscarTodosUsuarios();
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($totalUsuariosCadastrados as $usuario): ?>
+                <?php 
+                foreach ($totalUsuariosCadastrados as $usuario): 
+                    
+                    $artigosAutor = Artigos::listarArtigosAutor($usuario['id']);
+
+                    // Desativa botao de ver artigos caso o usuário não possua artigos
+                    if (empty($artigosAutor)) {
+                        $disabled = 'disabled';
+                    } else {
+                        $disabled = '';
+                    }
+                ?>
                 <tr>
                     <td class="align-bottom pb-2">
                         <div class="d-md-flex">

@@ -105,9 +105,16 @@ class Artigos
     }
 
     //Desativar artigo
-    public static function deletarArtigo($id)
+    public static function desativarArtigo($id)
     {
         $sql = MySql::connect()->prepare("UPDATE `tb_site.artigos` SET status = 0 WHERE id = ?");
+        $sql->execute(array($id));
+    }
+
+    //excluir excluir permanentemente artigo
+    public static function excluirPermanentemente($id)
+    {
+        $sql = MySql::connect()->prepare("DELETE FROM `tb_site.artigos` WHERE id = ?");
         $sql->execute(array($id));
     }
 

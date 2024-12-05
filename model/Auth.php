@@ -20,9 +20,6 @@ class Auth
     if ($userData['status'] != 0 && $userData['email'] == $email) {
         // Verificar a senha
         if (password_verify($senha, $userData['senha'])) {
-            
-            // Iniciar a sessão
-            session_start();
 
             // Definir variáveis de sessão
             $_SESSION['login'] = true;
